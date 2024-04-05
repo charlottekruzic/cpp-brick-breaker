@@ -1,5 +1,6 @@
 #include "Grid.h"
 
+#include "BasicBrick.h"
 #include "Brick.h"
 #include "Empty.h"
 #include "Wall.h"
@@ -26,7 +27,17 @@ Grid::Grid(const std::string& filename) {
       } else if (c == ' ') {
         gridRow.push_back(new Empty());
       } else if (c == 'B') {
-        gridRow.push_back(new Brick(1, Color::Red));
+        gridRow.push_back(new BasicBrick(Color::Blue));
+      } else if (c == 'G') {
+        gridRow.push_back(new BasicBrick(Color::Gray));
+      } else if (c == 'O') {
+        gridRow.push_back(new BasicBrick(Color::Orange));
+      } else if (c == 'Y') {
+        gridRow.push_back(new BasicBrick(Color::Yellow));
+      } else if (c == 'R') {
+        gridRow.push_back(new BasicBrick(Color::Red));
+      } else if (c == 'V') {
+        gridRow.push_back(new BasicBrick(Color::Green));
       } else {
         // Gérer les caractères inconnus ou non pris en charge
         std::cerr << "Caractère inconnu: " << c << std::endl;
@@ -44,21 +55,6 @@ Grid::~Grid() {
     }
   }
 }
-
-/*
-void Grid::renderGrid(SDL_Renderer* renderer) const {
-  // std::cout << "renderGrid" << std::endl;
-  int cellSize = 100;  // Taille de chaque case
-  int i = 0;
-  for (const auto& row : grid_) {
-    int j = 0;
-    for (const auto& cell : row) {
-      cell->renderCell(renderer, j, i, cellSize);
-      ++j;
-    }
-    ++i;
-  }
-}*/
 
 void Grid::renderGrid(SDL_Renderer* renderer, int screenWidth,
                       int screenHeight) const {

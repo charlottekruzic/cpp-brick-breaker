@@ -10,6 +10,7 @@ class Wall : public Cell {
 
   bool rebondir() const override;
   bool traverse() const override;
+  void renderCell(SDL_Renderer* renderer, int x, int y, int cellWidth) override;
 };
 
 #endif  // WALL_H

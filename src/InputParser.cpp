@@ -28,10 +28,6 @@ bool InputParser::parseFile() {
     board_.push_back(line);
   }
 
-  for (const std::string& row : board_) {
-    std::cout << row << std::endl;
-  }
-
   file.close();
   return true;
 }

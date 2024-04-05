@@ -11,6 +11,7 @@ class Empty : public Cell {
 
   bool rebondir() const override;
   bool traverse() const override;
+  void renderCell(SDL_Renderer* renderer, int x, int y, int cellWidth) override;
 };
 
 #endif  // EMPTY_H

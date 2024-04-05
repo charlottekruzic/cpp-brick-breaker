@@ -14,9 +14,11 @@ class Cell {
 
   virtual bool rebondir() const = 0;
   virtual bool traverse() const = 0;
+  virtual void renderCell(SDL_Renderer* renderer, int x, int y,
+                          int cellWidth) = 0;
 
   Color getColor() const;  // Méthode pour obtenir la couleur de la case
-  void renderCell(SDL_Renderer* renderer, int x, int y, int cellWidth);
+  bool isWall() const;
 
  protected:
   Cell();

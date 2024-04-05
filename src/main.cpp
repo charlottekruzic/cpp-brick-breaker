@@ -5,8 +5,8 @@
 #include "Grid.h"
 
 int main() {
-  const int screenWidth = 800;
-  const int screenHeight = 600;
+  const int screenWidth = 400;
+  const int screenHeight = 800;
 
   // Initialisation de la SDL2
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -33,7 +33,7 @@ int main() {
 
   // Création de la grille en utilisant le constructeur prenant en charge le
   // fichier d'entrée
-  Grid grid("../grilles/grille0.txt");
+  Grid grid("../grilles/grille2.txt");
 
   bool quit = false;
   while (!quit) {
