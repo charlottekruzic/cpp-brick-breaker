@@ -1,1 +1,2 @@
-# projet_prog_avancee
+# Projet : Programmation Avancée
+_Charlotte Kruzic & Zoé Marquis_
