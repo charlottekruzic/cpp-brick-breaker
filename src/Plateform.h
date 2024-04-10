@@ -10,6 +10,8 @@ class Plateform {
   int pos_x;
   int pos_y;
 
+  int speed;
+
   SDL_Rect plateformRect;
 
  public:
@@ -17,7 +19,8 @@ class Plateform {
   Plateform(float width_window, float height_window);
 
   void render(SDL_Renderer* renderer);
-  void move_keyboard(SDL_Keycode keyCode);
+  void move_keyboard(SDL_Keycode keyCode, int screenWidth);
+  void move_mouse(int mouseX, int mouseY, int screenWidth);
 };
 
 #endif  // PLATEFORM_H
