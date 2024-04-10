@@ -2,12 +2,13 @@
 
 #include <iostream>
 
+#include "Ball.h"
 #include "Grid.h"
 #include "Plateform.h"
 
 int main() {
   const int screenWidth = 400;
-  const int screenHeight = 800;
+  const int screenHeight = 400;
 
   // Initialisation de la SDL2
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -44,11 +45,25 @@ int main() {
   MyPlateform.render(renderer);
   SDL_RenderPresent(renderer);
 
+  // Création de la balle
+  Ball MyBall(10, 400, MyPlateform.getPosX(), MyPlateform.getPosY(),
+              MyPlateform.getWidth(), 0.5, -0.5);
+
   bool quit = false;
   SDL_Event event;
 
+  // Gestion temps
+  Uint32 previousTime = SDL_GetTicks();
+  Uint32 currentTime, deltaTime;
+  float dt;  // en s
+
   while (!quit) {
-    while (SDL_PollEvent(&event)) {
+    currentTime = SDL_GetTicks();
+    dt = (currentTime - previousTime) / 1000.0f;
+
+    previousTime = currentTime;
+
+    if (SDL_PollEvent(&event)) {
       if (event.type == SDL_QUIT) {
         quit = true;
       }
@@ -64,12 +79,19 @@ int main() {
       }
     }
 
+    // Mise à jour position balle
+    MyBall.updatePosition(dt, screenWidth, screenHeight);
+
+    // Check collisions avec plateforme
+    MyBall.checkCollide(MyPlateform);
+
     // Mise à jour affichage
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
     // grid.renderGrid(renderer, screenWidth, screenHeight);
     MyPlateform.render(renderer);
+    MyBall.render(renderer);
 
     SDL_RenderPresent(renderer);
   }
