@@ -33,18 +33,20 @@ void Plateform::render(SDL_Renderer* renderer) {
 }
 
 // Fonction déplacement clavier
-void Plateform::move_keyboard(SDL_Keycode keyCode, int screenWidth) {
+void Plateform::move_keyboard(SDL_Keycode keyCode, int screenWidth, float dt) {
+  float speed_factor = 50.0;  // obligé sinon plateform ne bouge pas à droite
+  float movement = speed_ * dt * speed_factor;
   switch (keyCode) {
     case SDLK_LEFT:
-      if (pos_x_ - speed_ >= 0) {
-        pos_x_ -= speed_;
+      if (pos_x_ - movement >= 0) {
+        pos_x_ -= movement;
       } else {
         pos_x_ = 0;
       }
       break;
     case SDLK_RIGHT:
-      if (pos_x_ + width_ + speed_ <= screenWidth) {
-        pos_x_ += speed_;
+      if (pos_x_ + width_ + movement <= screenWidth) {
+        pos_x_ += movement;
       } else {
         pos_x_ = screenWidth - width_;
       }

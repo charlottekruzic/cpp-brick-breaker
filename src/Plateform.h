@@ -35,7 +35,7 @@ class Plateform {
 
   // Fonctions
   void render(SDL_Renderer* renderer);
-  void move_keyboard(SDL_Keycode keyCode, int screenWidth);
+  void move_keyboard(SDL_Keycode keyCode, int screenWidth, float dt);
   void move_mouse(int mouseX, int mouseY, int screenWidth);
 };
 

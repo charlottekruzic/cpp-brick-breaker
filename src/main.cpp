@@ -41,6 +41,8 @@ int main() {
   Grid grid("../grilles/grille2.txt");
 
   // Création grille
+  bool leftKeyDown = false;
+  bool rightKeyDown = false;
   Plateform MyPlateform(screenWidth, screenHeight);
   MyPlateform.render(renderer);
   SDL_RenderPresent(renderer);
@@ -50,6 +52,7 @@ int main() {
               MyPlateform.getWidth(), 0.5, -0.5);
 
   bool quit = false;
+  bool game_over = false;
   SDL_Event event;
 
   // Gestion temps
@@ -57,7 +60,7 @@ int main() {
   Uint32 currentTime, deltaTime;
   float dt;  // en s
 
-  while (!quit) {
+  while (!quit && !game_over) {
     currentTime = SDL_GetTicks();
     dt = (currentTime - previousTime) / 1000.0f;
 
@@ -69,8 +72,19 @@ int main() {
       }
       // Clavier
       else if (event.type == SDL_KEYDOWN) {
-        MyPlateform.move_keyboard(event.key.keysym.sym, screenWidth);
+        if (event.key.keysym.sym == SDLK_LEFT) {
+          leftKeyDown = true;
+        } else if (event.key.keysym.sym == SDLK_RIGHT) {
+          rightKeyDown = true;
+        }
+      } else if (event.type == SDL_KEYUP) {
+        if (event.key.keysym.sym == SDLK_LEFT) {
+          leftKeyDown = false;
+        } else if (event.key.keysym.sym == SDLK_RIGHT) {
+          rightKeyDown = false;
+        }
       }
+
       // Souris
       else if (event.type == SDL_MOUSEMOTION) {
         int mouseX, mouseY;
@@ -79,8 +93,16 @@ int main() {
       }
     }
 
+    // MIse à jour position plateforme
+    if (leftKeyDown) {
+      MyPlateform.move_keyboard(SDLK_LEFT, screenWidth, dt);
+    }
+    if (rightKeyDown) {
+      MyPlateform.move_keyboard(SDLK_RIGHT, screenWidth, dt);
+    }
+
     // Mise à jour position balle
-    MyBall.updatePosition(dt, screenWidth, screenHeight);
+    game_over = MyBall.updatePosition(dt, screenWidth, screenHeight);
 
     // Check collisions avec plateforme
     MyBall.checkCollide(MyPlateform);
@@ -94,6 +116,10 @@ int main() {
     MyBall.render(renderer);
 
     SDL_RenderPresent(renderer);
+  }
+
+  if (game_over) {
+    std::cout << "Game Over !!" << std::endl;
   }
 
   SDL_DestroyRenderer(renderer);

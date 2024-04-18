@@ -22,7 +22,7 @@ class Ball {
        int platformLength, float velocity_x, float velocity_y);
 
   void render(SDL_Renderer* renderer);
-  void updatePosition(float dt, int screenWidth, int screenHeight);
+  bool updatePosition(float dt, int screenWidth, int screenHeight);
   void checkCollide(Plateform p);
 };
 
