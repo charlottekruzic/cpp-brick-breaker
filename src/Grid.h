@@ -10,7 +10,7 @@
 
 class Grid {
  public:
-  Grid(const std::string& filename);
+  Grid(const std::string& filename, SDL_Renderer* renderer);
   ~Grid();
 
   void renderGrid(SDL_Renderer* renderer, int screenWidth,

@@ -5,7 +5,7 @@
 #include "Empty.h"
 #include "Wall.h"
 
-Grid::Grid(const std::string& filename) {
+Grid::Grid(const std::string& filename, SDL_Renderer* renderer) {
   InputParser parser(filename);
   if (!parser.parseFile()) {
     // Gérer l'erreur de lecture du fichier
@@ -23,7 +23,7 @@ Grid::Grid(const std::string& filename) {
     std::vector<Cell*> gridRow;
     for (char c : row) {
       if (c == '#') {
-        gridRow.push_back(new Wall());
+        gridRow.push_back(new Wall(renderer));
       } else if (c == ' ') {
         gridRow.push_back(new Empty());
       } else if (c == 'B') {

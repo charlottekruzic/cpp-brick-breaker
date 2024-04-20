@@ -38,7 +38,7 @@ int main() {
 
   // Création de la grille en utilisant le constructeur prenant en charge le
   // fichier d'entrée
-  Grid grid("../grilles/grille2.txt");
+  Grid grid("../grilles/grille2.txt", renderer);
 
   // Création grille
   bool leftKeyDown = false;
@@ -111,7 +111,7 @@ int main() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
-    // grid.renderGrid(renderer, screenWidth, screenHeight);
+    grid.renderGrid(renderer, screenWidth, screenHeight);
     MyPlateform.render(renderer);
     MyBall.render(renderer);
 
