@@ -2,22 +2,29 @@
 
 #include <SDL2/SDL_image.h>
 
-Wall::Wall(SDL_Renderer* renderer) : Cell(Color::Yellow) {
-  // Chargez la texture du mur depuis un fichier
-  SDL_Surface* wallSurface = IMG_Load("../img/wall_texture.jpg");
-  if (!wallSurface) {
-    // Gestion de l'erreur si le chargement de l'image échoue
-    std::cerr << "Failed to load wall texture: " << IMG_GetError() << std::endl;
-    return;
-  }
+// pointeur statique pour la texture
+SDL_Texture* Wall::wall_texture_ = nullptr;
 
-  wall_texture_ = SDL_CreateTextureFromSurface(renderer, wallSurface);
-  SDL_FreeSurface(wallSurface);
+Wall::Wall(SDL_Renderer* renderer) : Cell(Color::Yellow) {
+  // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!wall_texture_) {
-    // Gestion de l'erreur si la création de la texture échoue
-    std::cerr << "Failed to create wall texture: " << SDL_GetError()
-              << std::endl;
-    return;
+    // Chargez la texture du mur depuis un fichier
+    SDL_Surface* wallSurface = IMG_Load("img/wall_texture.jpg");
+
+    if (!wallSurface) {
+      // Gestion de l'erreur si le chargement de l'image échoue
+      std::cerr << "Failed to load wall texture: " << IMG_GetError()
+                << std::endl;
+      return;
+    }
+    wall_texture_ = SDL_CreateTextureFromSurface(renderer, wallSurface);
+    SDL_FreeSurface(wallSurface);
+    if (!wall_texture_) {
+      // Gestion de l'erreur si la création de la texture échoue
+      std::cerr << "Failed to create wall texture: " << SDL_GetError()
+                << std::endl;
+      return;
+    }
   }
 }
 

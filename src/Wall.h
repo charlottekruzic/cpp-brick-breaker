@@ -6,9 +6,6 @@
 #include "Cell.h"
 
 class Wall : public Cell {
- private:
-  SDL_Texture* wall_texture_;
-
  public:
   Wall(SDL_Renderer* renderer);
   ~Wall();
@@ -16,6 +13,9 @@ class Wall : public Cell {
   bool rebondir() const override;
   bool traverse() const override;
   void renderCell(SDL_Renderer* renderer, int x, int y, int cellWidth) override;
+
+ private:
+  static SDL_Texture* wall_texture_;
 };
 
 #endif  // WALL_H
