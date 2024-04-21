@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 
+#include "Grid.h"
 #include "Plateform.h"
 
 class Ball {
@@ -23,7 +24,7 @@ class Ball {
 
   void render(SDL_Renderer* renderer);
   bool updatePosition(float dt, int screenWidth, int screenHeight);
-  void checkCollide(Plateform p);
+  void checkCollide(const Plateform& p, const Grid& grid);
 };
 
 #endif  // BALL_H

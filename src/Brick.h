@@ -4,6 +4,7 @@
 #include <string>
 
 #include "Cell.h"
+#include "Colors.h"
 
 // Classe représentant une brique
 class Brick : public Cell {
@@ -22,8 +23,9 @@ class Brick : public Cell {
   Brick(Color color, int strength, std::string type);
 
  private:
-  int strength_;      // Force de la brique
-  int hitsLeft_;      // Nombre de coups restants
+  int strength_;  // Force de la brique
+  int hitsLeft_;  // Nombre de coups restants
+  Color color_;
   std::string type_;  // Type par défaut
 };
 

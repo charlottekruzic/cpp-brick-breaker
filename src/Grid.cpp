@@ -5,7 +5,9 @@
 #include "Empty.h"
 #include "Wall.h"
 
-Grid::Grid(const std::string& filename, SDL_Renderer* renderer) {
+Grid::Grid(const std::string& filename, int width, int height,
+           SDL_Renderer* renderer)
+    : width_(width), height_(height) {
   InputParser parser(filename);
   if (!parser.parseFile()) {
     // Gérer l'erreur de lecture du fichier
@@ -73,4 +75,17 @@ void Grid::renderGrid(SDL_Renderer* renderer, int screenWidth,
       grid_[i][j]->renderCell(renderer, x, y, cellSize);
     }
   }
+}
+
+int Grid::getRows() const { return rows_; }
+int Grid::getCols() const { return cols_; }
+int Grid::getCellSize() const {
+  return std::min(width_ / getCols(), height_ / getRows());
+}
+
+Cell* Grid::getCell(int row, int col) const {
+  if (row < 0 || row >= rows_ || col < 0 || col >= cols_) {
+    return nullptr;
+  }
+  return grid_[row][col];
 }

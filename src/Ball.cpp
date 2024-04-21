@@ -1,5 +1,7 @@
 #include "Ball.h"
 
+#include "Brick.h"
+
 Ball::Ball()
     : radius_(10),
       speed_(10),
@@ -60,10 +62,44 @@ bool Ball::updatePosition(float dt, int screenWidth, int screenHeight) {
   return false;
 }
 
-void Ball::checkCollide(const Plateform p) {
+void Ball::checkCollide(const Plateform& p, const Grid& grid) {
   float distance_x = abs(pos_x_ - (p.getPosX() + p.getWidth() / 2));
   float distance_y = abs(pos_y_ - (p.getPosY() + p.getHeight() / 2));
 
+  // Collision avec les briques
+  int cell_size = grid.getCellSize();
+
+  int cell_pos_x = pos_x_ / cell_size;
+  int cell_pos_y = pos_y_ / cell_size;
+
+  for (int row = std::max(cell_pos_y - 1, 0);
+       row <= std::min(cell_pos_y + 1, grid.getRows() - 1); ++row) {
+    for (int col = std::max(cell_pos_x - 1, 0);
+         col <= std::min(cell_pos_x + 1, grid.getCols() - 1); ++col) {
+      Cell* cell = grid.getCell(row, col);
+      if (cell->rebondir()) {
+        bool intersect_x = pos_x_ + radius_ >= (col * cell_size) &&
+                           pos_x_ - radius_ <= ((col + 1) * cell_size);
+        bool intersect_y = pos_y_ + radius_ >= (row * cell_size) &&
+                           pos_y_ - radius_ <= ((row + 1) * cell_size);
+
+        if (intersect_x && intersect_y) {
+          if (std::min(abs(pos_x_ + radius_ - (col * cell_size)),
+                       abs(pos_x_ - radius_ - ((col + 1) * cell_size))) <
+              std::min(abs(pos_y_ + radius_ - (row * cell_size)),
+                       abs(pos_y_ - radius_ - ((row + 1) * cell_size)))) {
+            velocity_x_ = -velocity_x_;
+          } else {
+            velocity_y_ = -velocity_y_;
+          }
+
+          return;
+        }
+      }
+    }
+  }
+
+  // Collision entre la balle et les bords de la fenetre
   if (distance_x > (p.getWidth() / 2 + radius_)) {
     return;
   }

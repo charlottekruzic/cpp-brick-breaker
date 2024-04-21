@@ -8,7 +8,7 @@
 
 int main() {
   const int screenWidth = 400;
-  const int screenHeight = 400;
+  const int screenHeight = 800;
 
   // Initialisation de la SDL2
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -38,7 +38,7 @@ int main() {
 
   // Création de la grille en utilisant le constructeur prenant en charge le
   // fichier d'entrée
-  Grid grid("../grilles/grille2.txt", renderer);
+  Grid grid("../grilles/grille2.txt", screenWidth, screenHeight, renderer);
 
   // Création grille
   bool leftKeyDown = false;
@@ -105,7 +105,7 @@ int main() {
     game_over = MyBall.updatePosition(dt, screenWidth, screenHeight);
 
     // Check collisions avec plateforme
-    MyBall.checkCollide(MyPlateform);
+    MyBall.checkCollide(MyPlateform, grid);
 
     // Mise à jour affichage
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);

@@ -19,7 +19,11 @@ int Brick::getHitsLeft() const {
   return hitsLeft_;  // Renvoie le nombre de coups restants
 }
 
-void Brick::ballHit() { hitsLeft_--; }
+void Brick::ballHit() {
+  if (hitsLeft_ > 0) {
+    hitsLeft_--;
+  }
+}
 
 std::string Brick::getType() const { return type_; }
 
