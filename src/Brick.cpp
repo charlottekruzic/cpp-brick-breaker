@@ -20,9 +20,11 @@ bool Brick::hit() {
   if (hitsLeft_ > 0) {
     hitsLeft_--;
   }
-
-  std::cout << "HIT" << std::endl;
-  return (hitsLeft_ == 0);
+  if (hitsLeft_ == 0) {
+    return true;
+  }
+  std::cout << "-1 vie mais en vie" << std::endl;
+  return false;
 }
 
 std::string Brick::getType() const { return type_; }

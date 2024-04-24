@@ -1,13 +1,13 @@
 #include "Grid.h"
 
-#include "BasicBrick.h"
 #include "Brick.h"
 #include "Empty.h"
+#include "PlusieursBrick.h"
 #include "Wall.h"
 
 Grid::Grid(const std::string& filename, int width, int height,
            SDL_Renderer* renderer)
-    : width_(width), height_(height) {
+    : width_(width), height_(height), renderer_(renderer) {
   InputParser parser(filename);
   if (!parser.parseFile()) {
     // Gérer l'erreur de lecture du fichier
@@ -27,7 +27,7 @@ Grid::Grid(const std::string& filename, int width, int height,
       if (c == '#') {
         gridRow.push_back(new Wall(renderer));
       } else if (c == ' ') {
-        gridRow.push_back(new Empty());
+        gridRow.push_back(new Empty(renderer));
       } else if (c == 'B') {
         gridRow.push_back(new BasicBrick(Color::Blue));
       } else if (c == 'G') {
@@ -35,7 +35,7 @@ Grid::Grid(const std::string& filename, int width, int height,
       } else if (c == 'O') {
         gridRow.push_back(new BasicBrick(Color::Orange));
       } else if (c == 'Y') {
-        gridRow.push_back(new BasicBrick(Color::Yellow));
+        gridRow.push_back(new BrickV3(Color::Yellow));
       } else if (c == 'R') {
         gridRow.push_back(new BasicBrick(Color::Red));
       } else if (c == 'V') {
@@ -43,7 +43,7 @@ Grid::Grid(const std::string& filename, int width, int height,
       } else {
         // Gérer les caractères inconnus ou non pris en charge
         std::cerr << "Caractère inconnu: " << c << std::endl;
-        gridRow.push_back(new Empty());
+        gridRow.push_back(new Empty(renderer));
       }
     }
     grid_.push_back(gridRow);
@@ -95,6 +95,6 @@ void Grid::hitCell(int x, int y) {
   bool detruit = c->hit();
   if (detruit) {
     delete grid_[x][y];
-    grid_[x][y] = new Empty();
+    grid_[x][y] = new Empty(renderer_);
   }
 }

@@ -29,6 +29,7 @@ class Grid {
   int width_;
   int height_;
   std::vector<std::vector<Cell*>> grid_;
+  SDL_Renderer* renderer_;
 };
 
 #endif  // GRID_H

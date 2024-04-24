@@ -35,8 +35,6 @@ bool Wall::rebondir() const {
 bool Wall::hit() { return false; }
 
 void Wall::renderCell(SDL_Renderer* renderer, int x, int y, int cellSize) {
-  // std::cout << "renderCell de Wall" << std::endl;
-
   int padding = 1;  // Espace entre chaque case
   int size = cellSize - 2 * padding;
 
