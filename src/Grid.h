@@ -21,6 +21,7 @@ class Grid {
   int getCols() const;
   int getCellSize() const;
   Cell* getCell(int row, int col) const;
+  void hitCell(int x, int y);
 
  private:
   int rows_;

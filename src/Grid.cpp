@@ -89,3 +89,12 @@ Cell* Grid::getCell(int row, int col) const {
   }
   return grid_[row][col];
 }
+
+void Grid::hitCell(int x, int y) {
+  Cell* c = getCell(x, y);
+  bool detruit = c->hit();
+  if (detruit) {
+    delete grid_[x][y];
+    grid_[x][y] = new Empty();
+  }
+}

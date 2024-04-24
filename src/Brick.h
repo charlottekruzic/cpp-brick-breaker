@@ -10,7 +10,7 @@
 class Brick : public Cell {
  public:
   bool rebondir() const override;
-  bool traverse() const override;
+  bool hit() override;
   void renderCell(SDL_Renderer* renderer, int x, int y, int cellWidth) override;
 
   int getStrength() const;  // Méthode pour obtenir la force de la brique

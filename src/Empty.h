@@ -10,7 +10,7 @@ class Empty : public Cell {
   ~Empty();
 
   bool rebondir() const override;
-  bool traverse() const override;
+  bool hit() override;
   void renderCell(SDL_Renderer* renderer, int x, int y, int cellWidth) override;
 };
 

@@ -24,7 +24,15 @@ class Ball {
 
   void render(SDL_Renderer* renderer);
   bool updatePosition(float dt, int screenWidth, int screenHeight);
-  void checkCollide(const Plateform& p, const Grid& grid);
+  // void checkCollide(const Plateform& p, const Grid& grid);
+
+  float getPosX() const { return pos_x_; }
+  float getPosY() const { return pos_y_; }
+  int getRadius() const { return radius_; }
+
+  // Méthodes pour inverser les vitesses de la balle
+  void reverseVelocityX() { velocity_x_ = -velocity_x_; }
+  void reverseVelocityY() { velocity_y_ = -velocity_y_; }
 };
 
 #endif  // BALL_H

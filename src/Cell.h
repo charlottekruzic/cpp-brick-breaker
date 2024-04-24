@@ -13,12 +13,11 @@ class Cell {
   // destruction correcte des objets dérivés
 
   virtual bool rebondir() const = 0;
-  virtual bool traverse() const = 0;
+  virtual bool hit() = 0;
   virtual void renderCell(SDL_Renderer* renderer, int x, int y,
                           int cellWidth) = 0;
 
   Color getColor() const;  // Méthode pour obtenir la couleur de la case
-  bool isWall() const;
 
  protected:
   Cell();

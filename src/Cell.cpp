@@ -10,8 +10,6 @@ Cell::Cell(Color color) : color_(color) {}
 
 Color Cell::getColor() const { return color_; }
 
-bool Cell::isWall() const { return false; };
-
 void Cell::renderCell(SDL_Renderer* renderer, int x, int y, int cellSize) {
   int padding = 1;  // Espace entre chaque case
   int size = cellSize - 2 * padding;

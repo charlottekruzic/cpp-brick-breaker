@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "Ball.h"
+#include "CollisionManager.h"
 #include "Grid.h"
 #include "Plateform.h"
 
@@ -104,8 +105,7 @@ int main() {
     // Mise à jour position balle
     game_over = MyBall.updatePosition(dt, screenWidth, screenHeight);
 
-    // Check collisions avec plateforme
-    MyBall.checkCollide(MyPlateform, grid);
+    CollisionManager::checkCollisions(MyPlateform, MyBall, grid);
 
     // Mise à jour affichage
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);

@@ -1,1 +1,0 @@
-/usr/bin/c++ -rdynamic CMakeFiles/project_programmation.dir/src/plateform.cpp.o CMakeFiles/project_programmation.dir/main.cpp.o -o project_programmation  -lSDL2 

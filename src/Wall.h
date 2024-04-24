@@ -11,7 +11,7 @@ class Wall : public Cell {
   ~Wall();
 
   bool rebondir() const override;
-  bool traverse() const override;
+  bool hit() override;
   void renderCell(SDL_Renderer* renderer, int x, int y, int cellWidth) override;
 
  private:

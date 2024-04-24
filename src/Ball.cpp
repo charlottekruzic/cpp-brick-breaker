@@ -61,7 +61,7 @@ bool Ball::updatePosition(float dt, int screenWidth, int screenHeight) {
 
   return false;
 }
-
+/*
 void Ball::checkCollide(const Plateform& p, const Grid& grid) {
   float distance_x = abs(pos_x_ - (p.getPosX() + p.getWidth() / 2));
   float distance_y = abs(pos_y_ - (p.getPosY() + p.getHeight() / 2));
@@ -123,3 +123,4 @@ void Ball::checkCollide(const Plateform& p, const Grid& grid) {
     velocity_y_ *= -1;
   }
 }
+*/

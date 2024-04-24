@@ -4,11 +4,7 @@ Brick::Brick(Color color, int strength, std::string type)
     : Cell(color), strength_(strength), hitsLeft_(strength), type_(type) {}
 
 bool Brick::rebondir() const {
-  return true;  // Les objets rebondissent sur une brique
-}
-
-bool Brick::traverse() const {
-  return false;  // Les objets ne peuvent pas traverser une brique
+  return (hitsLeft_ > 0);  // Les objets rebondissent sur une brique
 }
 
 int Brick::getStrength() const {
@@ -19,10 +15,14 @@ int Brick::getHitsLeft() const {
   return hitsLeft_;  // Renvoie le nombre de coups restants
 }
 
-void Brick::ballHit() {
+// retourne vrai si détruit
+bool Brick::hit() {
   if (hitsLeft_ > 0) {
     hitsLeft_--;
   }
+
+  std::cout << "HIT" << std::endl;
+  return (hitsLeft_ == 0);
 }
 
 std::string Brick::getType() const { return type_; }
