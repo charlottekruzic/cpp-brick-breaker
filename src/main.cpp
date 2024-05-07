@@ -39,7 +39,7 @@ int main() {
 
   // Création de la grille en utilisant le constructeur prenant en charge le
   // fichier d'entrée
-  Grid grid("grilles/grille2.txt", screenWidth, screenHeight, renderer);
+  Grid grid("../grilles/grille2.txt", screenWidth, screenHeight, renderer);
 
   // Création grille
   bool leftKeyDown = false;

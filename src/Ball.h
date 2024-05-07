@@ -26,9 +26,18 @@ class Ball {
   bool updatePosition(float dt, int screenWidth, int screenHeight);
   // void checkCollide(const Plateform& p, const Grid& grid);
 
+  // Méthodes set et get
+  int getSpeed() const { return speed_; }
   float getPosX() const { return pos_x_; }
   float getPosY() const { return pos_y_; }
   int getRadius() const { return radius_; }
+  float getVelocityX() const { return velocity_x_; }
+  float getVelocityY() const { return velocity_y_; }
+
+  void setPosX(const float pos_x) { pos_x_ = pos_x; }
+  void setPosY(const float pos_y) { pos_y_ = pos_y; }
+  void setVelocityX(const float velocity_x) { velocity_x_ = velocity_x; }
+  void setVelocityY(const float velocity_y) { velocity_y_ = velocity_y; }
 
   // Méthodes pour inverser les vitesses de la balle
   void reverseVelocityX() { velocity_x_ = -velocity_x_; }

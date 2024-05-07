@@ -23,7 +23,7 @@ bool Brick::hit() {
   if (hitsLeft_ == 0) {
     return true;
   }
-  std::cout << "-1 vie mais en vie" << std::endl;
+  // std::cout << "-1 vie mais en vie" << std::endl;
   return false;
 }
 

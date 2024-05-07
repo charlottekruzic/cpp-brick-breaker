@@ -6,12 +6,16 @@ void CollisionManager::checkGridBallCollision(Grid& grid, Ball& ball) {
   int cell_pos_x = ball.getPosX() / cell_size;
   int cell_pos_y = ball.getPosY() / cell_size;
 
+  bool collisionDetected = false;
+  float collisionVectorX = 0;
+  float collisionVectorY = 0;
+
   for (int row = std::max(cell_pos_y - 1, 0);
        row <= std::min(cell_pos_y + 1, grid.getRows() - 1); ++row) {
     for (int col = std::max(cell_pos_x - 1, 0);
          col <= std::min(cell_pos_x + 1, grid.getCols() - 1); ++col) {
       Cell* cell = grid.getCell(row, col);
-      if (cell->rebondir()) {
+      if (cell && cell->rebondir()) {
         bool intersect_x =
             ball.getPosX() + ball.getRadius() >= (col * cell_size) &&
             ball.getPosX() - ball.getRadius() <= ((col + 1) * cell_size);
@@ -20,23 +24,35 @@ void CollisionManager::checkGridBallCollision(Grid& grid, Ball& ball) {
             ball.getPosY() - ball.getRadius() <= ((row + 1) * cell_size);
 
         if (intersect_x && intersect_y) {
-          // if else qui va pas ici ??
-          if (std::min(
-                  abs(ball.getPosX() + ball.getRadius() - (col * cell_size)),
-                  abs(ball.getPosX() - ball.getRadius() -
-                      ((col + 1) * cell_size))) <
-              std::min(
-                  abs(ball.getPosY() + ball.getRadius() - (row * cell_size)),
-                  abs(ball.getPosY() - ball.getRadius() -
-                      ((row + 1) * cell_size)))) {
-            ball.reverseVelocityX();
+          std::cerr << "Collision : (" << row << ", " << col << ")\n";
+          collisionDetected = true;
+
+          float depth_x = std::min(
+              abs(ball.getPosX() + ball.getRadius() - (col * cell_size)),
+              abs(ball.getPosX() - ball.getRadius() - ((col + 1) * cell_size)));
+          float depth_y = std::min(
+              abs(ball.getPosY() + ball.getRadius() - (row * cell_size)),
+              abs(ball.getPosY() - ball.getRadius() - ((row + 1) * cell_size)));
+
+          if (depth_x < depth_y) {
+            collisionVectorX +=
+                (ball.getPosX() < col * cell_size) ? -depth_x : depth_x;
           } else {
-            ball.reverseVelocityY();
+            collisionVectorY +=
+                (ball.getPosY() < row * cell_size) ? -depth_y : depth_y;
           }
+
           grid.hitCell(row, col);
-          return;
         }
       }
+    }
+  }
+
+  if (collisionDetected) {
+    if (abs(collisionVectorX) > abs(collisionVectorY)) {
+      ball.reverseVelocityX();
+    } else {
+      ball.reverseVelocityY();
     }
   }
 }
