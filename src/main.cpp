@@ -49,7 +49,7 @@ int main() {
   SDL_RenderPresent(renderer);
 
   // Création de la balle
-  Ball MyBall(10, 400, MyPlateform.getPosX(), MyPlateform.getPosY(),
+  Ball MyBall(10, 300, MyPlateform.getPosX(), MyPlateform.getPosY(),
               MyPlateform.getWidth(), 0.5, -0.5);
 
   bool quit = false;
