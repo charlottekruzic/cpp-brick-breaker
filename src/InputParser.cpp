@@ -30,7 +30,6 @@ bool InputParser::parseFile() {
   }
 
   file.close();
-  std::cout << "cols = " << cols_;
   return true;
 }
 

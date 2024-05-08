@@ -26,13 +26,13 @@ Grid::Grid(const std::string& filename, int width, int height,
     std::vector<Cell*> gridRow;
     for (char c : row) {
       if (c == ' ') {
-        gridRow.push_back(new Empty(renderer));
+        gridRow.push_back(new Empty());
       } else if (c >= '1' && c <= '5') {
         gridRow.push_back(new BasicBrick(c - '0'));
         remainingBricks_++;
       } else {
         std::cerr << "Caractère inconnu: " << c << std::endl;
-        gridRow.push_back(new Empty(renderer));
+        gridRow.push_back(new Empty());
       }
     }
     grid_.push_back(gridRow);
@@ -78,7 +78,7 @@ void Grid::hitCell(int x, int y) {
   bool detruit = c->hit();
   if (detruit) {
     delete grid_[x][y];
-    grid_[x][y] = new Empty(renderer_);
+    grid_[x][y] = new Empty();
     remainingBricks_--;
   }
 }

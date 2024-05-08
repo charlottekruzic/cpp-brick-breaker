@@ -28,7 +28,6 @@ void CollisionManager::checkGridBallCollision(Grid& grid, Ball& ball) {
                            pos_yBall - radiusBall <= ((row + 1) * cell_size);
 
         if (intersect_x && intersect_y) {
-          std::cerr << "Collision : (" << row << ", " << col << ")\n";
           collisionDetected = true;
 
           float depth_x =

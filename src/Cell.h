@@ -14,14 +14,15 @@ class Cell {
 
   virtual bool rebondir() const = 0;
   virtual bool hit() = 0;
-  virtual void renderCell(SDL_Renderer* renderer, int x, int y,
-                          int cellWidth) = 0;
+  virtual void renderCell(SDL_Renderer* renderer, int x, int y, int cellWidth);
 
-  virtual Color getColor();  // Méthode pour obtenir la couleur de la case
+  inline virtual Color getColor() {
+    return color_;
+  };  // Méthode pour obtenir la couleur de la case
 
  protected:
   Cell();
-  // Cell(Color color);
+  Cell(Color color);
   // constructeur accessible uniquement par les classes enfants
 
  private:

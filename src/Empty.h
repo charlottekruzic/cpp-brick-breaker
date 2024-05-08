@@ -8,15 +8,17 @@
 // Classe représentant une case vide
 class Empty : public Cell {
  public:
-  Empty(SDL_Renderer* renderer);
+  Empty();
+  // Empty(SDL_Renderer* renderer);
   ~Empty();
 
   bool rebondir() const override;
   bool hit() override;
-  void renderCell(SDL_Renderer* renderer, int x, int y, int cellWidth) override;
+  // void renderCell(SDL_Renderer* renderer, int x, int y, int cellWidth)
+  // override;
 
  private:
-  static SDL_Texture* empty_texture_;
+  // static SDL_Texture* empty_texture_;
 };
 
 #endif  // EMPTY_H

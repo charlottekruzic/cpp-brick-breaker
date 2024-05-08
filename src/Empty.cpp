@@ -1,13 +1,14 @@
 #include "Empty.h"
 
 // pointeur statique pour la texture
-SDL_Texture* Empty::empty_texture_ = nullptr;
+// SDL_Texture* Empty::empty_texture_ = nullptr;
 
-Empty::Empty(SDL_Renderer* renderer) : Cell() {
+Empty::Empty() : Cell(Color::Black) {
+  /*
   // Chargez la texture uniquement si elle n'a pas déjà été chargée
   if (!empty_texture_) {
     // Chargez la texture depuis un fichier
-    SDL_Surface* emptySurface = IMG_Load("img/space.jpg");
+    SDL_Surface* emptySurface = IMG_Load("img/test.jpg");
 
     if (!emptySurface) {
       // Gestion de l'erreur si le chargement de l'image échoue
@@ -24,6 +25,7 @@ Empty::Empty(SDL_Renderer* renderer) : Cell() {
       return;
     }
   }
+  */
 }
 
 bool Empty::rebondir() const {
@@ -32,6 +34,7 @@ bool Empty::rebondir() const {
 
 bool Empty::hit() { return true; }
 
+/*
 void Empty::renderCell(SDL_Renderer* renderer, int x, int y, int cellSize) {
   int padding = 1;  // Espace entre chaque case
   int size = cellSize - 2 * padding;
@@ -40,3 +43,4 @@ void Empty::renderCell(SDL_Renderer* renderer, int x, int y, int cellSize) {
   SDL_Rect rect = {x + padding, y + padding, size, size};
   SDL_RenderCopy(renderer, empty_texture_, NULL, &rect);
 }
+*/

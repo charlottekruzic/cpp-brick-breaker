@@ -6,9 +6,7 @@
 Cell::Cell() : color_(Color::White) {}
 
 // Constructeur avec spécification de la couleur
-// Cell::Cell(Color color) : color_(color) {}
-
-Color Cell::getColor() { return color_; }
+Cell::Cell(Color color) : color_(color) {}
 
 void Cell::renderCell(SDL_Renderer* renderer, int x, int y, int cellSize) {
   int padding = 1;  // Espace entre chaque case
