@@ -50,12 +50,15 @@ int Game::execute() {
   return 0;
 }
 
+void Game::togglePause() { paused_ = !paused_; }
+
 void Game::mainLoop() {
   Uint32 previousTime = SDL_GetTicks();
   const int frameRate = 50;
   const int maxFrameTime = 1000 / frameRate;
 
   SDL_Event event;
+  bool premiere_iter = true;
   while (!quit_ && !game_over_) {
     Uint32 startTime = SDL_GetTicks();
     float dt = (startTime - previousTime) / 1000.0f;
@@ -64,14 +67,19 @@ void Game::mainLoop() {
     while (SDL_PollEvent(&event)) {
       handleEvents(event);
     }
-    updateGame(dt);
-    render();
+
+    if (premiere_iter || !paused_) {
+      updateGame(dt);
+      render();
+    }
 
     // Pause si boucle trop rapide
     int frameTime = SDL_GetTicks() - startTime;
     if (frameTime < maxFrameTime) {
       SDL_Delay(maxFrameTime - frameTime);
     }
+
+    premiere_iter = false;
   }
 
   if (game_over_) {
@@ -89,6 +97,10 @@ void Game::handleEvents(SDL_Event& event) {
       left_key_down_ = true;
     } else if (event.key.keysym.sym == SDLK_RIGHT) {
       right_key_down_ = true;
+    } else if (event.key.keysym.sym == SDLK_SPACE) {
+      // Mettre en pause ou reprendre le jeu lorsque la barre d'espace est
+      // enfoncée
+      togglePause();
     }
   } else if (event.type == SDL_KEYUP) {
     if (event.key.keysym.sym == SDLK_LEFT) {
@@ -103,6 +115,9 @@ void Game::handleEvents(SDL_Event& event) {
     int mouseX, mouseY;
     SDL_GetMouseState(&mouseX, &mouseY);
     plateform_.move_mouse(mouseX, mouseY, screen_width_);
+  } else if (event.type == SDL_MOUSEBUTTONDOWN) {
+    // Mettre en pause ou reprendre le jeu lors d'un clic de souris
+    togglePause();
   }
 }
 

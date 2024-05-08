@@ -22,6 +22,7 @@ class Game {
   bool game_over_ = false;
   bool left_key_down_ = false;
   bool right_key_down_ = false;
+  bool paused_ = true;
 
   SDL_Window* window_ = nullptr;
   SDL_Renderer* renderer_ = nullptr;
@@ -36,6 +37,7 @@ class Game {
   void handleEvents(SDL_Event& event);
   void updateGame(float dt);
   void render();
+  void togglePause();
 };
 
 #endif  // GAME_H
