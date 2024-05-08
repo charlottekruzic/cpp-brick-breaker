@@ -41,7 +41,7 @@ void Game::createWindowAndRenderer() {
 }
 
 void Game::initGameComponents() {
-  grid_ = new Grid("grilles/grille00.txt", screen_width_, screen_height_,
+  grid_ = new Grid("grilles/grille11.txt", screen_width_, screen_height_,
                    renderer_);
 }
 
@@ -59,7 +59,7 @@ void Game::mainLoop() {
 
   SDL_Event event;
   bool premiere_iter = true;
-  while (!quit_ && !game_over_) {
+  while (!quit_ && !game_over_ && !game_finished_) {
     Uint32 startTime = SDL_GetTicks();
     float dt = (startTime - previousTime) / 1000.0f;
     previousTime = startTime;
@@ -82,6 +82,9 @@ void Game::mainLoop() {
     premiere_iter = false;
   }
 
+  if (game_finished_) {
+    std::cout << "Bravo !!" << std::endl;
+  }
   if (game_over_) {
     std::cout << "Game Over !!" << std::endl;
   }
@@ -124,7 +127,10 @@ void Game::handleEvents(SDL_Event& event) {
 void Game::updateGame(float dt) {
   // Mise à jour position balle
   game_over_ = ball_.updatePosition(dt, screen_width_, screen_height_);
+  // Vérifier les collisions
   CollisionManager::checkCollisions(plateform_, ball_, *grid_);
+
+  game_finished_ = !grid_->hasRemainingBricks();
 }
 
 void Game::render() {

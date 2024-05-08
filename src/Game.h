@@ -20,6 +20,7 @@ class Game {
   const int screen_height_ = 800;
   bool quit_ = false;
   bool game_over_ = false;
+  bool game_finished_ = false;
   bool left_key_down_ = false;
   bool right_key_down_ = false;
   bool paused_ = true;

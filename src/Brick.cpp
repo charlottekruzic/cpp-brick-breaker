@@ -26,8 +26,6 @@ Color Brick::getColor() {
     return it->second;  // Retourne la couleur associée à la force de la brique
   } else {
     // Gérer le cas où la force n'est pas trouvée dans le dictionnaire
-    // Vous pouvez renvoyer une couleur par défaut ou lancer une exception,
-    // selon votre logique
     return Color::DEFAULT_COLOR;
   }
 }

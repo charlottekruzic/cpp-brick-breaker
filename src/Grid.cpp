@@ -7,7 +7,7 @@
 
 Grid::Grid(const std::string& filename, int width, int height,
            SDL_Renderer* renderer)
-    : width_(width), height_(height), renderer_(renderer) {
+    : width_(width), height_(height), renderer_(renderer), remainingBricks_(0) {
   InputParser parser(filename);
   if (!parser.parseFile()) {
     // Gérer l'erreur de lecture du fichier
@@ -21,26 +21,16 @@ Grid::Grid(const std::string& filename, int width, int height,
 
   // Créer les cases de la grille en fonction du contenu du fichier
   const auto& board = parser.getBoard();
+
   for (const auto& row : board) {
     std::vector<Cell*> gridRow;
     for (char c : row) {
-      // if (c == '#') {
-      //   gridRow.push_back(new Wall(renderer));
-      // } else
       if (c == ' ') {
         gridRow.push_back(new Empty(renderer));
-      } else if (c == '1') {
-        gridRow.push_back(new BasicBrick(1));
-      } else if (c == '2') {
-        gridRow.push_back(new BasicBrick(2));
-      } else if (c == '3') {
-        gridRow.push_back(new BasicBrick(3));
-      } else if (c == '4') {
-        gridRow.push_back(new BasicBrick(4));
-      } else if (c == '5') {
-        gridRow.push_back(new BasicBrick(5));
+      } else if (c >= '1' && c <= '5') {
+        gridRow.push_back(new BasicBrick(c - '0'));
+        remainingBricks_++;
       } else {
-        // Gérer les caractères inconnus ou non pris en charge
         std::cerr << "Caractère inconnu: " << c << std::endl;
         gridRow.push_back(new Empty(renderer));
       }
@@ -76,12 +66,6 @@ void Grid::renderGrid(SDL_Renderer* renderer, int screenWidth,
   }
 }
 
-int Grid::getRows() const { return rows_; }
-int Grid::getCols() const { return cols_; }
-int Grid::getCellSize() const {
-  return std::min(width_ / getCols(), height_ / getRows());
-}
-
 Cell* Grid::getCell(int row, int col) const {
   if (row < 0 || row >= rows_ || col < 0 || col >= cols_) {
     return nullptr;
@@ -95,5 +79,6 @@ void Grid::hitCell(int x, int y) {
   if (detruit) {
     delete grid_[x][y];
     grid_[x][y] = new Empty(renderer_);
+    remainingBricks_--;
   }
 }
