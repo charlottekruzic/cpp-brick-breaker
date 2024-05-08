@@ -17,11 +17,11 @@ class Cell {
   virtual void renderCell(SDL_Renderer* renderer, int x, int y,
                           int cellWidth) = 0;
 
-  Color getColor() const;  // Méthode pour obtenir la couleur de la case
+  virtual Color getColor();  // Méthode pour obtenir la couleur de la case
 
  protected:
   Cell();
-  Cell(Color color);
+  // Cell(Color color);
   // constructeur accessible uniquement par les classes enfants
 
  private:

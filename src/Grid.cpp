@@ -3,7 +3,7 @@
 #include "Brick.h"
 #include "Empty.h"
 #include "PlusieursBrick.h"
-#include "Wall.h"
+// #include "Wall.h"
 
 Grid::Grid(const std::string& filename, int width, int height,
            SDL_Renderer* renderer)
@@ -29,18 +29,16 @@ Grid::Grid(const std::string& filename, int width, int height,
       // } else
       if (c == ' ') {
         gridRow.push_back(new Empty(renderer));
-      } else if (c == 'B') {
-        gridRow.push_back(new BasicBrick(Color::Blue));
-      } else if (c == 'G') {
-        gridRow.push_back(new BasicBrick(Color::Gray));
-      } else if (c == 'O') {
-        gridRow.push_back(new BasicBrick(Color::Orange));
-      } else if (c == 'Y') {
-        gridRow.push_back(new BrickV3(Color::Yellow));
-      } else if (c == 'R') {
-        gridRow.push_back(new BasicBrick(Color::Red));
-      } else if (c == 'V') {
-        gridRow.push_back(new BasicBrick(Color::Green));
+      } else if (c == '1') {
+        gridRow.push_back(new BasicBrick(1));
+      } else if (c == '2') {
+        gridRow.push_back(new BasicBrick(2));
+      } else if (c == '3') {
+        gridRow.push_back(new BasicBrick(3));
+      } else if (c == '4') {
+        gridRow.push_back(new BasicBrick(4));
+      } else if (c == '5') {
+        gridRow.push_back(new BasicBrick(5));
       } else {
         // Gérer les caractères inconnus ou non pris en charge
         std::cerr << "Caractère inconnu: " << c << std::endl;

@@ -1,10 +1,9 @@
-6 9
-GGGGGGGGG
-VVVVVVVVV
-BBBBBBBBB
-RRRRRRRRR
-OOOOOOOOO
-YYYYYYYYY
+16 9
+555555555
+444444444
+333333333
+222222222
+111111111
          
          
          
@@ -18,5 +17,4 @@ YYYYYYYYY
          
          
          
-
-
+                

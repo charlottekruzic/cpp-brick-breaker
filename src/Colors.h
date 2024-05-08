@@ -20,6 +20,7 @@ enum class Color {
   DarkGreen,
   DarkBlue,
   LightGray,
+  DEFAULT_COLOR,
   // Ajoutez d'autres couleurs selon vos besoins
 };
 
@@ -56,6 +57,7 @@ class ColorUtils {
       case Color::DarkBlue:
         return {0, 0, 139, 255};
       case Color::LightGray:
+      case Color::DEFAULT_COLOR:
         return {211, 211, 211, 255};
       // Ajoutez d'autres couleurs selon vos besoins
       default:

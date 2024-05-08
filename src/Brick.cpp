@@ -1,7 +1,12 @@
 #include "Brick.h"
 
-Brick::Brick(Color color, int strength, std::string type)
-    : Cell(color), strength_(strength), hitsLeft_(strength), type_(type) {}
+std::map<int, Color> Brick::strengthColorMap_ = {{1, Color::Green},
+                                                 {2, Color::Yellow},
+                                                 {3, Color::Orange},
+                                                 {4, Color::Red},
+                                                 {5, Color::Purple}};
+
+Brick::Brick(int strength) : strength_(strength), hitsLeft_(strength) {}
 
 bool Brick::rebondir() const {
   return (hitsLeft_ > 0);  // Les objets rebondissent sur une brique
@@ -15,6 +20,18 @@ int Brick::getHitsLeft() const {
   return hitsLeft_;  // Renvoie le nombre de coups restants
 }
 
+Color Brick::getColor() {
+  auto it = strengthColorMap_.find(hitsLeft_);
+  if (it != strengthColorMap_.end()) {
+    return it->second;  // Retourne la couleur associée à la force de la brique
+  } else {
+    // Gérer le cas où la force n'est pas trouvée dans le dictionnaire
+    // Vous pouvez renvoyer une couleur par défaut ou lancer une exception,
+    // selon votre logique
+    return Color::DEFAULT_COLOR;
+  }
+}
+
 // retourne vrai si détruit
 bool Brick::hit() {
   if (hitsLeft_ > 0) {
@@ -26,8 +43,6 @@ bool Brick::hit() {
   // std::cout << "-1 vie mais en vie" << std::endl;
   return false;
 }
-
-std::string Brick::getType() const { return type_; }
 
 void Brick::renderCell(SDL_Renderer* renderer, int x, int y, int cellSize) {
   int padding = 1;  // Espace entre chaque case

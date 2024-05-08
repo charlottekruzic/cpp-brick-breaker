@@ -1,6 +1,7 @@
 #ifndef BRICK_H
 #define BRICK_H
 
+#include <map>
 #include <string>
 
 #include "Cell.h"
@@ -17,16 +18,17 @@ class Brick : public Cell {
   int getHitsLeft() const;  // Méthode pour obtenir le nombre de coups restants
   void ballHit();  // Méthode pour réduire le nombre de coups restants
                    // lorsqu'une balle touche la brique
-  std::string getType() const;
+  Color getColor() override;
 
   // protected:
-  Brick(Color color, int strength, std::string type);
+  Brick(int strength);
 
  private:
   int strength_;  // Force de la brique
   int hitsLeft_;  // Nombre de coups restants
-  Color color_;
-  std::string type_;  // Type par défaut
+  Color color_;   // protected .
+  static std::map<int, Color>
+      strengthColorMap_;  // Dictionnaire associant une force à une couleur
 };
 
 #endif  // BRICK_H
