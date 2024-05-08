@@ -2,13 +2,13 @@
 
 #include <iostream>
 
-Game::Game()
+Game::Game(const std::string& nomFichierGrille)
     : plateform_(screen_width_, screen_height_),
       ball_(10, 500, plateform_.getPosX(), plateform_.getPosY(),
             plateform_.getWidth(), 0.5, -0.5) {
   initSDL();
   createWindowAndRenderer();
-  initGameComponents();
+  initGameComponents(nomFichierGrille);
 }
 
 Game::~Game() { cleanUp(); }
@@ -40,9 +40,8 @@ void Game::createWindowAndRenderer() {
   }
 }
 
-void Game::initGameComponents() {
-  grid_ = new Grid("grilles/grille11.txt", screen_width_, screen_height_,
-                   renderer_);
+void Game::initGameComponents(const std::string& nomFichierGrille) {
+  grid_ = new Grid(nomFichierGrille, screen_width_, screen_height_, renderer_);
 }
 
 int Game::execute() {

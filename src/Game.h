@@ -10,9 +10,8 @@
 
 class Game {
  public:
-  Game();
+  Game(const std::string& nomFichierGrille);
   ~Game();
-  void initGameComponents();  // POur retarder chargement des images
   int execute();
 
  private:
@@ -36,6 +35,7 @@ class Game {
   void mainLoop();
   void cleanUp();
   void handleEvents(SDL_Event& event);
+  void initGameComponents(const std::string& nomFichierGrille);
   void updateGame(float dt);
   void render();
   void togglePause();
