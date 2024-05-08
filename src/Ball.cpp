@@ -29,23 +29,35 @@ void Ball::render(SDL_Renderer* renderer) {
 }
 
 bool Ball::updatePosition(float dt, int screenWidth, int screenHeight) {
-  pos_x_ += speed_ * dt * velocity_x_;
+  prev_pos_x_ = pos_x_;
+  prev_pos_y_ = pos_y_;
 
-  if ((pos_x_ - radius_ < 0)) {
+  float new_pos_x = pos_x_ + speed_ * dt * velocity_x_;
+
+  // pos_x_ += speed_ * dt * velocity_x_;
+
+  if ((new_pos_x - radius_ < 0)) {
     velocity_x_ = -velocity_x_;
     pos_x_ = radius_;
-  }
-
-  if (pos_x_ + radius_ > screenWidth) {
+  } else if (new_pos_x + radius_ > screenWidth) {
     velocity_x_ = -velocity_x_;
     pos_x_ = screenWidth - radius_;
+  } else {
+    pos_x_ = new_pos_x;
   }
 
-  pos_y_ += speed_ * dt * velocity_y_;
+  // pos_y_ += speed_ * dt * velocity_y_;
+  float new_pos_y = pos_y_ + speed_ * dt * velocity_y_;
 
-  if (pos_y_ - radius_ < 0) {
+  if (new_pos_y - radius_ < 0) {
     velocity_y_ = -velocity_y_;
     pos_y_ = radius_;
+  }
+  // Balle sous la plateforme = GAME OVER
+  else if (new_pos_y + radius_ > screenHeight) {
+    return true;
+  } else {
+    pos_y_ = new_pos_y;
   }
 
   // Rebond bord du bas
@@ -54,73 +66,5 @@ bool Ball::updatePosition(float dt, int screenWidth, int screenHeight) {
     pos_y_ = screenHeight - radius_;
   }*/
 
-  // Balle sous la plateforme = GAME OVER
-  if (pos_y_ + radius_ > screenHeight) {
-    return true;
-  }
-
   return false;
 }
-/*
-void Ball::checkCollide(const Plateform& p, const Grid& grid) {
-  float distance_x = abs(pos_x_ - (p.getPosX() + p.getWidth() / 2));
-  float distance_y = abs(pos_y_ - (p.getPosY() + p.getHeight() / 2));
-
-  // Collision avec les briques
-  int cell_size = grid.getCellSize();
-
-  int cell_pos_x = pos_x_ / cell_size;
-  int cell_pos_y = pos_y_ / cell_size;
-
-  for (int row = std::max(cell_pos_y - 1, 0);
-       row <= std::min(cell_pos_y + 1, grid.getRows() - 1); ++row) {
-    for (int col = std::max(cell_pos_x - 1, 0);
-         col <= std::min(cell_pos_x + 1, grid.getCols() - 1); ++col) {
-      Cell* cell = grid.getCell(row, col);
-      if (cell->rebondir()) {
-        bool intersect_x = pos_x_ + radius_ >= (col * cell_size) &&
-                           pos_x_ - radius_ <= ((col + 1) * cell_size);
-        bool intersect_y = pos_y_ + radius_ >= (row * cell_size) &&
-                           pos_y_ - radius_ <= ((row + 1) * cell_size);
-
-        if (intersect_x && intersect_y) {
-          if (std::min(abs(pos_x_ + radius_ - (col * cell_size)),
-                       abs(pos_x_ - radius_ - ((col + 1) * cell_size))) <
-              std::min(abs(pos_y_ + radius_ - (row * cell_size)),
-                       abs(pos_y_ - radius_ - ((row + 1) * cell_size)))) {
-            velocity_x_ = -velocity_x_;
-          } else {
-            velocity_y_ = -velocity_y_;
-          }
-
-          return;
-        }
-      }
-    }
-  }
-
-  // Collision entre la balle et les bords de la fenetre
-  if (distance_x > (p.getWidth() / 2 + radius_)) {
-    return;
-  }
-  if (distance_y > (p.getHeight() / 2 + radius_)) {
-    return;
-  }
-
-  if (distance_x <= (p.getWidth() / 2)) {
-    velocity_y_ *= -1;
-  }
-  if (distance_y <= (p.getHeight() / 2)) {
-    velocity_x_ *= -1;
-  }
-
-  float corner_distance =
-      (distance_x - p.getWidth() / 2) * (distance_x - p.getWidth() / 2) +
-      (distance_y - p.getHeight() / 2) * (distance_y - p.getHeight() / 2);
-
-  if (corner_distance <= (radius_ * radius_)) {
-    velocity_x_ *= -1;
-    velocity_y_ *= -1;
-  }
-}
-*/

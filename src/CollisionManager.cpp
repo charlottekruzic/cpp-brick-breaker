@@ -1,10 +1,16 @@
 #include "CollisionManager.h"
 
+#include <cmath>
+
 // Méthode pour vérifier la collision entre la balle et la grille
 void CollisionManager::checkGridBallCollision(Grid& grid, Ball& ball) {
+  int radiusBall = ball.getRadius();
+  float pos_xBall = ball.getPosX();
+  float pos_yBall = ball.getPosY();
+
   int cell_size = grid.getCellSize();
-  int cell_pos_x = ball.getPosX() / cell_size;
-  int cell_pos_y = ball.getPosY() / cell_size;
+  int cell_pos_x = pos_xBall / cell_size;
+  int cell_pos_y = pos_yBall / cell_size;
 
   bool collisionDetected = false;
   float collisionVectorX = 0;
@@ -16,30 +22,28 @@ void CollisionManager::checkGridBallCollision(Grid& grid, Ball& ball) {
          col <= std::min(cell_pos_x + 1, grid.getCols() - 1); ++col) {
       Cell* cell = grid.getCell(row, col);
       if (cell && cell->rebondir()) {
-        bool intersect_x =
-            ball.getPosX() + ball.getRadius() >= (col * cell_size) &&
-            ball.getPosX() - ball.getRadius() <= ((col + 1) * cell_size);
-        bool intersect_y =
-            ball.getPosY() + ball.getRadius() >= (row * cell_size) &&
-            ball.getPosY() - ball.getRadius() <= ((row + 1) * cell_size);
+        bool intersect_x = pos_xBall + radiusBall >= (col * cell_size) &&
+                           pos_xBall - radiusBall <= ((col + 1) * cell_size);
+        bool intersect_y = pos_yBall + radiusBall >= (row * cell_size) &&
+                           pos_yBall - radiusBall <= ((row + 1) * cell_size);
 
         if (intersect_x && intersect_y) {
           std::cerr << "Collision : (" << row << ", " << col << ")\n";
           collisionDetected = true;
 
-          float depth_x = std::min(
-              abs(ball.getPosX() + ball.getRadius() - (col * cell_size)),
-              abs(ball.getPosX() - ball.getRadius() - ((col + 1) * cell_size)));
-          float depth_y = std::min(
-              abs(ball.getPosY() + ball.getRadius() - (row * cell_size)),
-              abs(ball.getPosY() - ball.getRadius() - ((row + 1) * cell_size)));
+          float depth_x =
+              std::min(abs(pos_xBall + radiusBall - (col * cell_size)),
+                       abs(pos_xBall - radiusBall - ((col + 1) * cell_size)));
+          float depth_y =
+              std::min(abs(pos_yBall + radiusBall - (row * cell_size)),
+                       abs(pos_yBall - radiusBall - ((row + 1) * cell_size)));
 
           if (depth_x < depth_y) {
             collisionVectorX +=
-                (ball.getPosX() < col * cell_size) ? -depth_x : depth_x;
+                (pos_xBall < col * cell_size) ? -depth_x : depth_x;
           } else {
             collisionVectorY +=
-                (ball.getPosY() < row * cell_size) ? -depth_y : depth_y;
+                (pos_yBall < row * cell_size) ? -depth_y : depth_y;
           }
 
           grid.hitCell(row, col);

@@ -14,6 +14,8 @@ class Ball {
   float pos_y_;
   float velocity_x_;
   float velocity_y_;
+  float prev_pos_x_;
+  float prev_pos_y_;
 
   SDL_Rect plateformRect;
 
@@ -30,6 +32,8 @@ class Ball {
   int getSpeed() const { return speed_; }
   float getPosX() const { return pos_x_; }
   float getPosY() const { return pos_y_; }
+  float getPrevPosX() const { return prev_pos_x_; }
+  float getPrevPosY() const { return prev_pos_y_; }
   int getRadius() const { return radius_; }
   float getVelocityX() const { return velocity_x_; }
   float getVelocityY() const { return velocity_y_; }
