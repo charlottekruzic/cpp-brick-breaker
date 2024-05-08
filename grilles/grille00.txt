@@ -1,7 +1,4 @@
-20 9
-         
-         
-         
+6 9
 GGGGGGGGG
 VVVVVVVVV
 BBBBBBBBB

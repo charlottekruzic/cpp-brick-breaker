@@ -29,23 +29,23 @@ class Ball {
   // void checkCollide(const Plateform& p, const Grid& grid);
 
   // Méthodes set et get
-  int getSpeed() const { return speed_; }
-  float getPosX() const { return pos_x_; }
-  float getPosY() const { return pos_y_; }
-  float getPrevPosX() const { return prev_pos_x_; }
-  float getPrevPosY() const { return prev_pos_y_; }
-  int getRadius() const { return radius_; }
-  float getVelocityX() const { return velocity_x_; }
-  float getVelocityY() const { return velocity_y_; }
+  inline int getSpeed() const { return speed_; }
+  inline float getPosX() const { return pos_x_; }
+  inline float getPosY() const { return pos_y_; }
+  inline float getPrevPosX() const { return prev_pos_x_; }
+  inline float getPrevPosY() const { return prev_pos_y_; }
+  inline int getRadius() const { return radius_; }
+  inline float getVelocityX() const { return velocity_x_; }
+  inline float getVelocityY() const { return velocity_y_; }
 
-  void setPosX(const float pos_x) { pos_x_ = pos_x; }
-  void setPosY(const float pos_y) { pos_y_ = pos_y; }
-  void setVelocityX(const float velocity_x) { velocity_x_ = velocity_x; }
-  void setVelocityY(const float velocity_y) { velocity_y_ = velocity_y; }
+  inline void setPosX(const float pos_x) { pos_x_ = pos_x; }
+  inline void setPosY(const float pos_y) { pos_y_ = pos_y; }
+  inline void setVelocityX(const float velocity_x) { velocity_x_ = velocity_x; }
+  inline void setVelocityY(const float velocity_y) { velocity_y_ = velocity_y; }
 
   // Méthodes pour inverser les vitesses de la balle
-  void reverseVelocityX() { velocity_x_ = -velocity_x_; }
-  void reverseVelocityY() { velocity_y_ = -velocity_y_; }
+  inline void reverseVelocityX() { velocity_x_ = -velocity_x_; }
+  inline void reverseVelocityY() { velocity_y_ = -velocity_y_; }
 };
 
 #endif  // BALL_H

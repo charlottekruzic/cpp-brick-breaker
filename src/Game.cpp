@@ -41,7 +41,7 @@ void Game::createWindowAndRenderer() {
 }
 
 void Game::initGameComponents() {
-  grid_ = new Grid("../grilles/grille2.txt", screen_width_, screen_height_,
+  grid_ = new Grid("grilles/grille00.txt", screen_width_, screen_height_,
                    renderer_);
 }
 

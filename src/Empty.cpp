@@ -7,7 +7,7 @@ Empty::Empty(SDL_Renderer* renderer) : Cell() {
   // Chargez la texture uniquement si elle n'a pas déjà été chargée
   if (!empty_texture_) {
     // Chargez la texture depuis un fichier
-    SDL_Surface* emptySurface = IMG_Load("../img/space.jpg");
+    SDL_Surface* emptySurface = IMG_Load("img/space.jpg");
 
     if (!emptySurface) {
       // Gestion de l'erreur si le chargement de l'image échoue

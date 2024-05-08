@@ -24,9 +24,10 @@ Grid::Grid(const std::string& filename, int width, int height,
   for (const auto& row : board) {
     std::vector<Cell*> gridRow;
     for (char c : row) {
-      if (c == '#') {
-        gridRow.push_back(new Wall(renderer));
-      } else if (c == ' ') {
+      // if (c == '#') {
+      //   gridRow.push_back(new Wall(renderer));
+      // } else
+      if (c == ' ') {
         gridRow.push_back(new Empty(renderer));
       } else if (c == 'B') {
         gridRow.push_back(new BasicBrick(Color::Blue));

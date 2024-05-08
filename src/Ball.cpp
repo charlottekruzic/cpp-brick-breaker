@@ -16,7 +16,7 @@ Ball::Ball(int radius, int speed, float platformPosX, float platformPosY,
       speed_(speed),
       velocity_x_(velocity_x),
       velocity_y_(velocity_y) {
-  pos_x_ = platformPosX + platformLength / 2 - radius_;
+  pos_x_ = platformPosX + platformLength / 2 - radius_ * 2;
   pos_y_ = platformPosY - radius_ * 2;
 }
 

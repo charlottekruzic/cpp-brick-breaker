@@ -9,7 +9,7 @@ Wall::Wall(SDL_Renderer* renderer) : Cell(Color::Yellow) {
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!wall_texture_) {
     // Chargez la texture du mur depuis un fichier
-    SDL_Surface* wallSurface = IMG_Load("../img/wall_texture.jpg");
+    SDL_Surface* wallSurface = IMG_Load("img/wall_texture.jpg");
 
     if (!wallSurface) {
       // Gestion de l'erreur si le chargement de l'image échoue

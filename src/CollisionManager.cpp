@@ -63,24 +63,21 @@ void CollisionManager::checkGridBallCollision(Grid& grid, Ball& ball) {
 
 void CollisionManager::checkPlatformBallCollision(Plateform& platform,
                                                   Ball& balle) {
+  if (balle.getPosY() > platform.getPosY()) {
+    return;
+  }
+
   float distance_x =
       abs(balle.getPosX() - (platform.getPosX() + platform.getWidth() / 2));
   float distance_y =
       abs(balle.getPosY() - (platform.getPosY() + platform.getHeight() / 2));
 
-  // Collision entre la balle et les bords de la fenetre
-  if (distance_x > (platform.getWidth() / 2 + balle.getRadius())) {
+  if (distance_x > (balle.getRadius() + platform.getWidth() / 2)) {
     return;
-  }
-  if (distance_y > (platform.getHeight() / 2 + balle.getRadius())) {
+  }  // pas de collision entre
+  if (distance_y > (balle.getRadius() + platform.getHeight() / 2)) {
+    // (platform.getHeight() / 2 + balle.getRadius())) {
     return;
-  }
-
-  if (distance_x <= (platform.getWidth() / 2)) {
-    balle.reverseVelocityY();
-  }
-  if (distance_y <= (platform.getHeight() / 2)) {
-    balle.reverseVelocityX();
   }
 
   float corner_distance = (distance_x - platform.getWidth() / 2) *
@@ -89,7 +86,78 @@ void CollisionManager::checkPlatformBallCollision(Plateform& platform,
                               (distance_y - platform.getHeight() / 2);
 
   if (corner_distance <= (balle.getRadius() * balle.getRadius())) {
-    balle.reverseVelocityX();
-    balle.reverseVelocityY();
+    // Détection de la direction d'approche de la balle par rapport à la
+    // plateforme
+    bool from_left = balle.getPosX() < platform.getPosX();
+    bool from_top = balle.getPosY() < platform.getPosY();
+
+    // Si la balle vient du coin supérieur gauche ou inférieur droit
+    if ((from_left && from_top) || (!from_left && !from_top)) {
+      // Inverse la direction horizontale de la balle
+      balle.reverseVelocityX();
+    }
   }
+
+  balle.reverseVelocityY();
+
+  /*
+
+  float distance_x =
+     abs(balle.getPosX()  - (platform.getPosX() + platform.getWidth() / 2));
+ // distance horizontale entre le centre de la balle et le centre de la
+ // plateforme
+ float distance_y =
+     abs(balle.getPosY() - (platform.getPosY() + platform.getHeight() / 2));
+ // distance verticale entre le centre de la balle et le centre de la
+ // plateforme
+
+ if (distance_x > (platform.getWidth() / 2 + balle.getRadius())) {
+   return;
+ }  // pas de collision entre
+ if (distance_y > balle.getRadius()) {
+   // (platform.getHeight() / 2 + balle.getRadius())) {
+   return;
+ }
+
+ // float corner_distance = (distance_x - platform.getWidth() / 2) *
+ //                             (distance_x - platform.getWidth() / 2) +
+ //                         (distance_y - platform.getHeight() / 2) *
+ //                             (distance_y - platform.getHeight() / 2);
+ //
+ // // if (corner_distance <= (balle.getRadius() * balle.getRadius())) {
+ // //   balle.reverseVelocityX();
+ // //   balle.reverseVelocityY();
+ // // } else {
+ // balle.reverseVelocityY();
+ // // }
+ //
+ // // if (distance_x <= (platform.getWidth() / 2 + balle.getRadius())) {
+ //
+ // //}
+ // // if (distance_y <= balle.getRadius()) {
+ // //(platform.getHeight() / 2 + balle.getRadius())) {
+ // // balle.reverseVelocityX();
+ // //}
+
+ // Calcul de la distance au coin
+ float corner_distance = (distance_x - platform.getWidth() / 2) *
+                             (distance_x - platform.getWidth() / 2) +
+                         (distance_y - platform.getHeight() / 2) *
+                             (distance_y - platform.getHeight() / 2);
+
+ // Gestion des rebonds spécifiques sur les coins
+ if (corner_distance <= (balle.getRadius() * balle.getRadius())) {
+   // Détection de la direction d'approche de la balle par rapport à la
+   // plateforme
+   bool from_left = balle.getPosX() < platform.getPosX();
+   bool from_top = balle.getPosY() < platform.getPosY();
+
+   // Si la balle vient du coin supérieur gauche ou inférieur droit
+   if ((from_left && from_top) || (!from_left && !from_top)) {
+     // Inverse la direction horizontale de la balle
+     balle.reverseVelocityX();
+   }
+ }
+ balle.reverseVelocityY();
+ */
 }
