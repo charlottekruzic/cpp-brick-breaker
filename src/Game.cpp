@@ -4,7 +4,7 @@
 
 Game::Game()
     : plateform_(screen_width_, screen_height_),
-      ball_(10, 300, plateform_.getPosX(), plateform_.getPosY(),
+      ball_(10, 500, plateform_.getPosX(), plateform_.getPosY(),
             plateform_.getWidth(), 0.5, -0.5) {
   initSDL();
   createWindowAndRenderer();
@@ -52,16 +52,28 @@ int Game::execute() {
 
 void Game::mainLoop() {
   Uint32 previousTime = SDL_GetTicks();
+  const int frameRate = 50;
+  const int maxFrameTime = 1000 / frameRate;
+
   SDL_Event event;
   while (!quit_ && !game_over_) {
-    float dt = (SDL_GetTicks() - previousTime) / 1000.0f;
-    previousTime = SDL_GetTicks();
+    Uint32 startTime = SDL_GetTicks();
+    float dt = (startTime - previousTime) / 1000.0f;
+    previousTime = startTime;
+
     while (SDL_PollEvent(&event)) {
       handleEvents(event);
     }
     updateGame(dt);
     render();
+
+    // Pause si boucle trop rapide
+    int frameTime = SDL_GetTicks() - startTime;
+    if (frameTime < maxFrameTime) {
+      SDL_Delay(maxFrameTime - frameTime);
+    }
   }
+
   if (game_over_) {
     std::cout << "Game Over !!" << std::endl;
   }
