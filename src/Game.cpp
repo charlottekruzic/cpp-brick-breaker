@@ -4,6 +4,7 @@
 #include <random>
 #include <vector>
 
+#include "Enlarge.h"
 #include "Shrink.h"
 
 Game::Game(const std::string& nomFichierGrille)
@@ -130,7 +131,7 @@ void Game::handleEvents(SDL_Event& event) {
 
 void Game::updateGame(float dt) {
   // update tous les bonus malus de bonus_maluses__
-  for (auto bonusMalus : bonus_maluses_) {
+  for (auto& bonusMalus : bonus_maluses_) {
     bonusMalus->update();
   }
   // supprimer les bonus malus en bas de l'image du vector
@@ -211,21 +212,53 @@ bool Game::isBallAccelerating() const {
 }
 */
 
+/*
 void Game::generateBonusMalus() {
-  // Générer un nombre aléatoire entre 1 et 10
-  int random = rand() % 70 + 1;
+  int random = rand() % 90 + 2;
 
   // Si le nombre aléatoire est égal à 1, générer un objet Shrink
   if (random == 1) {
     // Générer une position aléatoire en largeur
     int randomX =
-        rand() % (screen_width_ - 50);  // Ajustez la plage selon vos besoins
+        rand() % (screen_width_ - 10);  // Ajustez la plage selon vos besoins
 
-    // Créer un nouvel objet Shrink avec la position aléatoire en largeur
-    BonusMalus* shrink = new Shrink(this, randomX, 0);
+    BonusMalus* bm;
+    if (rand() % 2)
+      // Créer un nouvel objet Shrink avec la position aléatoire en largeur
+      bm = new Shrink(this, randomX, 0);
+    else
+      bm = new Enlarge(this, randomX, 0);
 
     // Ajouter l'objet Shrink à une liste ou un vecteur de BonusMalus
     // par exemple:
-    bonus_maluses_.insert(shrink);
+    bonus_maluses_.insert(bm);
+  }
+}
+*/
+
+void Game::generateBonusMalus() {
+  // Générateur de nombres aléatoires
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> distrib(1, 100);
+
+  // Générer un nombre aléatoire entre 1 et 100
+  int random = distrib(gen);
+
+  // Si le nombre aléatoire est égal à 1, générer un objet Shrink ou Enlarge
+  if (random == 1) {
+    // Générer une position aléatoire en largeur
+    int randomX = std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
+
+    // Créer un nouvel objet Shrink avec la position aléatoire en largeur
+    std::shared_ptr<BonusMalus> bm;
+    if (std::uniform_int_distribution<>(0, 1)(gen) == 0)
+      bm = std::make_shared<Shrink>(this, randomX, 0);
+    else
+      bm = std::make_shared<Enlarge>(this, randomX, 0);
+
+    // Ajouter l'objet Shrink ou Enlarge au vecteur de BonusMalus
+    // bonus_maluses_.push_back(std::move(bm));
+    bonus_maluses_.insert(bm);
   }
 }

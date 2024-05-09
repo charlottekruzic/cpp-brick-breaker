@@ -4,12 +4,13 @@
 
 void CollisionManager::checkCollisions(
     Plateform& platform, Ball* ball, Grid& grid,
-    std::unordered_set<BonusMalus*>& bonus_maluses__) {
+    std::unordered_set<std::shared_ptr<BonusMalus>>& bonus_maluses__) {
   checkPlatformBallCollision(platform, ball);
   // checkWindowBallCollision(bounds, ball);
   checkGridBallCollision(grid, ball);
   // Vérifier la collision entre la balle et les bonus/malus
-  std::unordered_set<BonusMalus*> bonus_maluses_to_remove;
+  std::unordered_set<std::shared_ptr<BonusMalus>> bonus_maluses_to_remove;
+
   for (auto bonusMalus : bonus_maluses__) {
     if (checkCollisionPlateformBonusMalus(platform, bonusMalus)) {
       // Collision détectée, gérer l'effet du bonus/malus
@@ -20,7 +21,6 @@ void CollisionManager::checkCollisions(
   }
   for (auto bonusMalus : bonus_maluses_to_remove) {
     bonus_maluses__.erase(bonusMalus);
-    delete bonusMalus;
   }
 }
 
@@ -184,7 +184,7 @@ void CollisionManager::checkPlatformBallCollision(Plateform& platform,
 }
 
 bool CollisionManager::checkCollisionPlateformBonusMalus(
-    Plateform& plateform, BonusMalus* bonusMalus) {
+    Plateform& plateform, std::shared_ptr<BonusMalus>& bonusMalus) {
   // Récupérer les coordonnées de la plateforme
   int plateformLeft = plateform.getPosX();
   int plateformRight = plateform.getPosX() + plateform.getWidth();
@@ -197,8 +197,8 @@ bool CollisionManager::checkCollisionPlateformBonusMalus(
   int bonusMalusTop = bonusMalus->getY();
   int bonusMalusBottom = bonusMalus->getY() + bonusMalus->getHeight();
 
-  // Vérifier si les rectangles délimitant la plateforme et le bonus/malus se
-  // chevauchent
+  // Vérifier si les rectangles délimitant la plateforme et le bonus/malus
+  // se chevauchent
   bool collision =
       (plateformLeft < bonusMalusRight) && (plateformRight > bonusMalusLeft) &&
       (plateformTop < bonusMalusBottom) && (plateformBottom > bonusMalusTop);

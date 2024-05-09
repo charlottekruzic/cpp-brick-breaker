@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 
 #include <chrono>
+#include <memory>
 #include <unordered_set>
 
 #include "Ball.h"
@@ -11,14 +12,12 @@
 #include "CollisionManager.h"
 #include "Grid.h"
 #include "Plateform.h"
-// #include "Shrink.h"
 
 class Ball;
 class Grid;
 class BonusMalus;
 class CollisionManager;
 class Plateform;
-class Shrink;
 
 class Game {
  public:
@@ -53,7 +52,7 @@ class Game {
   void togglePause();
 
   void generateBonusMalus();
-  std::unordered_set<BonusMalus*> bonus_maluses_;
+  std::unordered_set<std::shared_ptr<BonusMalus>> bonus_maluses_;
 
   bool ball_accelerating_ = false;
 
@@ -63,20 +62,6 @@ class Game {
 
   void shrinkPlateformWidth();
   void enlargePlateformWidth();
-
-  void removeBonusMalus(BonusMalus* bonusMalusPtr);
-
-  // threads :
-
-  // Méthode pour démarrer l'accélération de la balle
-  // void startBallAcceleration();
-  // Méthode pour vérifier si l'accélération de la balle est toujours active
-  // bool isBallAccelerating() const;
-  // bool ball_accelerating_;  // Indique si la balle
-  // est en train d'être
-  // accélérée
-  // std::chrono::steady_clock::time_point acceleration_start_time_;  // Moment
-  // où l'accélération a commencé
 };
 
 #endif  // GAME_H
