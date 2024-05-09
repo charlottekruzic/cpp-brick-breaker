@@ -10,7 +10,7 @@
 // #include "Wall.h"
 
 Grid::Grid(const std::string& filename, int width, int height,
-           SDL_Renderer* renderer, Game* game)
+           std::shared_ptr<SDL_Renderer>& renderer, Game* game)
     : width_(width),
       height_(height),
       renderer_(renderer),
@@ -63,7 +63,7 @@ Grid::~Grid() {
   }
 }
 
-void Grid::renderGrid(SDL_Renderer* renderer, int screenWidth,
+void Grid::renderGrid(std::shared_ptr<SDL_Renderer>& renderer, int screenWidth,
                       int screenHeight) const {
   int cellWidth = screenWidth / cols_;    // Largeur de chaque cellule
   int cellHeight = screenHeight / rows_;  // Hauteur de chaque cellule

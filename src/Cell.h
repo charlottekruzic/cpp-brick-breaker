@@ -2,6 +2,7 @@
 #define CELL_H
 
 #include <iostream>
+#include <memory>
 #include <vector>
 
 #include "Colors.h"
@@ -14,7 +15,8 @@ class Cell {
 
   virtual bool rebondir() const = 0;
   virtual bool hit() = 0;
-  virtual void renderCell(SDL_Renderer* renderer, int x, int y, int cellWidth);
+  virtual void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
+                          int cellWidth);
 
   inline virtual Color getColor() {
     return color_;

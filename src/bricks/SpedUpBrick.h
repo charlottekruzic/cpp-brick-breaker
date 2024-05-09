@@ -7,7 +7,7 @@
 class SpedUpBrick : public MalusBrick {
  public:
  public:
-  SpedUpBrick(Game* game, SDL_Renderer* renderer)
+  SpedUpBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
       : MalusBrick(game, renderer) {}
 
   void performAction() override {

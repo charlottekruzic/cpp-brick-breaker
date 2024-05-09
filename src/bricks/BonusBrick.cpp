@@ -5,7 +5,7 @@
 // pointeur statique pour la texture
 SDL_Texture* BonusBrick::bonus_texture_ = nullptr;
 
-BonusBrick::BonusBrick(Game* game, SDL_Renderer* renderer)
+BonusBrick::BonusBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
     : MalusBonusBrick(game, renderer) {
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!bonus_texture_) {
@@ -18,7 +18,7 @@ BonusBrick::BonusBrick(Game* game, SDL_Renderer* renderer)
                 << std::endl;
       return;
     }
-    bonus_texture_ = SDL_CreateTextureFromSurface(renderer, surface);
+    bonus_texture_ = SDL_CreateTextureFromSurface(renderer.get(), surface);
     SDL_FreeSurface(surface);
     if (!bonus_texture_) {
       // Gestion de l'erreur si la création de la texture échoue

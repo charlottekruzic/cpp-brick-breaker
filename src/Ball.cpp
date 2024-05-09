@@ -20,12 +20,12 @@ Ball::Ball(int radius, int speed, float platformPosX, float platformPosY,
   pos_y_ = platformPosY - radius_ * 2;
 }
 
-void Ball::render(SDL_Renderer* renderer) {
-  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+void Ball::render(std::shared_ptr<SDL_Renderer>& renderer) {
+  SDL_SetRenderDrawColor(renderer.get(), 255, 255, 255, 255);
   for (int y = -radius_; y <= radius_; y++)
     for (int x = -radius_; x <= radius_; x++)
       if (x * x + y * y <= radius_ * radius_)
-        SDL_RenderDrawPoint(renderer, pos_x_ + x, pos_y_ + y);
+        SDL_RenderDrawPoint(renderer.get(), pos_x_ + x, pos_y_ + y);
 }
 
 bool Ball::updatePosition(float dt, int screenWidth, int screenHeight) {

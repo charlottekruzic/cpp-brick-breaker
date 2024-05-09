@@ -7,7 +7,7 @@
 class SlowedDownBrick : public BonusBrick {
  public:
  public:
-  SlowedDownBrick(Game* game, SDL_Renderer* renderer)
+  SlowedDownBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
       : BonusBrick(game, renderer) {}
 
   void performAction() override {

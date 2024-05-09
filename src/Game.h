@@ -36,8 +36,8 @@ class Game {
   bool right_key_down_ = false;
   bool paused_ = true;
 
-  SDL_Window* window_ = nullptr;
-  SDL_Renderer* renderer_ = nullptr;
+  std::shared_ptr<SDL_Window> window_ = nullptr;
+  std::shared_ptr<SDL_Renderer> renderer_ = nullptr;
   std::shared_ptr<Grid> grid_;
   Plateform plateform_;
   std::shared_ptr<Ball> ball_;

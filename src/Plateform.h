@@ -3,6 +3,8 @@
 
 #include <SDL2/SDL.h>
 
+#include <memory>
+
 class Plateform {
  private:
   int height_;
@@ -35,7 +37,7 @@ class Plateform {
   float getSpeed() const;
 
   // Fonctions
-  void render(SDL_Renderer* renderer);
+  void render(std::shared_ptr<SDL_Renderer>& renderer);
   void move_keyboard(SDL_Keycode keyCode, int screenWidth, float dt);
   void move_mouse(int mouseX, int mouseY, int screenWidth);
 };

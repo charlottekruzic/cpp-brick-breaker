@@ -25,11 +25,11 @@ void Plateform::setPosY(int pos_y) { pos_y_ = pos_y; }
 void Plateform::setSpeed(float speed) { speed_ = speed; }
 
 // Fonction d'affichage
-void Plateform::render(SDL_Renderer* renderer) {
-  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+void Plateform::render(std::shared_ptr<SDL_Renderer>& renderer) {
+  SDL_SetRenderDrawColor(renderer.get(), 255, 255, 255, 255);
   plateformRect = {pos_x_, pos_y_, width_, height_};
 
-  SDL_RenderFillRect(renderer, &plateformRect);
+  SDL_RenderFillRect(renderer.get(), &plateformRect);
 }
 
 // Fonction déplacement clavier

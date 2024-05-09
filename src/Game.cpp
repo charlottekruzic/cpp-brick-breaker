@@ -25,19 +25,28 @@ void Game::initSDL() {
 }
 
 void Game::createWindowAndRenderer() {
-  window_ = SDL_CreateWindow("Game Board", SDL_WINDOWPOS_CENTERED,
-                             SDL_WINDOWPOS_CENTERED, screen_width_,
-                             screen_height_, SDL_WINDOW_SHOWN);
+  window_ = std::shared_ptr<SDL_Window>(
+      SDL_CreateWindow("Game Board", SDL_WINDOWPOS_CENTERED,
+                       SDL_WINDOWPOS_CENTERED, screen_width_, screen_height_,
+                       SDL_WINDOW_SHOWN),
+      [](SDL_Window* window) {
+        if (window) SDL_DestroyWindow(window);
+      });
+
   if (!window_) {
     std::cerr << "Error creating windows_: " << SDL_GetError() << std::endl;
     SDL_Quit();
     exit(1);
   }
 
-  renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED);
+  renderer_ = std::shared_ptr<SDL_Renderer>(
+      SDL_CreateRenderer(window_.get(), -1, SDL_RENDERER_ACCELERATED),
+      [](SDL_Renderer* renderer) {
+        if (renderer) SDL_DestroyRenderer(renderer);
+      });
   if (!renderer_) {
     std::cerr << "Error creating renderer_: " << SDL_GetError() << std::endl;
-    SDL_DestroyWindow(window_);
+    SDL_DestroyWindow(window_.get());
     SDL_Quit();
     exit(1);
   }
@@ -158,8 +167,8 @@ void Game::updateGame(float dt) {
 
 void Game::render() {
   // Mise à jour affichage
-  SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
-  SDL_RenderClear(renderer_);
+  SDL_SetRenderDrawColor(renderer_.get(), 0, 0, 0, 255);
+  SDL_RenderClear(renderer_.get());
 
   grid_->renderGrid(renderer_, screen_width_, screen_height_);
   plateform_.render(renderer_);
@@ -169,12 +178,12 @@ void Game::render() {
     bonus_malus->render(renderer_);
   }
 
-  SDL_RenderPresent(renderer_);
+  SDL_RenderPresent(renderer_.get());
 }
 
 void Game::cleanUp() {
-  SDL_DestroyRenderer(renderer_);
-  SDL_DestroyWindow(window_);
+  SDL_DestroyRenderer(renderer_.get());
+  SDL_DestroyWindow(window_.get());
   SDL_Quit();
 }
 void Game::setBallAccelerating() { ball_->setSpeed(700); }

@@ -24,7 +24,7 @@ class Ball {
   Ball(int radius, int speed, float platformPosX, float platformPosY,
        int platformLength, float velocity_x, float velocity_y);
 
-  void render(SDL_Renderer* renderer);
+  void render(std::shared_ptr<SDL_Renderer>& renderer);
   bool updatePosition(float dt, int screenWidth, int screenHeight);
   // void checkCollide(const Plateform& p, const Grid& grid);
 

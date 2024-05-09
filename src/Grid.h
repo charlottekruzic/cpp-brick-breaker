@@ -14,10 +14,10 @@ class Game;
 class Grid {
  public:
   Grid(const std::string& filename, int width, int height,
-       SDL_Renderer* renderer, Game* game);
+       std::shared_ptr<SDL_Renderer>& renderer, Game* game);
   ~Grid();
 
-  void renderGrid(SDL_Renderer* renderer, int screenWidth,
+  void renderGrid(std::shared_ptr<SDL_Renderer>& renderer, int screenWidth,
                   int screenHeight) const;
 
   inline int getRows() const { return rows_; }
@@ -36,7 +36,7 @@ class Grid {
   int height_;
   Game* game_;
   std::vector<std::vector<Cell*>> grid_;
-  SDL_Renderer* renderer_;
+  std::shared_ptr<SDL_Renderer>& renderer_;
   int remainingBricks_;  // Nouvel attribut pour su
 };
 

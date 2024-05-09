@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 
 #include <iostream>
+#include <memory>
 
 #include "../Colors.h"
 // #include "Game.h"
@@ -26,7 +27,7 @@ class BonusMalus {
   Color getColor() { return color_; }
   virtual void applyEffect() = 0;
   // void applyEffect();
-  void render(SDL_Renderer* renderer);
+  void render(std::shared_ptr<SDL_Renderer>& renderer);
 
  protected:
   Color color_{Color::DEFAULT_COLOR};

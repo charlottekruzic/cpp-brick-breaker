@@ -6,7 +6,7 @@
 
 class EnlargeBrick : public BonusBrick {
  public:
-  EnlargeBrick(Game* game, SDL_Renderer* renderer)
+  EnlargeBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
       : BonusBrick(game, renderer) {}
 
   void performAction() override {
