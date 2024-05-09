@@ -19,11 +19,6 @@ class Game {
   ~Game();
   int execute();
 
-  // Méthode pour démarrer l'accélération de la balle
-  void startBallAcceleration();
-  // Méthode pour vérifier si l'accélération de la balle est toujours active
-  bool isBallAccelerating() const;
-
  private:
   const int screen_width_ = 400;
   const int screen_height_ = 800;
@@ -50,9 +45,22 @@ class Game {
   void render();
   void togglePause();
 
-  bool ball_accelerating_;  // Indique si la balle est en train d'être accélérée
-  std::chrono::steady_clock::time_point
-      acceleration_start_time_;  // Moment où l'accélération a commencé
+  bool ball_accelerating_ = false;
+
+ public:
+  void setBallAccelerating();
+
+  // threads :
+
+  // Méthode pour démarrer l'accélération de la balle
+  // void startBallAcceleration();
+  // Méthode pour vérifier si l'accélération de la balle est toujours active
+  // bool isBallAccelerating() const;
+  // bool ball_accelerating_;  // Indique si la balle
+  // est en train d'être
+  // accélérée
+  // std::chrono::steady_clock::time_point acceleration_start_time_;  // Moment
+  // où l'accélération a commencé
 };
 
 #endif  // GAME_H

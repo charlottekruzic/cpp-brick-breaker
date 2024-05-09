@@ -30,6 +30,7 @@ class Ball {
 
   // Méthodes set et get
   inline int getSpeed() const { return speed_; }
+  inline void setSpeed(int speed) { speed_ = speed; }
   inline float getPosX() const { return pos_x_; }
   inline float getPosY() const { return pos_y_; }
   inline float getPrevPosX() const { return prev_pos_x_; }

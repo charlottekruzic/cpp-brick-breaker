@@ -83,10 +83,13 @@ Cell* Grid::getCell(int row, int col) const {
 
 void Grid::hitCell(int x, int y) {
   Cell* c = getCell(x, y);
+  BasicBrick* basicBrick =
+      dynamic_cast<BasicBrick*>(c);  // Vérifie si c est un BasicBrick
+
   bool detruit = c->hit();
   if (detruit) {
     delete grid_[x][y];
     grid_[x][y] = new Empty();
-    remainingBricks_--;
+    if (basicBrick) remainingBricks_--;
   }
 }

@@ -17,19 +17,17 @@ class Brick : public Cell {
 
   int getStrength() const;  // Méthode pour obtenir la force de la brique
   int getHitsLeft() const;  // Méthode pour obtenir le nombre de coups restants
-  void ballHit();  // Méthode pour réduire le nombre de coups restants
-                   // lorsqu'une balle touche la brique
   Color getColor() override;
 
   // protected:
   Brick(int strength, Game* game);
 
  protected:
-  Game* game_;  // Attribut pour stocker un pointeur vers l'objet Game
+  Game* game_;    // Attribut pour stocker un pointeur vers l'objet Game
+  int hitsLeft_;  // Nombre de coups restants
 
  private:
   int strength_;  // Force de la brique
-  int hitsLeft_;  // Nombre de coups restants
   Color color_;   // protected .
   static std::map<int, Color>
       strengthColorMap_;  // Dictionnaire associant une force à une couleur

@@ -10,7 +10,7 @@ class SpeedChangeBrick : public MalusBrick {
   SpeedChangeBrick(int strength, Game* game, SDL_Renderer* renderer)
       : MalusBrick(strength, game, renderer) {}
 
-  void performAction(Ball& ball, Plateform& platform) override;
+  void performAction() override;
 };
 
 #endif  // SPEED_CHANGE_BRICK_H

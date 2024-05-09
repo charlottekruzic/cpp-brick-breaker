@@ -67,6 +67,9 @@ void Game::mainLoop() {
     while (SDL_PollEvent(&event)) {
       handleEvents(event);
     }
+    if (ball_accelerating_) {
+      setBallAccelerating();
+    }
 
     if (premiere_iter || !paused_) {
       updateGame(dt);
@@ -151,8 +154,9 @@ void Game::cleanUp() {
   SDL_Quit();
 }
 
-//
+void Game::setBallAccelerating() { ball_->setSpeed(700); }
 
+/* grére des threads pour n'accélrer que pendant 5 secondes :
 void Game::startBallAcceleration() {
   ball_accelerating_ = true;
   acceleration_start_time_ = std::chrono::steady_clock::now();
@@ -168,3 +172,4 @@ bool Game::isBallAccelerating() const {
   }
   return false;
 }
+*/

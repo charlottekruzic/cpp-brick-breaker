@@ -1,5 +1,9 @@
 #include "SpeedChangeBrick.h"
 
-void SpeedChangeBrick::performAction(Ball& ball, Plateform& platform) {
-  std::cout << "perform action" << std::endl;
+#include <thread>
+
+void SpeedChangeBrick::performAction() {
+  std::cout << "perform action speed change" << std::endl;
+  // Démarrer l'accélération de la balle
+  game_->setBallAccelerating();
 }

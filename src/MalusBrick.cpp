@@ -38,3 +38,14 @@ void MalusBrick::renderCell(SDL_Renderer* renderer, int x, int y,
   SDL_Rect rect = {x + padding, y + padding, size, size};
   SDL_RenderCopy(renderer, malus_texture_, NULL, &rect);
 }
+
+bool MalusBrick::hit() {
+  if (hitsLeft_ > 0) {
+    hitsLeft_--;
+  }
+  if (hitsLeft_ == 0) {
+    performAction();
+    return true;
+  }
+  return false;
+}
