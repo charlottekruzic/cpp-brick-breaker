@@ -1,15 +1,19 @@
 #include "Grid.h"
 
+#include "BasicBrick.h"
 #include "Brick.h"
 #include "Empty.h"
 #include "MalusBrick.h"
-#include "PlusieursBrick.h"
 #include "SpeedChangeBrick.h"
 // #include "Wall.h"
 
 Grid::Grid(const std::string& filename, int width, int height,
-           SDL_Renderer* renderer)
-    : width_(width), height_(height), renderer_(renderer), remainingBricks_(0) {
+           SDL_Renderer* renderer, Game* game)
+    : width_(width),
+      height_(height),
+      renderer_(renderer),
+      remainingBricks_(0),
+      game_(game) {
   InputParser parser(filename);
   if (!parser.parseFile()) {
     // Gérer l'erreur de lecture du fichier
@@ -30,10 +34,10 @@ Grid::Grid(const std::string& filename, int width, int height,
       if (c == ' ') {
         gridRow.push_back(new Empty());
       } else if (c >= '1' && c <= '5') {
-        gridRow.push_back(new BasicBrick(c - '0'));
+        gridRow.push_back(new BasicBrick(c - '0', game_));
         remainingBricks_++;
       } else if (c == 'M') {
-        gridRow.push_back(new SpeedChangeBrick(1, renderer));
+        gridRow.push_back(new SpeedChangeBrick(1, game_, renderer));
       } else {
         std::cerr << "Caractère inconnu: " << c << std::endl;
         gridRow.push_back(new Empty());

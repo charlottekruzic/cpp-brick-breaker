@@ -3,10 +3,10 @@
 #include <cmath>
 
 // Méthode pour vérifier la collision entre la balle et la grille
-void CollisionManager::checkGridBallCollision(Grid& grid, Ball& ball) {
-  int radiusBall = ball.getRadius();
-  float pos_xBall = ball.getPosX();
-  float pos_yBall = ball.getPosY();
+void CollisionManager::checkGridBallCollision(Grid& grid, Ball* ball) {
+  int radiusBall = ball->getRadius();
+  float pos_xBall = ball->getPosX();
+  float pos_yBall = ball->getPosY();
 
   int cell_size = grid.getCellSize();
   int cell_pos_x = pos_xBall / cell_size;
@@ -53,28 +53,28 @@ void CollisionManager::checkGridBallCollision(Grid& grid, Ball& ball) {
 
   if (collisionDetected) {
     if (abs(collisionVectorX) > abs(collisionVectorY)) {
-      ball.reverseVelocityX();
+      ball->reverseVelocityX();
     } else {
-      ball.reverseVelocityY();
+      ball->reverseVelocityY();
     }
   }
 }
 
 void CollisionManager::checkPlatformBallCollision(Plateform& platform,
-                                                  Ball& balle) {
-  if (balle.getPosY() > platform.getPosY()) {
+                                                  Ball* balle) {
+  if (balle->getPosY() > platform.getPosY()) {
     return;
   }
 
   float distance_x =
-      abs(balle.getPosX() - (platform.getPosX() + platform.getWidth() / 2));
+      abs(balle->getPosX() - (platform.getPosX() + platform.getWidth() / 2));
   float distance_y =
-      abs(balle.getPosY() - (platform.getPosY() + platform.getHeight() / 2));
+      abs(balle->getPosY() - (platform.getPosY() + platform.getHeight() / 2));
 
-  if (distance_x > (balle.getRadius() + platform.getWidth() / 2)) {
+  if (distance_x > (balle->getRadius() + platform.getWidth() / 2)) {
     return;
   }  // pas de collision entre
-  if (distance_y > (balle.getRadius() + platform.getHeight() / 2)) {
+  if (distance_y > (balle->getRadius() + platform.getHeight() / 2)) {
     // (platform.getHeight() / 2 + balle.getRadius())) {
     return;
   }
@@ -84,20 +84,20 @@ void CollisionManager::checkPlatformBallCollision(Plateform& platform,
                           (distance_y - platform.getHeight() / 2) *
                               (distance_y - platform.getHeight() / 2);
 
-  if (corner_distance <= (balle.getRadius() * balle.getRadius())) {
+  if (corner_distance <= (balle->getRadius() * balle->getRadius())) {
     // Détection de la direction d'approche de la balle par rapport à la
     // plateforme
-    bool from_left = balle.getPosX() < platform.getPosX();
-    bool from_top = balle.getPosY() < platform.getPosY();
+    bool from_left = balle->getPosX() < platform.getPosX();
+    bool from_top = balle->getPosY() < platform.getPosY();
 
     // Si la balle vient du coin supérieur gauche ou inférieur droit
     if ((from_left && from_top) || (!from_left && !from_top)) {
       // Inverse la direction horizontale de la balle
-      balle.reverseVelocityX();
+      balle->reverseVelocityX();
     }
   }
 
-  balle.reverseVelocityY();
+  balle->reverseVelocityY();
 
   /*
 

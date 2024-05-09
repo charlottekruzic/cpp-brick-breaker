@@ -6,6 +6,7 @@
 
 #include "Cell.h"
 #include "Colors.h"
+#include "Game.h"
 
 // Classe représentant une brique
 class Brick : public Cell {
@@ -21,7 +22,10 @@ class Brick : public Cell {
   Color getColor() override;
 
   // protected:
-  Brick(int strength);
+  Brick(int strength, Game* game);
+
+ protected:
+  Game* game_;  // Attribut pour stocker un pointeur vers l'objet Game
 
  private:
   int strength_;  // Force de la brique

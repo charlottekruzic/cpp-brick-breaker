@@ -7,7 +7,7 @@
 
 class MalusBrick : public Brick {
  public:
-  MalusBrick(int strength, SDL_Renderer* renderer);
+  MalusBrick(int strength, Game* game, SDL_Renderer* renderer);
   virtual void performAction(Ball& ball, Plateform& platform) = 0;  //
   // Méthode virtuelle pure pour effectuer une action spécifique
   void renderCell(SDL_Renderer* renderer, int x, int y, int cellWidth) override;

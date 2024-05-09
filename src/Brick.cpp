@@ -6,7 +6,8 @@ std::map<int, Color> Brick::strengthColorMap_ = {{1, Color::Green},
                                                  {4, Color::Red},
                                                  {5, Color::Purple}};
 
-Brick::Brick(int strength) : strength_(strength), hitsLeft_(strength) {}
+Brick::Brick(int strength, Game* game)
+    : strength_(strength), hitsLeft_(strength), game_(game) {}
 
 bool Brick::rebondir() const {
   return (hitsLeft_ > 0);  // Les objets rebondissent sur une brique

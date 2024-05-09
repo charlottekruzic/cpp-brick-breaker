@@ -5,10 +5,14 @@
 #include "Grid.h"
 #include "Plateform.h"
 
+class Ball;
+class Plateform;
+class Grid;
+
 class CollisionManager {
  public:
   // Méthode principale pour vérifier les collisions
-  static void checkCollisions(Plateform& platform, Ball& ball, Grid& grid) {
+  static void checkCollisions(Plateform& platform, Ball* ball, Grid& grid) {
     checkPlatformBallCollision(platform, ball);
     // checkWindowBallCollision(bounds, ball);
     checkGridBallCollision(grid, ball);
@@ -16,9 +20,9 @@ class CollisionManager {
 
  private:
   // Méthode pour vérifier la collision entre la plateforme et la balle
-  static void checkPlatformBallCollision(Plateform& platform, Ball& ball);
+  static void checkPlatformBallCollision(Plateform& platform, Ball* ball);
   // Méthode pour vérifier la collision entre la balle et la grille
-  static void checkGridBallCollision(Grid& grid, Ball& ball);
+  static void checkGridBallCollision(Grid& grid, Ball* ball);
 };
 
 #endif

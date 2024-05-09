@@ -3,9 +3,7 @@
 #include <iostream>
 
 Game::Game(const std::string& nomFichierGrille)
-    : plateform_(screen_width_, screen_height_),
-      ball_(10, 500, plateform_.getPosX(), plateform_.getPosY(),
-            plateform_.getWidth(), 0.5, -0.5) {
+    : plateform_(screen_width_, screen_height_), ball_(nullptr) {
   initSDL();
   createWindowAndRenderer();
   initGameComponents(nomFichierGrille);
@@ -41,7 +39,10 @@ void Game::createWindowAndRenderer() {
 }
 
 void Game::initGameComponents(const std::string& nomFichierGrille) {
-  grid_ = new Grid(nomFichierGrille, screen_width_, screen_height_, renderer_);
+  grid_ = new Grid(nomFichierGrille, screen_width_, screen_height_, renderer_,
+                   this);
+  ball_ = new Ball(10, 500, plateform_.getPosX(), plateform_.getPosY(),
+                   plateform_.getWidth(), 0.5, -0.5);
 }
 
 int Game::execute() {
@@ -125,7 +126,7 @@ void Game::handleEvents(SDL_Event& event) {
 
 void Game::updateGame(float dt) {
   // Mise à jour position balle
-  game_over_ = ball_.updatePosition(dt, screen_width_, screen_height_);
+  game_over_ = ball_->updatePosition(dt, screen_width_, screen_height_);
   // Vérifier les collisions
   CollisionManager::checkCollisions(plateform_, ball_, *grid_);
 
@@ -139,7 +140,7 @@ void Game::render() {
 
   grid_->renderGrid(renderer_, screen_width_, screen_height_);
   plateform_.render(renderer_);
-  ball_.render(renderer_);
+  ball_->render(renderer_);
 
   SDL_RenderPresent(renderer_);
 }
@@ -148,4 +149,22 @@ void Game::cleanUp() {
   SDL_DestroyRenderer(renderer_);
   SDL_DestroyWindow(window_);
   SDL_Quit();
+}
+
+//
+
+void Game::startBallAcceleration() {
+  ball_accelerating_ = true;
+  acceleration_start_time_ = std::chrono::steady_clock::now();
+}
+
+bool Game::isBallAccelerating() const {
+  if (ball_accelerating_) {
+    auto current_time = std::chrono::steady_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::seconds>(
+        current_time - acceleration_start_time_);
+    return duration.count() < 5;  // Vérifie si l'accélération est active depuis
+                                  // moins de 5 secondes
+  }
+  return false;
 }

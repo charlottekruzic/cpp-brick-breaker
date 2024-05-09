@@ -6,12 +6,15 @@
 #include <vector>
 
 #include "Cell.h"
+#include "Game.h"
 #include "InputParser.h"
+
+class Game;
 
 class Grid {
  public:
   Grid(const std::string& filename, int width, int height,
-       SDL_Renderer* renderer);
+       SDL_Renderer* renderer, Game* game);
   ~Grid();
 
   void renderGrid(SDL_Renderer* renderer, int screenWidth,
@@ -31,6 +34,7 @@ class Grid {
   int cols_;
   int width_;
   int height_;
+  Game* game_;
   std::vector<std::vector<Cell*>> grid_;
   SDL_Renderer* renderer_;
   int remainingBricks_;  // Nouvel attribut pour su
