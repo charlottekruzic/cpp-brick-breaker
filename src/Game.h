@@ -11,10 +11,14 @@
 #include "CollisionManager.h"
 #include "Grid.h"
 #include "Plateform.h"
-#include "Shrink.h"
+// #include "Shrink.h"
 
 class Ball;
 class Grid;
+class BonusMalus;
+class CollisionManager;
+class Plateform;
+class Shrink;
 
 class Game {
  public:

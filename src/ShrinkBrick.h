@@ -1,4 +1,3 @@
-// SpeedChangeBrick.h
 #ifndef SHRINK_BRICK_H
 #define SHRINK_BRICK_H
 

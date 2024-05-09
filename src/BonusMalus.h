@@ -6,13 +6,13 @@
 #include <iostream>
 
 #include "Colors.h"
-#include "Game.h"
+// #include "Game.h"
 
 class Game;
 
 class BonusMalus {
  public:
-  BonusMalus(Game* game, int x, int y);
+  BonusMalus(Game* game, Color color, int x, int y);
 
   int getX() const { return x_; }
   int getY() const { return y_; }
@@ -24,8 +24,8 @@ class BonusMalus {
     y_ += fall_speed_;
   }
   Color getColor() { return color_; }
-  // virtual void applyEffect() = 0;
-  void applyEffect();
+  virtual void applyEffect() = 0;
+  // void applyEffect();
   void render(SDL_Renderer* renderer);
 
  protected:

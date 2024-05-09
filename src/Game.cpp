@@ -4,6 +4,8 @@
 #include <random>
 #include <vector>
 
+#include "Shrink.h"
+
 Game::Game(const std::string& nomFichierGrille)
     : plateform_(screen_width_, screen_height_), ball_(nullptr) {
   initSDL();
@@ -220,7 +222,7 @@ void Game::generateBonusMalus() {
         rand() % (screen_width_ - 50);  // Ajustez la plage selon vos besoins
 
     // Créer un nouvel objet Shrink avec la position aléatoire en largeur
-    BonusMalus* shrink = new BonusMalus(this, randomX, 0);
+    BonusMalus* shrink = new Shrink(this, randomX, 0);
 
     // Ajouter l'objet Shrink à une liste ou un vecteur de BonusMalus
     // par exemple:
