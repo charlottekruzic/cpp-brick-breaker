@@ -49,6 +49,7 @@ class Game {
 
  public:
   void setBallAccelerating();
+  void setBallDecelerating();
 
   // threads :
 

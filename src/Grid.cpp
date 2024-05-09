@@ -4,7 +4,8 @@
 #include "Brick.h"
 #include "Empty.h"
 #include "MalusBrick.h"
-#include "SpeedChangeBrick.h"
+#include "SlowedDownBrick.h"
+#include "SpedUpBrick.h"
 // #include "Wall.h"
 
 Grid::Grid(const std::string& filename, int width, int height,
@@ -36,8 +37,10 @@ Grid::Grid(const std::string& filename, int width, int height,
       } else if (c >= '1' && c <= '5') {
         gridRow.push_back(new BasicBrick(c - '0', game_));
         remainingBricks_++;
-      } else if (c == 'M') {
-        gridRow.push_back(new SpeedChangeBrick(1, game_, renderer));
+      } else if (c == 'A') {
+        gridRow.push_back(new SpedUpBrick(1, game_, renderer));
+      } else if (c == 'D') {
+        gridRow.push_back(new SlowedDownBrick(1, game_, renderer));
       } else {
         std::cerr << "Caractère inconnu: " << c << std::endl;
         gridRow.push_back(new Empty());

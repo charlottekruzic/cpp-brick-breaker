@@ -153,9 +153,14 @@ void Game::cleanUp() {
   SDL_DestroyWindow(window_);
   SDL_Quit();
 }
-
 void Game::setBallAccelerating() { ball_->setSpeed(700); }
 
+void Game::setBallDecelerating() {
+  if (ball_->getSpeed() == 500)
+    ball_->setSpeed(300);
+  else
+    ball_->setSpeed(300);  // retour à la normale
+}
 /* grére des threads pour n'accélrer que pendant 5 secondes :
 void Game::startBallAcceleration() {
   ball_accelerating_ = true;

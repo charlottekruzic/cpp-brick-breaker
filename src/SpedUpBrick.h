@@ -4,10 +4,10 @@
 
 #include "MalusBrick.h"
 
-class SpeedChangeBrick : public MalusBrick {
+class SpedUpBrick : public MalusBrick {
  public:
  public:
-  SpeedChangeBrick(int strength, Game* game, SDL_Renderer* renderer)
+  SpedUpBrick(int strength, Game* game, SDL_Renderer* renderer)
       : MalusBrick(strength, game, renderer) {}
 
   void performAction() override;
