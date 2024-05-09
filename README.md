@@ -34,6 +34,7 @@ todo
   - compteur pour savoir si il reste au moins une balle -> détermine la fin de partie
   - supprimer une balle à chaque fois qu'elle sort du cadre
 
+- patron de conception singleton pour les couleurs 
 - dossier bonus malus et brique
 - simplifier les include
 

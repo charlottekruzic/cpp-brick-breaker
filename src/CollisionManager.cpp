@@ -3,7 +3,8 @@
 #include <cmath>
 
 void CollisionManager::checkCollisions(
-    Plateform& platform, Ball* ball, Grid& grid,
+    Plateform& platform, std::shared_ptr<Ball>& ball,
+    std::shared_ptr<Grid>& grid,
     std::unordered_set<std::shared_ptr<BonusMalus>>& bonus_maluses__) {
   checkPlatformBallCollision(platform, ball);
   // checkWindowBallCollision(bounds, ball);
@@ -25,12 +26,13 @@ void CollisionManager::checkCollisions(
 }
 
 // Méthode pour vérifier la collision entre la balle et la grille
-void CollisionManager::checkGridBallCollision(Grid& grid, Ball* ball) {
+void CollisionManager::checkGridBallCollision(std::shared_ptr<Grid>& grid,
+                                              std::shared_ptr<Ball>& ball) {
   int radiusBall = ball->getRadius();
   float pos_xBall = ball->getPosX();
   float pos_yBall = ball->getPosY();
 
-  int cell_size = grid.getCellSize();
+  int cell_size = grid->getCellSize();
   int cell_pos_x = pos_xBall / cell_size;
   int cell_pos_y = pos_yBall / cell_size;
 
@@ -39,10 +41,10 @@ void CollisionManager::checkGridBallCollision(Grid& grid, Ball* ball) {
   float collisionVectorY = 0;
 
   for (int row = std::max(cell_pos_y - 1, 0);
-       row <= std::min(cell_pos_y + 1, grid.getRows() - 1); ++row) {
+       row <= std::min(cell_pos_y + 1, grid->getRows() - 1); ++row) {
     for (int col = std::max(cell_pos_x - 1, 0);
-         col <= std::min(cell_pos_x + 1, grid.getCols() - 1); ++col) {
-      Cell* cell = grid.getCell(row, col);
+         col <= std::min(cell_pos_x + 1, grid->getCols() - 1); ++col) {
+      Cell* cell = grid->getCell(row, col);
       if (cell && cell->rebondir()) {
         bool intersect_x = pos_xBall + radiusBall >= (col * cell_size) &&
                            pos_xBall - radiusBall <= ((col + 1) * cell_size);
@@ -67,7 +69,7 @@ void CollisionManager::checkGridBallCollision(Grid& grid, Ball* ball) {
                 (pos_yBall < row * cell_size) ? -depth_y : depth_y;
           }
 
-          grid.hitCell(row, col);
+          grid->hitCell(row, col);
         }
       }
     }
@@ -83,20 +85,20 @@ void CollisionManager::checkGridBallCollision(Grid& grid, Ball* ball) {
 }
 
 void CollisionManager::checkPlatformBallCollision(Plateform& platform,
-                                                  Ball* balle) {
-  if (balle->getPosY() > platform.getPosY()) {
+                                                  std::shared_ptr<Ball>& ball) {
+  if (ball->getPosY() > platform.getPosY()) {
     return;
   }
 
   float distance_x =
-      abs(balle->getPosX() - (platform.getPosX() + platform.getWidth() / 2));
+      abs(ball->getPosX() - (platform.getPosX() + platform.getWidth() / 2));
   float distance_y =
-      abs(balle->getPosY() - (platform.getPosY() + platform.getHeight() / 2));
+      abs(ball->getPosY() - (platform.getPosY() + platform.getHeight() / 2));
 
-  if (distance_x > (balle->getRadius() + platform.getWidth() / 2)) {
+  if (distance_x > (ball->getRadius() + platform.getWidth() / 2)) {
     return;
   }  // pas de collision entre
-  if (distance_y > (balle->getRadius() + platform.getHeight() / 2)) {
+  if (distance_y > (ball->getRadius() + platform.getHeight() / 2)) {
     // (platform.getHeight() / 2 + balle.getRadius())) {
     return;
   }
@@ -106,20 +108,20 @@ void CollisionManager::checkPlatformBallCollision(Plateform& platform,
                           (distance_y - platform.getHeight() / 2) *
                               (distance_y - platform.getHeight() / 2);
 
-  if (corner_distance <= (balle->getRadius() * balle->getRadius())) {
+  if (corner_distance <= (ball->getRadius() * ball->getRadius())) {
     // Détection de la direction d'approche de la balle par rapport à la
     // plateforme
-    bool from_left = balle->getPosX() < platform.getPosX();
-    bool from_top = balle->getPosY() < platform.getPosY();
+    bool from_left = ball->getPosX() < platform.getPosX();
+    bool from_top = ball->getPosY() < platform.getPosY();
 
     // Si la balle vient du coin supérieur gauche ou inférieur droit
     if ((from_left && from_top) || (!from_left && !from_top)) {
       // Inverse la direction horizontale de la balle
-      balle->reverseVelocityX();
+      ball->reverseVelocityX();
     }
   }
 
-  balle->reverseVelocityY();
+  ball->reverseVelocityY();
 
   /*
 

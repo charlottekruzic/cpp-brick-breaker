@@ -44,10 +44,11 @@ void Game::createWindowAndRenderer() {
 }
 
 void Game::initGameComponents(const std::string& nomFichierGrille) {
-  grid_ = new Grid(nomFichierGrille, screen_width_, screen_height_, renderer_,
-                   this);
-  ball_ = new Ball(10, 500, plateform_.getPosX(), plateform_.getPosY(),
-                   plateform_.getWidth(), 0.5, -0.5);
+  grid_ = std::make_shared<Grid>(nomFichierGrille, screen_width_,
+                                 screen_height_, renderer_, this);
+  ball_ = std::make_shared<Ball>(10, 500, plateform_.getPosX(),
+                                 plateform_.getPosY(), plateform_.getWidth(),
+                                 0.5, -0.5);
 }
 
 int Game::execute() {
@@ -150,7 +151,7 @@ void Game::updateGame(float dt) {
   // Mise à jour position balle
   game_over_ = ball_->updatePosition(dt, screen_width_, screen_height_);
   // Vérifier les collisions
-  CollisionManager::checkCollisions(plateform_, ball_, *grid_, bonus_maluses_);
+  CollisionManager::checkCollisions(plateform_, ball_, grid_, bonus_maluses_);
 
   game_finished_ = !grid_->hasRemainingBricks();
 }

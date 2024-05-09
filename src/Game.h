@@ -28,6 +28,7 @@ class Game {
  private:
   const int screen_width_ = 400;
   const int screen_height_ = 800;
+
   bool quit_ = false;
   bool game_over_ = false;
   bool game_finished_ = false;
@@ -37,9 +38,9 @@ class Game {
 
   SDL_Window* window_ = nullptr;
   SDL_Renderer* renderer_ = nullptr;
-  Grid* grid_;
+  std::shared_ptr<Grid> grid_;
   Plateform plateform_;
-  Ball* ball_;
+  std::shared_ptr<Ball> ball_;
 
   void initSDL();
   void createWindowAndRenderer();
