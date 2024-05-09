@@ -6,20 +6,20 @@
 SDL_Texture* MalusBrick::malus_texture_ = nullptr;
 
 MalusBrick::MalusBrick(int strength, Game* game, SDL_Renderer* renderer)
-    : Brick(strength, game) {
+    : MalusBonusBrick(strength, game, renderer) {
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!malus_texture_) {
     // Chargez la texture du mur depuis un fichier
-    SDL_Surface* wallSurface = IMG_Load("img/malus.jpg");
+    SDL_Surface* surface = IMG_Load("img/malus.jpg");
 
-    if (!wallSurface) {
+    if (!surface) {
       // Gestion de l'erreur si le chargement de l'image échoue
       std::cerr << "Failed to load wall texture: " << IMG_GetError()
                 << std::endl;
       return;
     }
-    malus_texture_ = SDL_CreateTextureFromSurface(renderer, wallSurface);
-    SDL_FreeSurface(wallSurface);
+    malus_texture_ = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_FreeSurface(surface);
     if (!malus_texture_) {
       // Gestion de l'erreur si la création de la texture échoue
       std::cerr << "Failed to create wall texture: " << SDL_GetError()
@@ -27,25 +27,4 @@ MalusBrick::MalusBrick(int strength, Game* game, SDL_Renderer* renderer)
       return;
     }
   }
-}
-
-void MalusBrick::renderCell(SDL_Renderer* renderer, int x, int y,
-                            int cellSize) {
-  int padding = 1;  // Espace entre chaque case
-  int size = cellSize - 2 * padding;
-
-  // Utilisez la texture du mur pour afficher le mur
-  SDL_Rect rect = {x + padding, y + padding, size, size};
-  SDL_RenderCopy(renderer, malus_texture_, NULL, &rect);
-}
-
-bool MalusBrick::hit() {
-  if (hitsLeft_ > 0) {
-    hitsLeft_--;
-  }
-  if (hitsLeft_ == 0) {
-    performAction();
-    return true;
-  }
-  return false;
 }

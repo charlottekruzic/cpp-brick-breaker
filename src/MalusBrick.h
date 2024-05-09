@@ -1,23 +1,20 @@
-#ifndef MALICIOUS_BRICK_H
-#define MALICIOUS_BRICK_H
+#ifndef MALUS_BRICK_H
+#define MALUS_BRICK_H
 
-#include "Ball.h"
-#include "Brick.h"
-#include "Plateform.h"
+#include "MalusBonusBrick.h"
 
-class MalusBrick : public Brick {
+class MalusBrick : public MalusBonusBrick<MalusBrick> {
  public:
   MalusBrick(int strength, Game* game, SDL_Renderer* renderer);
-  virtual void performAction() = 0;  //
-  // Méthode virtuelle pure pour effectuer une action spécifique
-  void renderCell(SDL_Renderer* renderer, int x, int y, int cellWidth) override;
-  bool hit() override;
+
+  // Méthode pour obtenir la texture du malus
+  static SDL_Texture* getTexture() {
+    // Implémentation pour obtenir la texture spécifique à MalusBrick
+    return malus_texture_;
+  }
 
  private:
-  static SDL_Texture* malus_texture_;
-
- protected:
-  // int hitsLeft_;
+  static SDL_Texture* malus_texture_;  // Attribut pour la texture du malus
 };
 
-#endif  // MALICIOUS_BRICK_H
+#endif  // MALUS_BRICK_H
