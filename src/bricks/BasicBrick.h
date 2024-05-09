@@ -1,7 +1,7 @@
 #ifndef BASICsBRICK_H
 #define BASICsBRICK_H
 
-#include "Brick.h"
+#include "../Brick.h"
 
 // Classe représentant une brique basique
 class BasicBrick : public Brick {

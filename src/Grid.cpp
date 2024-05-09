@@ -1,13 +1,13 @@
 #include "Grid.h"
 
-#include "BasicBrick.h"
 #include "Brick.h"
 #include "Empty.h"
-#include "EnlargeBrick.h"
-#include "MalusBrick.h"
-#include "ShrinkBrick.h"
-#include "SlowedDownBrick.h"
-#include "SpedUpBrick.h"
+#include "bricks/BasicBrick.h"
+#include "bricks/EnlargeBrick.h"
+#include "bricks/MalusBrick.h"
+#include "bricks/ShrinkBrick.h"
+#include "bricks/SlowedDownBrick.h"
+#include "bricks/SpedUpBrick.h"
 // #include "Wall.h"
 
 Grid::Grid(const std::string& filename, int width, int height,
