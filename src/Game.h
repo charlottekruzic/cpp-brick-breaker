@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 
 #include <chrono>
+#include <unordered_set>
 
 #include "Ball.h"
 #include "BonusMalus.h"
@@ -48,7 +49,7 @@ class Game {
   void togglePause();
 
   void generateBonusMalus();
-  std::vector<BonusMalus*> bonus_maluses_;
+  std::unordered_set<BonusMalus*> bonus_maluses_;
 
   bool ball_accelerating_ = false;
 

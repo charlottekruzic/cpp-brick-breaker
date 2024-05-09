@@ -224,6 +224,6 @@ void Game::generateBonusMalus() {
 
     // Ajouter l'objet Shrink à une liste ou un vecteur de BonusMalus
     // par exemple:
-    bonus_maluses_.push_back(shrink);
+    bonus_maluses_.insert(shrink);
   }
 }
