@@ -24,7 +24,10 @@ class BonusMalus {
   }
   Color getColor() { return color_; }
   // virtual void applyEffect() = 0;
-  void applyEffect() { std::cout << "apply effect bonus malus " << std::endl; }
+  void applyEffect() {
+    std::cout << "apply effect bonus malus " << std::endl;
+    // game_ -> ...
+  }
   void render(SDL_Renderer* renderer);
 
  protected:

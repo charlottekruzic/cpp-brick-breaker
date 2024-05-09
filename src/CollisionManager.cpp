@@ -160,3 +160,28 @@ void CollisionManager::checkPlatformBallCollision(Plateform& platform,
  balle.reverseVelocityY();
  */
 }
+
+bool CollisionManager::checkCollisionBallBonusMalus(Ball* ball,
+                                                    BonusMalus* bonusMalus) {
+  // Vérifiez la collision entre la balle et le bonus/malus
+  int ballLeft = ball->getPosX() - ball->getRadius();
+  int ballRight = ball->getPosX() + ball->getRadius();
+  int ballTop = ball->getPosY() - ball->getRadius();
+  int ballBottom = ball->getPosY() + ball->getRadius();
+
+  int bonusMalusLeft = bonusMalus->getX();
+  int bonusMalusRight =
+      bonusMalus->getX() +
+      bonusMalus
+          ->getWidth();  // Suppose que BonusMalus a une méthode getWidth()
+  int bonusMalusTop = bonusMalus->getY();
+  int bonusMalusBottom =
+      bonusMalus->getY() +
+      bonusMalus
+          ->getHeight();  // Suppose que BonusMalus a une méthode getHeight()
+
+  // Vérifiez si les rectangles délimitant la balle et le bonus/malus se
+  // chevauchent
+  return ballLeft < bonusMalusRight && ballRight > bonusMalusLeft &&
+         ballTop < bonusMalusBottom && ballBottom > bonusMalusTop;
+}

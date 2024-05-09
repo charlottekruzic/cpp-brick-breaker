@@ -59,6 +59,8 @@ class Game {
   void shrinkPlateformWidth();
   void enlargePlateformWidth();
 
+  void removeBonusMalus(BonusMalus* bonusMalusPtr);
+
   // threads :
 
   // Méthode pour démarrer l'accélération de la balle

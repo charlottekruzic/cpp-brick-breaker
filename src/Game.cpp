@@ -131,12 +131,23 @@ void Game::updateGame(float dt) {
   for (auto bonusMalus : bonus_maluses_) {
     bonusMalus->update();
   }
+  // supprimer les bonus malus en bas de l'image du vector
+  for (auto it = bonus_maluses_.begin(); it != bonus_maluses_.end();) {
+    // Si le bonus/malus est en dehors de l'écran (en bas), supprimez-le
+    if ((*it)->getY() >= screen_height_) {
+      it = bonus_maluses_.erase(it);
+      // Supprime l'élément et renvoie l'itérateur suivant
+      std::cout << "suppr un bonus malus en bas image" << std::endl;
+    } else {
+      ++it;  // Passe à l'élément suivant
+    }
+  }
 
   generateBonusMalus();
   // Mise à jour position balle
   game_over_ = ball_->updatePosition(dt, screen_width_, screen_height_);
   // Vérifier les collisions
-  CollisionManager::checkCollisions(plateform_, ball_, *grid_);
+  CollisionManager::checkCollisions(plateform_, ball_, *grid_, bonus_maluses_);
 
   game_finished_ = !grid_->hasRemainingBricks();
 }
