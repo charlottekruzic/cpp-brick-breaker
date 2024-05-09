@@ -123,6 +123,20 @@ void CollisionManager::checkPlatformBallCollision(Plateform& platform,
 
   ball->reverseVelocityY();
 
+  // Direction balle en fonction de l'endroit de l'impact sur la plateforme
+  float impact_point =
+      (ball->getPosX() - platform.getPosX()) / (platform.getWidth() / 2) - 1;
+
+  // Calcule vitesse et vélocite pour ne pas accelerer la balle
+  float new_velocity_x = -impact_point * ball->getVelocityY();
+  float old_speed = std::hypot(ball->getVelocityX(), ball->getVelocityY());
+  float new_speed = std::hypot(new_velocity_x, ball->getVelocityY());
+
+  if (new_speed != 0) {
+    ball->setVelocityX(new_velocity_x * old_speed / new_speed);
+    ball->setVelocityY(ball->getVelocityY() * old_speed / new_speed);
+  }
+
   /*
 
   float distance_x =
