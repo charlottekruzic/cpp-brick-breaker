@@ -4,9 +4,11 @@
 #include <map>
 #include <string>
 
-#include "Cell.h"
-#include "Colors.h"
-#include "Game.h"
+#include "../Cell.h"
+#include "../Colors.h"
+// #include "Game.h"
+
+class Game;
 
 // Classe représentant une brique
 class Brick : public Cell {

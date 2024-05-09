@@ -8,10 +8,10 @@
 #include <unordered_set>
 
 #include "Ball.h"
-#include "BonusMalus.h"
 #include "CollisionManager.h"
 #include "Grid.h"
 #include "Plateform.h"
+#include "bonus_malus/BonusMalus.h"
 
 class Ball;
 class Grid;

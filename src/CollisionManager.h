@@ -4,9 +4,9 @@
 #include <memory>
 
 #include "Ball.h"
-#include "BonusMalus.h"
 #include "Grid.h"
 #include "Plateform.h"
+#include "bonus_malus/BonusMalus.h"
 
 class Ball;
 class Plateform;

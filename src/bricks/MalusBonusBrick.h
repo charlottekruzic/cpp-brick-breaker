@@ -1,7 +1,7 @@
 #ifndef MALUS_BONUS_H
 #define MALUS_BONUS_H
 
-#include "../Brick.h"
+#include "Brick.h"
 
 template <typename Derived>
 class MalusBonusBrick : public Brick {

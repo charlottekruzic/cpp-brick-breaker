@@ -4,8 +4,8 @@
 #include <random>
 #include <vector>
 
-#include "Enlarge.h"
-#include "Shrink.h"
+#include "bonus_malus/Enlarge.h"
+#include "bonus_malus/Shrink.h"
 
 Game::Game(const std::string& nomFichierGrille)
     : plateform_(screen_width_, screen_height_), ball_(nullptr) {

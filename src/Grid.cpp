@@ -1,6 +1,5 @@
 #include "Grid.h"
 
-#include "Brick.h"
 #include "Empty.h"
 #include "bricks/BasicBrick.h"
 #include "bricks/EnlargeBrick.h"

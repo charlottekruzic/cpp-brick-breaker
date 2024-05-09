@@ -1,6 +1,6 @@
 #include "Enlarge.h"
 
-#include "Game.h"
+#include "../Game.h"
 
 Enlarge::Enlarge(Game* game, int x, int y)
     : BonusMalus(game, Color::DarkGreen, x, y) {}

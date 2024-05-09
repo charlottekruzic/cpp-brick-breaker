@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-#include "Colors.h"
+#include "../Colors.h"
 // #include "Game.h"
 
 class Game;

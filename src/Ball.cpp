@@ -1,6 +1,6 @@
 #include "Ball.h"
 
-#include "Brick.h"
+#include "bricks/Brick.h"
 
 Ball::Ball()
     : radius_(10),
