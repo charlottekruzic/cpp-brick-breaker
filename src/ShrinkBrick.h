@@ -2,7 +2,7 @@
 #ifndef SHRINK_BRICK_H
 #define SHRINK_BRICK_H
 
-#include "BonusBrick.h"
+#include "MalusBrick.h"
 
 class ShrinkBrick : public MalusBrick {
  public:

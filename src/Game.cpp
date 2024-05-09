@@ -1,6 +1,8 @@
 #include "Game.h"
 
 #include <iostream>
+#include <random>
+#include <vector>
 
 Game::Game(const std::string& nomFichierGrille)
     : plateform_(screen_width_, screen_height_), ball_(nullptr) {
@@ -67,9 +69,6 @@ void Game::mainLoop() {
     while (SDL_PollEvent(&event)) {
       handleEvents(event);
     }
-    if (ball_accelerating_) {
-      setBallAccelerating();
-    }
 
     if (premiere_iter || !paused_) {
       updateGame(dt);
@@ -128,6 +127,12 @@ void Game::handleEvents(SDL_Event& event) {
 }
 
 void Game::updateGame(float dt) {
+  // update tous les bonus malus de bonus_maluses__
+  for (auto bonusMalus : bonus_maluses_) {
+    bonusMalus->update();
+  }
+
+  generateBonusMalus();
   // Mise à jour position balle
   game_over_ = ball_->updatePosition(dt, screen_width_, screen_height_);
   // Vérifier les collisions
@@ -144,6 +149,10 @@ void Game::render() {
   grid_->renderGrid(renderer_, screen_width_, screen_height_);
   plateform_.render(renderer_);
   ball_->render(renderer_);
+  // pour tous les éléments de la liste bonus malus -> render
+  for (auto bonus_malus : bonus_maluses_) {
+    bonus_malus->render(renderer_);
+  }
 
   SDL_RenderPresent(renderer_);
 }
@@ -170,6 +179,7 @@ void Game::enlargePlateformWidth() {
   if (plateform_.getWidth() < 200)
     plateform_.setWidth(plateform_.getWidth() + 30);
 }
+
 /* grére des threads pour n'accélrer que pendant 5 secondes :
 void Game::startBallAcceleration() {
   ball_accelerating_ = true;
@@ -187,3 +197,22 @@ bool Game::isBallAccelerating() const {
   return false;
 }
 */
+
+void Game::generateBonusMalus() {
+  // Générer un nombre aléatoire entre 1 et 10
+  int random = rand() % 70 + 1;
+
+  // Si le nombre aléatoire est égal à 1, générer un objet Shrink
+  if (random == 1) {
+    // Générer une position aléatoire en largeur
+    int randomX =
+        rand() % (screen_width_ - 50);  // Ajustez la plage selon vos besoins
+
+    // Créer un nouvel objet Shrink avec la position aléatoire en largeur
+    BonusMalus* shrink = new BonusMalus(this, randomX, 0);
+
+    // Ajouter l'objet Shrink à une liste ou un vecteur de BonusMalus
+    // par exemple:
+    bonus_maluses_.push_back(shrink);
+  }
+}

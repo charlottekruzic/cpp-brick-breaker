@@ -6,9 +6,11 @@
 #include <chrono>
 
 #include "Ball.h"
+#include "BonusMalus.h"
 #include "CollisionManager.h"
 #include "Grid.h"
 #include "Plateform.h"
+#include "Shrink.h"
 
 class Ball;
 class Grid;
@@ -44,6 +46,9 @@ class Game {
   void updateGame(float dt);
   void render();
   void togglePause();
+
+  void generateBonusMalus();
+  std::vector<BonusMalus*> bonus_maluses_;
 
   bool ball_accelerating_ = false;
 
