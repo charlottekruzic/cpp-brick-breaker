@@ -2,6 +2,28 @@
 
 #include <cmath>
 
+void CollisionManager::checkCollisions(
+    Plateform& platform, Ball* ball, Grid& grid,
+    std::unordered_set<BonusMalus*>& bonus_maluses__) {
+  checkPlatformBallCollision(platform, ball);
+  // checkWindowBallCollision(bounds, ball);
+  checkGridBallCollision(grid, ball);
+  // Vérifier la collision entre la balle et les bonus/malus
+  std::unordered_set<BonusMalus*> bonus_maluses_to_remove;
+  for (auto bonusMalus : bonus_maluses__) {
+    if (checkCollisionBallBonusMalus(ball, bonusMalus)) {
+      // Collision détectée, gérer l'effet du bonus/malus
+      bonusMalus->applyEffect();
+      // Si applyEffect a été appelée, supprimer le bonus/malus de l'ensemble
+      bonus_maluses_to_remove.insert(bonusMalus);
+    }
+  }
+  for (auto bonusMalus : bonus_maluses_to_remove) {
+    bonus_maluses__.erase(bonusMalus);
+    delete bonusMalus;
+  }
+}
+
 // Méthode pour vérifier la collision entre la balle et la grille
 void CollisionManager::checkGridBallCollision(Grid& grid, Ball* ball) {
   int radiusBall = ball->getRadius();

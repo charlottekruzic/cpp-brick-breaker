@@ -2,37 +2,20 @@
 #define COLLISIONMANAGER_H
 
 #include "Ball.h"
+#include "BonusMalus.h"
 #include "Grid.h"
 #include "Plateform.h"
 
 class Ball;
 class Plateform;
 class Grid;
+class BonusMalus;
 
 class CollisionManager {
  public:
   // Méthode principale pour vérifier les collisions
-  static void checkCollisions(
-      Plateform& platform, Ball* ball, Grid& grid,
-      std::unordered_set<BonusMalus*>& bonus_maluses__) {
-    checkPlatformBallCollision(platform, ball);
-    // checkWindowBallCollision(bounds, ball);
-    checkGridBallCollision(grid, ball);
-    // Vérifier la collision entre la balle et les bonus/malus
-    std::unordered_set<BonusMalus*> bonus_maluses_to_remove;
-    for (auto bonusMalus : bonus_maluses__) {
-      if (checkCollisionBallBonusMalus(ball, bonusMalus)) {
-        // Collision détectée, gérer l'effet du bonus/malus
-        bonusMalus->applyEffect();
-        // Si applyEffect a été appelée, supprimer le bonus/malus de l'ensemble
-        bonus_maluses_to_remove.insert(bonusMalus);
-      }
-    }
-    for (auto bonusMalus : bonus_maluses_to_remove) {
-      bonus_maluses__.erase(bonusMalus);
-      delete bonusMalus;
-    }
-  }
+  static void checkCollisions(Plateform& platform, Ball* ball, Grid& grid,
+                              std::unordered_set<BonusMalus*>& bonus_maluses__);
 
  private:
   // Méthode pour vérifier la collision entre la plateforme et la balle

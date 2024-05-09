@@ -6,12 +6,13 @@
 #include <iostream>
 
 #include "Colors.h"
+#include "Game.h"
 
 class Game;
 
 class BonusMalus {
  public:
-  BonusMalus(Game* game, int x, int y) : game_(game), x_(x), y_(y) {}
+  BonusMalus(Game* game, int x, int y);
 
   int getX() const { return x_; }
   int getY() const { return y_; }
@@ -24,10 +25,7 @@ class BonusMalus {
   }
   Color getColor() { return color_; }
   // virtual void applyEffect() = 0;
-  void applyEffect() {
-    std::cout << "apply effect bonus malus " << std::endl;
-    // game_ -> ...
-  }
+  void applyEffect();
   void render(SDL_Renderer* renderer);
 
  protected:
