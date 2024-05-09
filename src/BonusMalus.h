@@ -37,7 +37,7 @@ class BonusMalus {
   int y_;
   int width_{10};
   int height_{10};
-  static constexpr int fall_speed_ = 1;  // Vitesse de chute
+  static constexpr int fall_speed_ = 2;  // Vitesse de chute
 };
 
 #endif  // BONUS_MALUS_H

@@ -23,7 +23,8 @@ class CollisionManager {
   // Méthode pour vérifier la collision entre la balle et la grille
   static void checkGridBallCollision(Grid& grid, Ball* ball);
 
-  static bool checkCollisionBallBonusMalus(Ball* ball, BonusMalus* bonusMalus);
+  static bool checkCollisionPlateformBonusMalus(Plateform& plateform,
+                                                BonusMalus* bonusMalus);
 };
 
 #endif

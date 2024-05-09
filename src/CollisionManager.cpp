@@ -11,7 +11,7 @@ void CollisionManager::checkCollisions(
   // Vérifier la collision entre la balle et les bonus/malus
   std::unordered_set<BonusMalus*> bonus_maluses_to_remove;
   for (auto bonusMalus : bonus_maluses__) {
-    if (checkCollisionBallBonusMalus(ball, bonusMalus)) {
+    if (checkCollisionPlateformBonusMalus(platform, bonusMalus)) {
       // Collision détectée, gérer l'effet du bonus/malus
       bonusMalus->applyEffect();
       // Si applyEffect a été appelée, supprimer le bonus/malus de l'ensemble
@@ -183,27 +183,25 @@ void CollisionManager::checkPlatformBallCollision(Plateform& platform,
  */
 }
 
-bool CollisionManager::checkCollisionBallBonusMalus(Ball* ball,
-                                                    BonusMalus* bonusMalus) {
-  // Vérifiez la collision entre la balle et le bonus/malus
-  int ballLeft = ball->getPosX() - ball->getRadius();
-  int ballRight = ball->getPosX() + ball->getRadius();
-  int ballTop = ball->getPosY() - ball->getRadius();
-  int ballBottom = ball->getPosY() + ball->getRadius();
+bool CollisionManager::checkCollisionPlateformBonusMalus(
+    Plateform& plateform, BonusMalus* bonusMalus) {
+  // Récupérer les coordonnées de la plateforme
+  int plateformLeft = plateform.getPosX();
+  int plateformRight = plateform.getPosX() + plateform.getWidth();
+  int plateformTop = plateform.getPosY();
+  int plateformBottom = plateform.getPosY() + plateform.getHeight();
 
+  // Récupérer les coordonnées du bonus/malus
   int bonusMalusLeft = bonusMalus->getX();
-  int bonusMalusRight =
-      bonusMalus->getX() +
-      bonusMalus
-          ->getWidth();  // Suppose que BonusMalus a une méthode getWidth()
+  int bonusMalusRight = bonusMalus->getX() + bonusMalus->getWidth();
   int bonusMalusTop = bonusMalus->getY();
-  int bonusMalusBottom =
-      bonusMalus->getY() +
-      bonusMalus
-          ->getHeight();  // Suppose que BonusMalus a une méthode getHeight()
+  int bonusMalusBottom = bonusMalus->getY() + bonusMalus->getHeight();
 
-  // Vérifiez si les rectangles délimitant la balle et le bonus/malus se
+  // Vérifier si les rectangles délimitant la plateforme et le bonus/malus se
   // chevauchent
-  return ballLeft < bonusMalusRight && ballRight > bonusMalusLeft &&
-         ballTop < bonusMalusBottom && ballBottom > bonusMalusTop;
+  bool collision =
+      (plateformLeft < bonusMalusRight) && (plateformRight > bonusMalusLeft) &&
+      (plateformTop < bonusMalusBottom) && (plateformBottom > bonusMalusTop);
+
+  return collision;
 }
