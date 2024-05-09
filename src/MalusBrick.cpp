@@ -5,8 +5,8 @@
 // pointeur statique pour la texture
 SDL_Texture* MalusBrick::malus_texture_ = nullptr;
 
-MalusBrick::MalusBrick(int strength, Game* game, SDL_Renderer* renderer)
-    : MalusBonusBrick(strength, game, renderer) {
+MalusBrick::MalusBrick(Game* game, SDL_Renderer* renderer)
+    : MalusBonusBrick(game, renderer) {
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!malus_texture_) {
     // Chargez la texture du mur depuis un fichier

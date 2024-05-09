@@ -5,7 +5,7 @@
 
 class BonusBrick : public MalusBonusBrick<BonusBrick> {
  public:
-  BonusBrick(int strength, Game* game, SDL_Renderer* renderer);
+  BonusBrick(Game* game, SDL_Renderer* renderer);
 
   // Méthode pour obtenir la texture du malus
   static SDL_Texture* getTexture() {

@@ -1,9 +1,8 @@
 #include "MalusBonusBrick.h"
 
 template <typename Derived>
-MalusBonusBrick<Derived>::MalusBonusBrick(int strength, Game* game,
-                                          SDL_Renderer* renderer)
-    : Brick(strength, game) {}
+MalusBonusBrick<Derived>::MalusBonusBrick(Game* game, SDL_Renderer* renderer)
+    : Brick(1, game) {}
 
 template <typename Derived>
 void MalusBonusBrick<Derived>::renderCell(SDL_Renderer* renderer, int x, int y,

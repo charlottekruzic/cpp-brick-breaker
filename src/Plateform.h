@@ -16,7 +16,6 @@ class Plateform {
 
   // Set
   void setHeight(int height);
-  void setWidth(int width);
   void setPosX(int pos_x);
   void setPosY(int pos_y);
   void setSpeed(float speed);
@@ -25,6 +24,8 @@ class Plateform {
   // Constructeurs
   Plateform();
   Plateform(float width_window, float height_window);
+
+  void setWidth(int width);
 
   // Get
   int getHeight() const;

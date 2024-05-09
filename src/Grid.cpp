@@ -3,7 +3,9 @@
 #include "BasicBrick.h"
 #include "Brick.h"
 #include "Empty.h"
+#include "EnlargeBrick.h"
 #include "MalusBrick.h"
+#include "ShrinkBrick.h"
 #include "SlowedDownBrick.h"
 #include "SpedUpBrick.h"
 // #include "Wall.h"
@@ -38,9 +40,13 @@ Grid::Grid(const std::string& filename, int width, int height,
         gridRow.push_back(new BasicBrick(c - '0', game_));
         remainingBricks_++;
       } else if (c == 'A') {
-        gridRow.push_back(new SpedUpBrick(1, game_, renderer));
+        gridRow.push_back(new SpedUpBrick(game_, renderer));
       } else if (c == 'D') {
-        gridRow.push_back(new SlowedDownBrick(1, game_, renderer));
+        gridRow.push_back(new SlowedDownBrick(game_, renderer));
+      } else if (c == 'E') {
+        gridRow.push_back(new EnlargeBrick(game_, renderer));
+      } else if (c == 'S') {
+        gridRow.push_back(new ShrinkBrick(game_, renderer));
       } else {
         std::cerr << "Caractère inconnu: " << c << std::endl;
         gridRow.push_back(new Empty());

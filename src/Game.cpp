@@ -161,6 +161,15 @@ void Game::setBallDecelerating() {
   else
     ball_->setSpeed(300);  // retour à la normale
 }
+
+void Game::shrinkPlateformWidth() {
+  if (plateform_.getWidth() > 50)
+    plateform_.setWidth(plateform_.getWidth() - 30);
+}
+void Game::enlargePlateformWidth() {
+  if (plateform_.getWidth() < 200)
+    plateform_.setWidth(plateform_.getWidth() + 30);
+}
 /* grére des threads pour n'accélrer que pendant 5 secondes :
 void Game::startBallAcceleration() {
   ball_accelerating_ = true;

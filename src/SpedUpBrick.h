@@ -7,10 +7,14 @@
 class SpedUpBrick : public MalusBrick {
  public:
  public:
-  SpedUpBrick(int strength, Game* game, SDL_Renderer* renderer)
-      : MalusBrick(strength, game, renderer) {}
+  SpedUpBrick(Game* game, SDL_Renderer* renderer)
+      : MalusBrick(game, renderer) {}
 
-  void performAction() override;
+  void performAction() override {
+    std::cout << "perform action speed change" << std::endl;
+    // Démarrer l'accélération de la balle
+    game_->setBallAccelerating();
+  }
 };
 
 #endif  // SPEED_CHANGE_BRICK_H

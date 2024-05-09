@@ -7,10 +7,14 @@
 class SlowedDownBrick : public BonusBrick {
  public:
  public:
-  SlowedDownBrick(int strength, Game* game, SDL_Renderer* renderer)
-      : BonusBrick(strength, game, renderer) {}
+  SlowedDownBrick(Game* game, SDL_Renderer* renderer)
+      : BonusBrick(game, renderer) {}
 
-  void performAction() override;
+  void performAction() override {
+    std::cout << "SLOWED DOWN" << std::endl;
+    // Démarrer l'accélération de la balle
+    game_->setBallDecelerating();
+  }
 };
 
 #endif  // SLOWED_DOWN_BRICK_H

@@ -51,6 +51,9 @@ class Game {
   void setBallAccelerating();
   void setBallDecelerating();
 
+  void shrinkPlateformWidth();
+  void enlargePlateformWidth();
+
   // threads :
 
   // Méthode pour démarrer l'accélération de la balle
