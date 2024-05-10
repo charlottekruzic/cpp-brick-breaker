@@ -10,3 +10,8 @@ bool Empty::rebondir() const {
 }
 
 bool Empty::hit() { return true; }
+
+void Empty::renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
+                       int cellWidth, int cellHeight) { /*rien*/ }
+
+Color Empty::getColor() const { return color_; }

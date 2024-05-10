@@ -20,7 +20,7 @@ class Brick : public Cell {
 
   int getStrength() const;  // Méthode pour obtenir la force de la brique
   int getHitsLeft() const;  // Méthode pour obtenir le nombre de coups restants
-  Color getColor() override;
+  Color getColor() const override;
 
   // protected:
   Brick(int strength, Game* game);

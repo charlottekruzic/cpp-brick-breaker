@@ -23,7 +23,7 @@ int Brick::getHitsLeft() const {
   return hitsLeft_;  // Renvoie le nombre de coups restants
 }
 
-Color Brick::getColor() {
+Color Brick::getColor() const {
   auto it = strengthColorMap_.find(hitsLeft_);
   if (it != strengthColorMap_.end()) {
     return it->second;  // Retourne la couleur associée à la force de la brique
