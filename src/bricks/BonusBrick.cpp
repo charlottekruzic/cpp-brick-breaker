@@ -2,8 +2,10 @@
 
 #include <SDL2/SDL_image.h>
 
+#include <memory>
+
 // pointeur statique pour la texture
-SDL_Texture* BonusBrick::bonus_texture_ = nullptr;
+std::shared_ptr<SDL_Texture> BonusBrick::bonus_texture_ = nullptr;
 
 BonusBrick::BonusBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
     : MalusBonusBrick(game, renderer) {
@@ -18,7 +20,9 @@ BonusBrick::BonusBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
                 << std::endl;
       return;
     }
-    bonus_texture_ = SDL_CreateTextureFromSurface(renderer.get(), surface);
+    bonus_texture_ = std::shared_ptr<SDL_Texture>(
+        SDL_CreateTextureFromSurface(renderer.get(), surface),
+        [](SDL_Texture* texture) { SDL_DestroyTexture(texture); });
     SDL_FreeSurface(surface);
     if (!bonus_texture_) {
       // Gestion de l'erreur si la création de la texture échoue

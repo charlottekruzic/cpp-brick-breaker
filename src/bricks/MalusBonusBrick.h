@@ -14,7 +14,9 @@ class MalusBonusBrick : public Brick {
   virtual void performAction() = 0;
   bool hit() override;
 
-  static SDL_Texture* getTexture() { return Derived::getTexture(); }
+  static std::shared_ptr<SDL_Texture>& getTexture() {
+    return Derived::getTexture();
+  }
 };
 
 #include "MalusBonusBrick.hpp"

@@ -3,7 +3,7 @@
 #include <SDL2/SDL_image.h>
 
 // pointeur statique pour la texture
-SDL_Texture* MalusBrick::malus_texture_ = nullptr;
+std::shared_ptr<SDL_Texture> MalusBrick::malus_texture_ = nullptr;
 
 MalusBrick::MalusBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
     : MalusBonusBrick(game, renderer) {
@@ -18,7 +18,9 @@ MalusBrick::MalusBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
                 << std::endl;
       return;
     }
-    malus_texture_ = SDL_CreateTextureFromSurface(renderer.get(), surface);
+    malus_texture_ = std::shared_ptr<SDL_Texture>(
+        SDL_CreateTextureFromSurface(renderer.get(), surface),
+        [](SDL_Texture* texture) { SDL_DestroyTexture(texture); });
     SDL_FreeSurface(surface);
     if (!malus_texture_) {
       // Gestion de l'erreur si la création de la texture échoue

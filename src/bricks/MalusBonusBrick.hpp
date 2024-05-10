@@ -13,7 +13,7 @@ void MalusBonusBrick<Derived>::renderCell(
 
   // Utilisez la texture du mur pour afficher le mur
   SDL_Rect rect = {x + padding, y + padding, size, size};
-  SDL_RenderCopy(renderer.get(), getTexture(), NULL, &rect);
+  SDL_RenderCopy(renderer.get(), getTexture().get(), NULL, &rect);
 }
 
 template <typename Derived>

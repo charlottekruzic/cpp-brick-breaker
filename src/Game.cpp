@@ -150,7 +150,6 @@ void Game::updateGame(float dt) {
     if ((*it)->getY() >= screen_height_) {
       it = bonus_maluses_.erase(it);
       // Supprime l'élément et renvoie l'itérateur suivant
-      std::cout << "suppr un bonus malus en bas image" << std::endl;
     } else {
       ++it;  // Passe à l'élément suivant
     }

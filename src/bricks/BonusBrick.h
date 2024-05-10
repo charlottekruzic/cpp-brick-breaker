@@ -8,13 +8,14 @@ class BonusBrick : public MalusBonusBrick<BonusBrick> {
   BonusBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer);
 
   // Méthode pour obtenir la texture du malus
-  static SDL_Texture* getTexture() {
+  static std::shared_ptr<SDL_Texture>& getTexture() {
     // Implémentation pour obtenir la texture spécifique à MalusBrick
     return bonus_texture_;
   }
 
  private:
-  static SDL_Texture* bonus_texture_;  // Attribut pour la texture du malus
+  static std::shared_ptr<SDL_Texture>
+      bonus_texture_;  // Attribut pour la texture du malus
 };
 
 #endif  // BONUS_BRICK_H
