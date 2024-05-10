@@ -216,7 +216,11 @@ void Game::cleanUp() {
 
 void Game::setBallAccelerating() {
   for (const auto& ball : balls_) {
-    ball->setSpeed(700);
+    if (ball->getSpeed() == 500) {
+      ball->setSpeed(700);
+    } else {
+      ball->setSpeed(500);
+    }
   }
 }
 
