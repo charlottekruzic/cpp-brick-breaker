@@ -9,16 +9,10 @@
 class Empty : public Cell {
  public:
   Empty();
-  // Empty(SDL_Renderer* renderer);
   ~Empty();
 
   bool rebondir() const override;
   bool hit() override;
-  // void renderCell(SDL_Renderer* renderer, int x, int y, int cellWidth)
-  // override;
-
- private:
-  // static SDL_Texture* empty_texture_;
 };
 
 #endif  // EMPTY_H

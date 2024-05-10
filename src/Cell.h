@@ -16,7 +16,7 @@ class Cell {
   virtual bool rebondir() const = 0;
   virtual bool hit() = 0;
   virtual void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                          int cellWidth);
+                          int cellWidth, int cellHeight);
 
   inline virtual Color getColor() {
     return color_;

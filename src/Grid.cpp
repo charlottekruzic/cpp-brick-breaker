@@ -77,7 +77,7 @@ void Grid::renderGrid(std::shared_ptr<SDL_Renderer>& renderer, int screenWidth,
       int y = i * cellSize;
 
       // Rendu de la cellule
-      grid_[i][j]->renderCell(renderer, x, y, cellSize);
+      grid_[i][j]->renderCell(renderer, x, y, cellWidth, cellHeight);
     }
   }
 }

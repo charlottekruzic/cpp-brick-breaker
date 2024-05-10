@@ -16,7 +16,7 @@ class Brick : public Cell {
   bool rebondir() const override;
   bool hit() override;
   void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                  int cellWidth) override;
+                  int cellWidth, int cellHeight) override;
 
   int getStrength() const;  // Méthode pour obtenir la force de la brique
   int getHitsLeft() const;  // Méthode pour obtenir le nombre de coups restants

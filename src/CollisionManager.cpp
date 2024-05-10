@@ -139,67 +139,6 @@ void CollisionManager::checkPlatformBallCollision(Plateform& platform,
     ball->setVelocityX(new_velocity_x * old_speed / new_speed);
     ball->setVelocityY(ball->getVelocityY() * old_speed / new_speed);
   }
-
-  /*
-
-  float distance_x =
-     abs(balle.getPosX()  - (platform.getPosX() + platform.getWidth() / 2));
- // distance horizontale entre le centre de la balle et le centre de la
- // plateforme
- float distance_y =
-     abs(balle.getPosY() - (platform.getPosY() + platform.getHeight() / 2));
- // distance verticale entre le centre de la balle et le centre de la
- // plateforme
-
- if (distance_x > (platform.getWidth() / 2 + balle.getRadius())) {
-   return;
- }  // pas de collision entre
- if (distance_y > balle.getRadius()) {
-   // (platform.getHeight() / 2 + balle.getRadius())) {
-   return;
- }
-
- // float corner_distance = (distance_x - platform.getWidth() / 2) *
- //                             (distance_x - platform.getWidth() / 2) +
- //                         (distance_y - platform.getHeight() / 2) *
- //                             (distance_y - platform.getHeight() / 2);
- //
- // // if (corner_distance <= (balle.getRadius() * balle.getRadius())) {
- // //   balle.reverseVelocityX();
- // //   balle.reverseVelocityY();
- // // } else {
- // balle.reverseVelocityY();
- // // }
- //
- // // if (distance_x <= (platform.getWidth() / 2 + balle.getRadius())) {
- //
- // //}
- // // if (distance_y <= balle.getRadius()) {
- // //(platform.getHeight() / 2 + balle.getRadius())) {
- // // balle.reverseVelocityX();
- // //}
-
- // Calcul de la distance au coin
- float corner_distance = (distance_x - platform.getWidth() / 2) *
-                             (distance_x - platform.getWidth() / 2) +
-                         (distance_y - platform.getHeight() / 2) *
-                             (distance_y - platform.getHeight() / 2);
-
- // Gestion des rebonds spécifiques sur les coins
- if (corner_distance <= (balle.getRadius() * balle.getRadius())) {
-   // Détection de la direction d'approche de la balle par rapport à la
-   // plateforme
-   bool from_left = balle.getPosX() < platform.getPosX();
-   bool from_top = balle.getPosY() < platform.getPosY();
-
-   // Si la balle vient du coin supérieur gauche ou inférieur droit
-   if ((from_left && from_top) || (!from_left && !from_top)) {
-     // Inverse la direction horizontale de la balle
-     balle.reverseVelocityX();
-   }
- }
- balle.reverseVelocityY();
- */
 }
 
 bool CollisionManager::checkCollisionPlateformBonusMalus(

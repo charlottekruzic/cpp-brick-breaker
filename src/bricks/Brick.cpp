@@ -47,9 +47,9 @@ bool Brick::hit() {
 
 // idem à Cell
 void Brick::renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                       int cellSize) {
+                       int cellWidth, int cellHeight) {
   int padding = 1;  // Espace entre chaque case
-  int size = cellSize - 2 * padding;
+  int size = cellWidth - 2 * padding;
   // Taille effective de la case avec l'espace
   SDL_Rect rect = {x + padding, y + padding, size, size};
   // Utilise les coordonnées et la taille du carré avec l'espace
