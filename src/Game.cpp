@@ -5,12 +5,13 @@
 #include <vector>
 
 #include "bonus_malus/Enlarge.h"
+#include "bonus_malus/MultiBall.h"
 #include "bonus_malus/Shrink.h"
 #include "bonus_malus/SlowedDown.h"
 #include "bonus_malus/SpedUp.h"
 
 Game::Game(const std::string& nomFichierGrille)
-    : plateform_(screen_width_, screen_height_), ball_(nullptr) {
+    : plateform_(screen_width_, screen_height_) {
   initSDL();
   createWindowAndRenderer();
   initGameComponents(nomFichierGrille);
@@ -57,9 +58,9 @@ void Game::createWindowAndRenderer() {
 void Game::initGameComponents(const std::string& nomFichierGrille) {
   grid_ = std::make_shared<Grid>(nomFichierGrille, screen_width_,
                                  screen_height_, renderer_, this);
-  ball_ = std::make_shared<Ball>(10, 500, plateform_.getPosX(),
-                                 plateform_.getPosY(), plateform_.getWidth(),
-                                 0.5, -0.5);
+  balls_.insert(std::make_shared<Ball>(10, 500, plateform_.getPosX(),
+                                       plateform_.getPosY(),
+                                       plateform_.getWidth(), 0.5, -0.5));
 }
 
 int Game::execute() {
@@ -158,12 +159,34 @@ void Game::updateGame(float dt) {
   }
 
   generateBonusMalus();
-  // Mise à jour position balle
-  game_over_ = ball_->updatePosition(dt, screen_width_, screen_height_);
+
+  /*
+  // Supprimer les bonus/malus en bas de l'écran du vecteur
+  bonus_maluses_.erase(
+      std::remove_if(bonus_maluses_.begin(), bonus_maluses_.end(),
+                     [this](const auto& bonusMalus) {
+                       return bonusMalus->getY() >= screen_height_;
+                     }),
+      bonus_maluses_.end());
+  */
+  // Mise à jour de la position de chaque balle dans le vecteur balls_
+  for (auto it = balls_.begin(); it != balls_.end();) {
+    // Mettre à jour la position de la balle et vérifier si elle est en dehors
+    // de l'écran
+    if ((*it)->updatePosition(dt, screen_width_, screen_height_)) {
+      // Si une balle est hors de l'écran, la supprimer de l'ensemble balls_
+      it = balls_.erase(it);
+    } else {
+      ++it;  // Passer à l'élément suivant dans le cas où la balle est toujours
+             // à l'intérieur de l'écran
+    }
+  }
+
   // Vérifier les collisions
-  CollisionManager::checkCollisions(plateform_, ball_, grid_, bonus_maluses_);
+  CollisionManager::checkCollisions(plateform_, balls_, grid_, bonus_maluses_);
 
   game_finished_ = !grid_->hasRemainingBricks();
+  game_over_ = balls_.empty();
 }
 
 void Game::render() {
@@ -173,12 +196,15 @@ void Game::render() {
 
   grid_->renderGrid(renderer_, screen_width_, screen_height_);
   plateform_.render(renderer_);
-  ball_->render(renderer_);
-  // pour tous les éléments de la liste bonus malus -> render
-  for (auto bonus_malus : bonus_maluses_) {
-    bonus_malus->render(renderer_);
+  // Rendu de chaque balle dans le vecteur
+  for (const auto& ball : balls_) {
+    ball->render(renderer_);
   }
 
+  // Rendu de chaque bonus/malus dans la liste bonus_maluses_
+  for (const auto& bonus_malus : bonus_maluses_) {
+    bonus_malus->render(renderer_);
+  }
   SDL_RenderPresent(renderer_.get());
 }
 
@@ -187,13 +213,21 @@ void Game::cleanUp() {
   SDL_DestroyWindow(window_.get());
   SDL_Quit();
 }
-void Game::setBallAccelerating() { ball_->setSpeed(700); }
+
+void Game::setBallAccelerating() {
+  for (const auto& ball : balls_) {
+    ball->setSpeed(700);
+  }
+}
 
 void Game::setBallDecelerating() {
-  if (ball_->getSpeed() == 500)
-    ball_->setSpeed(300);
-  else
-    ball_->setSpeed(500);  // retour à la normale
+  for (const auto& ball : balls_) {
+    if (ball->getSpeed() == 500) {
+      ball->setSpeed(300);
+    } else {
+      ball->setSpeed(500);
+    }
+  }
 }
 
 void Game::shrinkPlateformWidth() {
@@ -204,52 +238,6 @@ void Game::enlargePlateformWidth() {
   if (plateform_.getWidth() < 200)
     plateform_.setWidth(plateform_.getWidth() + 30);
 }
-
-/* grére des threads pour n'accélrer que pendant 5 secondes :
-void Game::startBallAcceleration() {
-  ball_accelerating_ = true;
-  acceleration_start_time_ = std::chrono::steady_clock::now();
-}
-
-bool Game::isBallAccelerating() const {
-  if (ball_accelerating_) {
-    auto current_time = std::chrono::steady_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::seconds>(
-        current_time - acceleration_start_time_);
-    return duration.count() < 5;  // Vérifie si l'accélération est active depuis
-                                  // moins de 5 secondes
-  }
-  return false;
-}
-*/
-/*
-void Game::generateBonusMalus() {
-  // Générateur de nombres aléatoires
-  std::random_device rd;
-  std::mt19937 gen(rd());
-  std::uniform_int_distribution<> distrib(1, 100);
-
-  // Générer un nombre aléatoire entre 1 et 100
-  int random = distrib(gen);
-
-  // Si le nombre aléatoire est égal à 1, générer un objet Shrink ou Enlarge
-  if (random == 1) {
-    // Générer une position aléatoire en largeur
-    int randomX = std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
-
-    // Créer un nouvel objet Shrink avec la position aléatoire en largeur
-    std::shared_ptr<BonusMalus> bm;
-    if (std::uniform_int_distribution<>(0, 1)(gen) == 0)
-      bm = std::make_shared<Shrink>(this, randomX, 0);
-    else
-      bm = std::make_shared<Enlarge>(this, randomX, 0);
-
-    // Ajouter l'objet Shrink ou Enlarge au vecteur de BonusMalus
-    // bonus_maluses_.push_back(std::move(bm));
-    bonus_maluses_.insert(bm);
-  }
-}
-*/
 
 void Game::generateBonusMalus() {
   // Générateur de nombres aléatoires
@@ -268,22 +256,35 @@ void Game::generateBonusMalus() {
 
     // Générer un nombre aléatoire entre 0 et 3 pour choisir le type de
     // BonusMalus
-    int type = std::uniform_int_distribution<>(0, 3)(gen);
+    int type = std::uniform_int_distribution<>(0, 10)(gen);
 
     std::shared_ptr<BonusMalus> bm;
 
     switch (type) {
       case 0:
+      case 1:
         bm = std::make_shared<Shrink>(this, randomX, 0);
         break;
-      case 1:
+
+      case 2:
+      case 3:
+      case 4:
         bm = std::make_shared<Enlarge>(this, randomX, 0);
         break;
-      case 2:
+
+      case 5:
+      case 6:
         bm = std::make_shared<SpedUp>(this, randomX, 0);
         break;
-      case 3:
+
+      case 7:
+      case 8:
+      case 9:
         bm = std::make_shared<SlowedDown>(this, randomX, 0);
+        break;
+
+      case 10:
+        bm = std::make_shared<MultiBall>(this, randomX, 0);
         break;
       default:
         // En cas de type invalide, ne rien faire
@@ -293,4 +294,26 @@ void Game::generateBonusMalus() {
     // Ajouter l'objet au vecteur de BonusMalus
     bonus_maluses_.insert(bm);
   }
+}
+
+void Game::generateNewBalls() {
+  // Créer deux nouvelles balles avec des positions aléatoires
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> distrib(1, 100);
+  int random = distrib(gen);
+  int randomX1 = std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
+  int randomX2 = std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
+
+  auto ball1 = std::make_shared<Ball>(
+      10, 500, std::max(plateform_.getPosX() - 20, 5), plateform_.getPosY(),
+      plateform_.getWidth(), 0.5, -0.5);
+
+  auto ball2 = std::make_shared<Ball>(
+      10, 500, std::min(plateform_.getPosX() + 20, screen_width_ - 5),
+      plateform_.getPosY(), plateform_.getWidth(), 0.5, -0.5);
+
+  // Ajouter les nouvelles balles à la liste des balles du jeu
+  balls_.insert(ball1);
+  balls_.insert(ball2);
 }

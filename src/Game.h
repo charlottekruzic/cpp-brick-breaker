@@ -40,7 +40,7 @@ class Game {
   std::shared_ptr<SDL_Renderer> renderer_ = nullptr;
   std::shared_ptr<Grid> grid_;
   Plateform plateform_;
-  std::shared_ptr<Ball> ball_;
+  std::unordered_set<std::shared_ptr<Ball>> balls_;
 
   void initSDL();
   void createWindowAndRenderer();
@@ -63,6 +63,8 @@ class Game {
 
   void shrinkPlateformWidth();
   void enlargePlateformWidth();
+
+  void generateNewBalls();
 };
 
 #endif  // GAME_H

@@ -3,16 +3,19 @@
 #include <cmath>
 
 void CollisionManager::checkCollisions(
-    Plateform& platform, std::shared_ptr<Ball>& ball,
+    Plateform& platform, std::unordered_set<std::shared_ptr<Ball>>& balls,
     std::shared_ptr<Grid>& grid,
-    std::unordered_set<std::shared_ptr<BonusMalus>>& bonus_maluses__) {
-  checkPlatformBallCollision(platform, ball);
-  // checkWindowBallCollision(bounds, ball);
-  checkGridBallCollision(grid, ball);
+    std::unordered_set<std::shared_ptr<BonusMalus>>& bonus_malus) {
+  for (auto ball : balls) {
+    checkPlatformBallCollision(platform, ball);
+    // checkWindowBallCollision(bounds, ball);
+    checkGridBallCollision(grid, ball);
+  }
+
   // Vérifier la collision entre la balle et les bonus/malus
   std::unordered_set<std::shared_ptr<BonusMalus>> bonus_maluses_to_remove;
 
-  for (auto bonusMalus : bonus_maluses__) {
+  for (auto bonusMalus : bonus_malus) {
     if (checkCollisionPlateformBonusMalus(platform, bonusMalus)) {
       // Collision détectée, gérer l'effet du bonus/malus
       bonusMalus->applyEffect();
@@ -21,7 +24,7 @@ void CollisionManager::checkCollisions(
     }
   }
   for (auto bonusMalus : bonus_maluses_to_remove) {
-    bonus_maluses__.erase(bonusMalus);
+    bonus_malus.erase(bonusMalus);
   }
 }
 

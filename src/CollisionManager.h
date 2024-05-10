@@ -17,9 +17,9 @@ class CollisionManager {
  public:
   // Méthode principale pour vérifier les collisions
   static void checkCollisions(
-      Plateform& platform, std::shared_ptr<Ball>& ball,
+      Plateform& platform, std::unordered_set<std::shared_ptr<Ball>>& balls,
       std::shared_ptr<Grid>& grid,
-      std::unordered_set<std::shared_ptr<BonusMalus> >& bonus_maluses__);
+      std::unordered_set<std::shared_ptr<BonusMalus>>& bonus_maluses__);
 
  private:
   // Méthode pour vérifier la collision entre la plateforme et la balle
