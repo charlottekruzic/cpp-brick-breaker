@@ -44,16 +44,3 @@ bool Brick::hit() {
   // std::cout << "-1 vie mais en vie" << std::endl;
   return false;
 }
-
-// idem à Cell
-void Brick::renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                       int cellSize) {
-  int padding = 1;  // Espace entre chaque case
-  int size = cellSize - 2 * padding;
-  // Taille effective de la case avec l'espace
-  SDL_Rect rect = {x + padding, y + padding, size, size};
-  // Utilise les coordonnées et la taille du carré avec l'espace
-  SDL_Color color = ColorUtils::convertColor(getColor());
-  SDL_SetRenderDrawColor(renderer.get(), color.r, color.g, color.b, color.a);
-  SDL_RenderFillRect(renderer.get(), &rect);
-}

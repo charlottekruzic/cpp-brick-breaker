@@ -30,13 +30,17 @@ Grid::Grid(const std::string& filename, int width, int height,
   // Créer les cases de la grille en fonction du contenu du fichier
   const auto& board = parser.getBoard();
 
-  for (const auto& row : board) {
+  for (size_t i = 0; i < board.size(); i++) {
     std::vector<Cell*> gridRow;
-    for (char c : row) {
+    for (size_t j = 0; j < board[i].size(); j++) {
+      char c = board[i][j];
+      BasicBrick::Orientation orientation = ((i + j) % 2 == 0)
+                                                ? BasicBrick::Orientation::UP
+                                                : BasicBrick::Orientation::DOWN;
       if (c == ' ') {
         gridRow.push_back(new Empty());
       } else if (c >= '1' && c <= '5') {
-        gridRow.push_back(new BasicBrick(c - '0', game_));
+        gridRow.push_back(new BasicBrick(c - '0', game_, orientation));
         remainingBricks_++;
       } else if (c == 'A') {
         gridRow.push_back(new SpedUpBrick(game_, renderer));
@@ -65,19 +69,23 @@ Grid::~Grid() {
 
 void Grid::renderGrid(std::shared_ptr<SDL_Renderer>& renderer, int screenWidth,
                       int screenHeight) const {
-  int cellWidth = screenWidth / cols_;    // Largeur de chaque cellule
-  int cellHeight = screenHeight / rows_;  // Hauteur de chaque cellule
-
-  int cellSize = std::min(cellWidth, cellHeight);  // carré
+  int cellWidth =
+      (screenWidth / (cols_ + 1)) * 2.0;  // Largeur de chaque cellule
+  int cellHeight = ((screenWidth / (cols_)) * 2.0 * std::sqrt(3)) /
+                   2.0;  // Hauteur de chaque cellule
 
   for (size_t i = 0; i < grid_.size(); ++i) {
     for (size_t j = 0; j < grid_[i].size(); ++j) {
       // Coordonnées de rendu de la cellule actuelle
-      int x = j * cellSize;
-      int y = i * cellSize;
+      int x = j * cellWidth;
+      int y = i * cellHeight;
+      if (x != 0) {
+        x = j * cellWidth / 2;
+        y = i * cellHeight;
+      }
 
       // Rendu de la cellule
-      grid_[i][j]->renderCell(renderer, x, y, cellSize);
+      grid_[i][j]->renderCell(renderer, x, y, cellWidth, cellHeight);
     }
   }
 }

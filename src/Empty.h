@@ -14,8 +14,6 @@ class Empty : public Cell {
 
   bool rebondir() const override;
   bool hit() override;
-  // void renderCell(SDL_Renderer* renderer, int x, int y, int cellWidth)
-  // override;
 
  private:
   // static SDL_Texture* empty_texture_;

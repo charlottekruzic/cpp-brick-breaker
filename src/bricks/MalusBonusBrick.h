@@ -10,7 +10,7 @@ class MalusBonusBrick : public Brick {
 
   // Méthode virtuelle pure pour effectuer une action spécifique
   void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                  int cellWidth) override;
+                  int cellWidth, int cellHeight) override;
   virtual void performAction() = 0;
   bool hit() override;
 

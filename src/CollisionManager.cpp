@@ -25,61 +25,64 @@ void CollisionManager::checkCollisions(
   }
 }
 
+bool isNear(float px, float py, float x1, float y1, float x2, float y2,
+            float radius) {
+  float line_height = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+  float distance;
+  if (line_height < 0) {
+    distance = sqrt(pow(px - x1, 2) + pow(py - y1, 2));
+  } else {
+    float u = ((px - x1) * (x2 - x1) + (py - y1) * (y2 - y1)) /
+              (line_height * line_height);
+    if (u < 0.0f || u > 1.0f) {
+      distance = std::min(sqrt(pow(px - x1, 2) + pow(py - y1, 2)),
+                          sqrt(pow(px - x2, 2) + pow(py - y2, 2)));
+    } else {
+      float ix = x1 + u * (x2 - x1);
+      float iy = y1 + u * (y2 - y1);
+      distance = sqrt(pow(px - ix, 2) + pow(py - iy, 2));
+    }
+  }
+  return distance <= radius;
+}
+
 // Méthode pour vérifier la collision entre la balle et la grille
 void CollisionManager::checkGridBallCollision(std::shared_ptr<Grid>& grid,
                                               std::shared_ptr<Ball>& ball) {
-  int radiusBall = ball->getRadius();
-  float pos_xBall = ball->getPosX();
-  float pos_yBall = ball->getPosY();
-
-  int cell_size = grid->getCellSize();
-  int cell_pos_x = pos_xBall / cell_size;
-  int cell_pos_y = pos_yBall / cell_size;
-
-  bool collisionDetected = false;
-  float collisionVectorX = 0;
-  float collisionVectorY = 0;
-
-  for (int row = std::max(cell_pos_y - 1, 0);
-       row <= std::min(cell_pos_y + 1, grid->getRows() - 1); ++row) {
-    for (int col = std::max(cell_pos_x - 1, 0);
-         col <= std::min(cell_pos_x + 1, grid->getCols() - 1); ++col) {
-      Cell* cell = grid->getCell(row, col);
+  for (int i = 0; i < grid->getRows(); i++) {
+    for (int j = 0; j < grid->getCols(); j++) {
+      Cell* cell = grid->getCell(i, j);
       if (cell && cell->rebondir()) {
-        bool intersect_x = pos_xBall + radiusBall >= (col * cell_size) &&
-                           pos_xBall - radiusBall <= ((col + 1) * cell_size);
-        bool intersect_y = pos_yBall + radiusBall >= (row * cell_size) &&
-                           pos_yBall - radiusBall <= ((row + 1) * cell_size);
+        SDL_Point points[4] = {cell->getPoint(0), cell->getPoint(1),
+                               cell->getPoint(2), cell->getPoint(3)};
 
-        if (intersect_x && intersect_y) {
-          collisionDetected = true;
+        bool hit = false;
+        for (int k = 0; k < 4; k++) {
+          int next = (k + 1) % 4;
+          if (isNear(ball->getPosX(), ball->getPosY(), points[k].x, points[k].y,
+                     points[next].x, points[next].y, ball->getRadius())) {
+            hit = true;
 
-          float depth_x =
-              std::min(abs(pos_xBall + radiusBall - (col * cell_size)),
-                       abs(pos_xBall - radiusBall - ((col + 1) * cell_size)));
-          float depth_y =
-              std::min(abs(pos_yBall + radiusBall - (row * cell_size)),
-                       abs(pos_yBall - radiusBall - ((row + 1) * cell_size)));
+            // Direction collision
+            float dx = ball->getVelocityX();
+            float dy = ball->getVelocityY();
 
-          if (depth_x < depth_y) {
-            collisionVectorX +=
-                (pos_xBall < col * cell_size) ? -depth_x : depth_x;
-          } else {
-            collisionVectorY +=
-                (pos_yBall < row * cell_size) ? -depth_y : depth_y;
+            if ((k == 0 || k == 2) &&
+                fabs(dy) > fabs(dx)) {  // collision horizontale
+              ball->reverseVelocityY();
+            } else if ((k == 1 || k == 3) &&
+                       fabs(dx) > fabs(dy)) {  // collision verticale
+              ball->reverseVelocityX();
+            } else {
+              ball->reverseVelocityX();
+              ball->reverseVelocityY();
+            }
+            // Détruit cellule
+            grid->hitCell(i, j);
+            break;
           }
-
-          grid->hitCell(row, col);
         }
       }
-    }
-  }
-
-  if (collisionDetected) {
-    if (abs(collisionVectorX) > abs(collisionVectorY)) {
-      ball->reverseVelocityX();
-    } else {
-      ball->reverseVelocityY();
     }
   }
 }

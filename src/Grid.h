@@ -1,6 +1,7 @@
 #ifndef GRID_H
 #define GRID_H
 
+#include <cmath>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,6 +9,7 @@
 #include "Cell.h"
 #include "Game.h"
 #include "InputParser.h"
+#include "bricks/BasicBrick.h"
 
 class Game;
 
@@ -22,6 +24,8 @@ class Grid {
 
   inline int getRows() const { return rows_; }
   inline int getCols() const { return cols_; }
+  inline int getCellWidth() const { return width_; }
+  inline int getCellHeight() const { return height_; }
   inline int getCellSize() const {
     return std::min(width_ / getCols(), height_ / getRows());
   }

@@ -7,9 +7,10 @@ MalusBonusBrick<Derived>::MalusBonusBrick(
 
 template <typename Derived>
 void MalusBonusBrick<Derived>::renderCell(
-    std::shared_ptr<SDL_Renderer>& renderer, int x, int y, int cellSize) {
+    std::shared_ptr<SDL_Renderer>& renderer, int x, int y, int screenWidth,
+    int screenHeight) {
   int padding = 1;  // Espace entre chaque case
-  int size = cellSize - 2 * padding;
+  int size = screenWidth - 2 * padding;
 
   // Utilisez la texture du mur pour afficher le mur
   SDL_Rect rect = {x + padding, y + padding, size, size};
