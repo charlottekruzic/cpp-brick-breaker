@@ -42,3 +42,7 @@ todo
 - écrire ce qu'on a implémenté / pas implémenté
 - triangles 
 - hexagones
+
+- renderbrick identique à rendercell
+
+- pointeur : trasnformer les texture * ...

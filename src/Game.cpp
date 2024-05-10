@@ -6,6 +6,8 @@
 
 #include "bonus_malus/Enlarge.h"
 #include "bonus_malus/Shrink.h"
+#include "bonus_malus/SlowedDown.h"
+#include "bonus_malus/SpedUp.h"
 
 Game::Game(const std::string& nomFichierGrille)
     : plateform_(screen_width_, screen_height_), ball_(nullptr) {
@@ -191,7 +193,7 @@ void Game::setBallDecelerating() {
   if (ball_->getSpeed() == 500)
     ball_->setSpeed(300);
   else
-    ball_->setSpeed(300);  // retour à la normale
+    ball_->setSpeed(500);  // retour à la normale
 }
 
 void Game::shrinkPlateformWidth() {
@@ -220,31 +222,7 @@ bool Game::isBallAccelerating() const {
   return false;
 }
 */
-
 /*
-void Game::generateBonusMalus() {
-  int random = rand() % 90 + 2;
-
-  // Si le nombre aléatoire est égal à 1, générer un objet Shrink
-  if (random == 1) {
-    // Générer une position aléatoire en largeur
-    int randomX =
-        rand() % (screen_width_ - 10);  // Ajustez la plage selon vos besoins
-
-    BonusMalus* bm;
-    if (rand() % 2)
-      // Créer un nouvel objet Shrink avec la position aléatoire en largeur
-      bm = new Shrink(this, randomX, 0);
-    else
-      bm = new Enlarge(this, randomX, 0);
-
-    // Ajouter l'objet Shrink à une liste ou un vecteur de BonusMalus
-    // par exemple:
-    bonus_maluses_.insert(bm);
-  }
-}
-*/
-
 void Game::generateBonusMalus() {
   // Générateur de nombres aléatoires
   std::random_device rd;
@@ -268,6 +246,51 @@ void Game::generateBonusMalus() {
 
     // Ajouter l'objet Shrink ou Enlarge au vecteur de BonusMalus
     // bonus_maluses_.push_back(std::move(bm));
+    bonus_maluses_.insert(bm);
+  }
+}
+*/
+
+void Game::generateBonusMalus() {
+  // Générateur de nombres aléatoires
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> distrib(1, 100);
+
+  // Générer un nombre aléatoire entre 1 et 100
+  int random = distrib(gen);
+
+  // Si le nombre aléatoire est égal à 1, générer un objet Shrink, Enlarge,
+  // SpeedUp ou SlowDown
+  if (random == 1) {
+    // Générer une position aléatoire en largeur
+    int randomX = std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
+
+    // Générer un nombre aléatoire entre 0 et 3 pour choisir le type de
+    // BonusMalus
+    int type = std::uniform_int_distribution<>(0, 3)(gen);
+
+    std::shared_ptr<BonusMalus> bm;
+
+    switch (type) {
+      case 0:
+        bm = std::make_shared<Shrink>(this, randomX, 0);
+        break;
+      case 1:
+        bm = std::make_shared<Enlarge>(this, randomX, 0);
+        break;
+      case 2:
+        bm = std::make_shared<SpedUp>(this, randomX, 0);
+        break;
+      case 3:
+        bm = std::make_shared<SlowedDown>(this, randomX, 0);
+        break;
+      default:
+        // En cas de type invalide, ne rien faire
+        break;
+    }
+
+    // Ajouter l'objet au vecteur de BonusMalus
     bonus_maluses_.insert(bm);
   }
 }
