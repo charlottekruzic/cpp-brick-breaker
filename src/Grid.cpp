@@ -9,8 +9,9 @@
 #include "bricks/SpedUpBrick.h"
 // #include "Wall.h"
 
-Grid::Grid(const std::string& filename, int width, int height,
-           std::shared_ptr<SDL_Renderer>& renderer, Game* game)
+template <typename CellShape>
+Grid<CellShape>::Grid(const std::string& filename, int width, int height,
+                      std::shared_ptr<SDL_Renderer>& renderer, Game* game)
     : width_(width),
       height_(height),
       renderer_(renderer),
@@ -55,7 +56,8 @@ Grid::Grid(const std::string& filename, int width, int height,
   }
 }
 
-Grid::~Grid() {
+template <typename CellShape>
+Grid<CellShape>::~Grid() {
   for (auto& row : grid_) {
     for (auto& cell : row) {
       delete cell;
@@ -63,8 +65,9 @@ Grid::~Grid() {
   }
 }
 
-void Grid::renderGrid(std::shared_ptr<SDL_Renderer>& renderer, int screenWidth,
-                      int screenHeight) const {
+template <typename CellShape>
+void Grid<CellShape>::renderGrid(std::shared_ptr<SDL_Renderer>& renderer,
+                                 int screenWidth, int screenHeight) const {
   int cellWidth = screenWidth / cols_;    // Largeur de chaque cellule
   int cellHeight = screenHeight / rows_;  // Hauteur de chaque cellule
 
@@ -82,14 +85,16 @@ void Grid::renderGrid(std::shared_ptr<SDL_Renderer>& renderer, int screenWidth,
   }
 }
 
-Cell* Grid::getCell(int row, int col) const {
+template <typename CellShape>
+CellShape* Grid<CellShape>::getCell(int row, int col) const {
   if (row < 0 || row >= rows_ || col < 0 || col >= cols_) {
     return nullptr;
   }
   return grid_[row][col];
 }
 
-void Grid::hitCell(int x, int y) {
+template <typename CellShape>
+void Grid<CellShape>::hitCell(int x, int y) {
   Cell* c = getCell(x, y);
   BasicBrick* basicBrick =
       dynamic_cast<BasicBrick*>(c);  // Vérifie si c est un BasicBrick
@@ -97,7 +102,7 @@ void Grid::hitCell(int x, int y) {
   bool detruit = c->hit();
   if (detruit) {
     delete grid_[x][y];
-    grid_[x][y] = new Empty();
+    grid_[x][y] = new Empty();  // std::make_unique<Empty>()
     if (basicBrick) remainingBricks_--;
   }
 }

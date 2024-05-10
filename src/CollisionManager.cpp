@@ -4,7 +4,7 @@
 
 void CollisionManager::checkCollisions(
     Plateform& platform, std::unordered_set<std::shared_ptr<Ball>>& balls,
-    std::shared_ptr<Grid>& grid,
+    std::shared_ptr<Grid<SquareCell>>& grid,
     std::unordered_set<std::shared_ptr<BonusMalus>>& bonus_malus) {
   for (auto ball : balls) {
     checkPlatformBallCollision(platform, ball);
@@ -29,8 +29,8 @@ void CollisionManager::checkCollisions(
 }
 
 // Méthode pour vérifier la collision entre la balle et la grille
-void CollisionManager::checkGridBallCollision(std::shared_ptr<Grid>& grid,
-                                              std::shared_ptr<Ball>& ball) {
+void CollisionManager::checkGridBallCollision(
+    std::shared_ptr<Grid<SquareCell>>& grid, std::shared_ptr<Ball>& ball) {
   int radiusBall = ball->getRadius();
   float pos_xBall = ball->getPosX();
   float pos_yBall = ball->getPosY();

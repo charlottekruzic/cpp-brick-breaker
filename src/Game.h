@@ -11,9 +11,11 @@
 #include "CollisionManager.h"
 #include "Grid.h"
 #include "Plateform.h"
+#include "Shape.h"
 #include "bonus_malus/BonusMalus.h"
 
 class Ball;
+template <typename SquareCell>
 class Grid;
 class BonusMalus;
 class CollisionManager;
@@ -38,7 +40,7 @@ class Game {
 
   std::shared_ptr<SDL_Window> window_ = nullptr;
   std::shared_ptr<SDL_Renderer> renderer_ = nullptr;
-  std::shared_ptr<Grid> grid_;
+  std::shared_ptr<Grid<SquareCell>> grid_;
   Plateform plateform_;
   std::unordered_set<std::shared_ptr<Ball>> balls_;
 
