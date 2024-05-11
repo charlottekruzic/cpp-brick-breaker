@@ -1,0 +1,66 @@
+@startuml
+
+class Ball 
+
+class CollisionManager 
+
+enum Color
+
+class ColorUtils
+
+class Game
+
+class Grid
+
+class InputParser
+
+class Plateform
+
+
+
+class BonusMalus
+class MultiBall
+class Enlarge
+class Shrink
+class SlowedDown
+class SpedUp 
+
+BonusMalus <|-- MultiBall 
+BonusMalus <|-- Enlarge 
+BonusMalus <|-- Shrink 
+BonusMalus <|-- SlowedDown 
+BonusMalus <|-- SpedUp 
+ 
+
+interface Cell
+
+class Brick
+class Empty
+class Wall 
+Cell <|-- Brick
+Cell <|-- Empty
+Cell <|-- Wall 
+
+class BasicBrick
+class SpecialBrick
+Brick <|-- BasicBrick
+Brick <|-- SpecialBrick
+
+class BonusBrick
+class MalusBrick
+SpecialBrick <|-- BonusBrick
+SpecialBrick <|-- MalusBrick
+
+class SlowedDownBrick
+class EnlargeBrick
+BonusBrick <|-- EnlargeBrick 
+BonusBrick <|-- SlowedDownBrick
+
+class ShrinkBrick
+class SpedUpBrick
+MalusBrick <|-- SpedUpBrick 
+MalusBrick <|-- ShrinkBrick 
+
+
+
+@enduml

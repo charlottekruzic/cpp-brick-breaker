@@ -1,14 +1,14 @@
-#include "MalusBonusBrick.h"
+#include "SpecialBrick.h"
 
 template <typename Derived>
-MalusBonusBrick<Derived>::MalusBonusBrick(
-    Game* game, std::shared_ptr<SDL_Renderer>& renderer)
+SpecialBrick<Derived>::SpecialBrick(Game* game,
+                                    std::shared_ptr<SDL_Renderer>& renderer)
     : Brick(1, game) {}
 
 template <typename Derived>
-void MalusBonusBrick<Derived>::renderCell(
-    std::shared_ptr<SDL_Renderer>& renderer, int x, int y, int cellWidth,
-    int cellHeight) {
+void SpecialBrick<Derived>::renderCell(std::shared_ptr<SDL_Renderer>& renderer,
+                                       int x, int y, int cellWidth,
+                                       int cellHeight) {
   int padding = 1;  // Espace entre chaque case
   int size = cellWidth - 2 * padding;
 
@@ -18,7 +18,7 @@ void MalusBonusBrick<Derived>::renderCell(
 }
 
 template <typename Derived>
-bool MalusBonusBrick<Derived>::hit() {
+bool SpecialBrick<Derived>::hit() {
   if (hitsLeft_ > 0) {
     hitsLeft_--;
   }

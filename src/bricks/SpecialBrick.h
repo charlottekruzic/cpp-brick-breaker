@@ -4,9 +4,9 @@
 #include "Brick.h"
 
 template <typename Derived>
-class MalusBonusBrick : public Brick {
+class SpecialBrick : public Brick {
  public:
-  MalusBonusBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer);
+  SpecialBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer);
 
   // Méthode virtuelle pure pour effectuer une action spécifique
   void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
@@ -19,6 +19,6 @@ class MalusBonusBrick : public Brick {
   }
 };
 
-#include "MalusBonusBrick.hpp"
+#include "SpecialBrick.hpp"
 
 #endif  // MALUS_BONUS_H

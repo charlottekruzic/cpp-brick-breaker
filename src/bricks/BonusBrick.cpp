@@ -9,7 +9,7 @@
 std::shared_ptr<SDL_Texture> BonusBrick::bonus_texture_ = nullptr;
 
 BonusBrick::BonusBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
-    : MalusBonusBrick(game, renderer) {
+    : SpecialBrick(game, renderer) {
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!bonus_texture_) {
     // Chargez la texture du mur depuis un fichier

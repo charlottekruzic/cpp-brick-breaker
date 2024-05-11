@@ -1,9 +1,9 @@
 #ifndef MALUS_BRICK_H
 #define MALUS_BRICK_H
 
-#include "MalusBonusBrick.h"
+#include "SpecialBrick.h"
 
-class MalusBrick : public MalusBonusBrick<MalusBrick> {
+class MalusBrick : public SpecialBrick<MalusBrick> {
  public:
   MalusBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer);
 
