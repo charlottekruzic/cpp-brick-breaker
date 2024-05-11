@@ -6,12 +6,11 @@
 #include "Ball.h"
 #include "Grid.h"
 #include "Plateform.h"
-#include "Shape.h"
-#include "bonus_malus/BonusMalus.h"
+// #include "bonus_malus/BonusMalus.h"
 
 class Ball;
 class Plateform;
-template <typename SquareCell>
+template <typename Shape>
 class Grid;
 class BonusMalus;
 
@@ -20,8 +19,8 @@ class CollisionManager {
   // Méthode principale pour vérifier les collisions
   static void checkCollisions(
       Plateform& platform, std::unordered_set<std::shared_ptr<Ball>>& balls,
-      std::shared_ptr<Grid<SquareCell>>& grid,
-      std::unordered_set<std::shared_ptr<BonusMalus>>& bonus_maluses__);
+      std::shared_ptr<Grid<SquareCell>>& grid/*,
+      std::unordered_set<std::shared_ptr<BonusMalus>>& bonus_maluses__*/);
 
  private:
   // Méthode pour vérifier la collision entre la plateforme et la balle
@@ -31,8 +30,8 @@ class CollisionManager {
   static void checkGridBallCollision(std::shared_ptr<Grid<SquareCell>>& grid,
                                      std::shared_ptr<Ball>& ball);
 
-  static bool checkCollisionPlateformBonusMalus(
-      Plateform& plateform, std::shared_ptr<BonusMalus>& bonusMalus);
+  // static bool checkCollisionPlateformBonusMalus(
+  // Plateform& plateform, std::shared_ptr<BonusMalus>& bonusMalus);
 };
 
 #endif

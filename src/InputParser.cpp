@@ -9,6 +9,7 @@ bool InputParser::parseFile() {
   std::ifstream file(filename_);
   if (!file.is_open()) {
     std::cerr << "Impossible d'ouvrir le fichier: " << filename_ << std::endl;
+    // erreur gérée dans Grid.h
     return false;
   }
 
@@ -21,9 +22,10 @@ bool InputParser::parseFile() {
     std::string line;
     std::getline(file, line);
     if (line.length() != static_cast<size_t>(cols_)) {
-      std::cerr << "Invalid input: incorrect number of characters in line "
-                << (i + 1) << " : " << line.length() << "," << cols_
-                << std::endl;
+      std::cerr
+          << "Entrée invalide : nombre incorrect de caractères dans la ligne "
+          << (i + 2) << " : longueur de la ligne : " << line.length()
+          << ", nombre de caractères attendu : " << cols_ << std::endl;
       return false;
     }
     board_.push_back(line);
@@ -32,9 +34,3 @@ bool InputParser::parseFile() {
   file.close();
   return true;
 }
-
-int InputParser::getRows() const { return rows_; }
-
-int InputParser::getCols() const { return cols_; }
-
-const std::vector<std::string>& InputParser::getBoard() const { return board_; }

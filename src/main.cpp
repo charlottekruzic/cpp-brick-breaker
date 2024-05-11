@@ -4,12 +4,17 @@
 #include "Game.h"
 
 int main(int argc, char* argv[]) {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " <nom_fichier_grille>" << std::endl;
+  if (argc != 3) {
+    //-t pour triangle
+    //-s pour square
+    std::cerr << "Usage: " << argv[0] << " <nom_fichier_grille>"
+              << " <type_cellule>\n"
+              << std::endl;
     return 1;
   }
 
   std::string nomFichierGrille = argv[1];
+  std::string shapeCellule = argv[2];
 
   // Vérifier si l'utilisateur demande de l'aide
   std::string argument = argv[1];
@@ -36,6 +41,6 @@ int main(int argc, char* argv[]) {
   }
 
   // Démarrer le jeu avec le nom du fichier de grille fourni
-  Game game(nomFichierGrille);
+  Game game(nomFichierGrille, shapeCellule);
   return game.execute();
 }

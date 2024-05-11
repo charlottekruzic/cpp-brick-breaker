@@ -4,10 +4,12 @@
 #include "Brick.h"
 
 // Classe représentant une brique basique
-class BasicBrick : public Brick {
+template <typename Shape>
+class BasicBrick : public Brick<Shape> {
  public:
   BasicBrick(int strength, Game* game)
-      : Brick(strength, game) {}  // Constructeur prenant la couleur choisie
+      : Brick<Shape>(strength, game) {
+  }  // Constructeur prenant la couleur choisie
 };
 
 #endif  // BASICsBRICK_H

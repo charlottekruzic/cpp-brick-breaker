@@ -4,8 +4,8 @@
 
 void CollisionManager::checkCollisions(
     Plateform& platform, std::unordered_set<std::shared_ptr<Ball>>& balls,
-    std::shared_ptr<Grid<SquareCell>>& grid,
-    std::unordered_set<std::shared_ptr<BonusMalus>>& bonus_malus) {
+    std::shared_ptr<Grid<SquareCell>>& grid
+    /*, std::unordered_set<std::shared_ptr<BonusMalus>>& bonus_malus*/) {
   for (auto ball : balls) {
     checkPlatformBallCollision(platform, ball);
     // checkWindowBallCollision(bounds, ball);
@@ -15,7 +15,7 @@ void CollisionManager::checkCollisions(
   // Vérifier la collision entre la balle et les bonus/malus
   std::unordered_set<std::shared_ptr<BonusMalus>> bonus_maluses_to_remove;
 
-  for (auto bonusMalus : bonus_malus) {
+  /*for (auto bonusMalus : bonus_malus) {
     if (checkCollisionPlateformBonusMalus(platform, bonusMalus)) {
       // Collision détectée, gérer l'effet du bonus/malus
       bonusMalus->applyEffect();
@@ -25,7 +25,7 @@ void CollisionManager::checkCollisions(
   }
   for (auto bonusMalus : bonus_maluses_to_remove) {
     bonus_malus.erase(bonusMalus);
-  }
+  }*/
 }
 
 // Méthode pour vérifier la collision entre la balle et la grille
@@ -47,7 +47,7 @@ void CollisionManager::checkGridBallCollision(
        row <= std::min(cell_pos_y + 1, grid->getRows() - 1); ++row) {
     for (int col = std::max(cell_pos_x - 1, 0);
          col <= std::min(cell_pos_x + 1, grid->getCols() - 1); ++col) {
-      Cell* cell = grid->getCell(row, col);
+      Cell<SquareCell>* cell = grid->getCell(row, col);
       if (cell && cell->rebondir()) {
         bool intersect_x = pos_xBall + radiusBall >= (col * cell_size) &&
                            pos_xBall - radiusBall <= ((col + 1) * cell_size);
@@ -141,7 +141,7 @@ void CollisionManager::checkPlatformBallCollision(Plateform& platform,
   }
 }
 
-bool CollisionManager::checkCollisionPlateformBonusMalus(
+/*bool CollisionManager::checkCollisionPlateformBonusMalus(
     Plateform& plateform, std::shared_ptr<BonusMalus>& bonusMalus) {
   // Récupérer les coordonnées de la plateforme
   int plateformLeft = plateform.getPosX();
@@ -162,4 +162,4 @@ bool CollisionManager::checkCollisionPlateformBonusMalus(
       (plateformTop < bonusMalusBottom) && (plateformBottom > bonusMalusTop);
 
   return collision;
-}
+}*/
