@@ -11,7 +11,6 @@ class SlowedDownBrick : public BonusBrick {
       : BonusBrick(game, renderer) {}
 
   void performAction() override {
-    std::cout << "SLOWED DOWN" << std::endl;
     // Démarrer l'accélération de la balle
     game_->setBallDecelerating();
   }

@@ -239,7 +239,7 @@ void Game::shrinkPlateformWidth() {
     plateform_.setWidth(plateform_.getWidth() - 30);
 }
 void Game::enlargePlateformWidth() {
-  if (plateform_.getWidth() < 200)
+  if (plateform_.getWidth() < 150)
     plateform_.setWidth(plateform_.getWidth() + 30);
 }
 

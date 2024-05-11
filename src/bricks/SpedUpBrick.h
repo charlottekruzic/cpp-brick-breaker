@@ -11,7 +11,6 @@ class SpedUpBrick : public MalusBrick {
       : MalusBrick(game, renderer) {}
 
   void performAction() override {
-    std::cout << "perform action speed change" << std::endl;
     // Démarrer l'accélération de la balle
     game_->setBallAccelerating();
   }

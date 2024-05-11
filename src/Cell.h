@@ -1,9 +1,7 @@
 #ifndef CELL_H
 #define CELL_H
 
-#include <iostream>
 #include <memory>
-#include <vector>
 
 #include "Colors.h"
 
@@ -21,8 +19,8 @@ class Cell {
 
  protected:
   // constructeur accessible uniquement par les classes enfants
-  Cell();
-  Cell(Color color);
+  Cell() : color_(Color::White) {}
+  Cell(Color color) : color_(color) {}
 
   Color color_;
 };

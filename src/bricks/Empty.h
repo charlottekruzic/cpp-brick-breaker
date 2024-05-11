@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL_image.h>
 
-#include "Cell.h"
+#include "../Cell.h"
 
 // Classe représentant une case vide
 class Empty : public Cell {

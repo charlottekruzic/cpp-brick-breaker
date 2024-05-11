@@ -1,13 +1,15 @@
 #include "Grid.h"
 
-#include "Empty.h"
+#include <iostream>
+
 #include "bricks/BasicBrick.h"
+#include "bricks/Empty.h"
 #include "bricks/EnlargeBrick.h"
 #include "bricks/MalusBrick.h"
 #include "bricks/ShrinkBrick.h"
 #include "bricks/SlowedDownBrick.h"
 #include "bricks/SpedUpBrick.h"
-// #include "Wall.h"
+#include "bricks/Wall.h"
 
 Grid::Grid(const std::string& filename, int width, int height,
            std::shared_ptr<SDL_Renderer>& renderer, Game* game)
@@ -46,6 +48,8 @@ Grid::Grid(const std::string& filename, int width, int height,
         gridRow.push_back(new EnlargeBrick(game_, renderer));
       } else if (c == 'S') {
         gridRow.push_back(new ShrinkBrick(game_, renderer));
+      } else if (c == 'W') {
+        gridRow.push_back(new Wall(renderer));
       } else {
         std::cerr << "Caractère inconnu: " << c << std::endl;
         gridRow.push_back(new Empty());
