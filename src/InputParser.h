@@ -28,18 +28,18 @@ class InputParser {
    * @brief Récupère le nombre de lignes du tableau.
    * @return Le nombre de lignes du tableau.
    */
-  int getRows() const;
+  inline int getRows() const { return rows_; }
   /**
    * @brief Récupère le nombre de colonnes du tableau.
    * @return Le nombre de colonnes du tableau.
    */
-  int getCols() const;
+  inline int getCols() const { return cols_; }
 
   /**
    * @brief Récupère la grille de jeu.
    * @return La grille de jeu sous forme d'un vecteur de chaînes de caractères.
    */
-  const std::vector<std::string>& getBoard() const;
+  inline const std::vector<std::string>& getBoard() const { return board_; }
 
  private:
   std::string filename_;           /**< Nom du fichier à parser. */

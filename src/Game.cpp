@@ -37,7 +37,8 @@ void Game::createWindowAndRenderer() {
       });
 
   if (!window_) {
-    std::cerr << "Error creating windows_: " << SDL_GetError() << std::endl;
+    std::cerr << "Erreur lors de la création de la fenêtre : " << SDL_GetError()
+              << std::endl;
     SDL_Quit();
     exit(1);
   }
@@ -48,7 +49,8 @@ void Game::createWindowAndRenderer() {
         if (renderer) SDL_DestroyRenderer(renderer);
       });
   if (!renderer_) {
-    std::cerr << "Error creating renderer_: " << SDL_GetError() << std::endl;
+    std::cerr << "Erreur lors de la création du rendu : " << SDL_GetError()
+              << std::endl;
     SDL_DestroyWindow(window_.get());
     SDL_Quit();
     exit(1);

@@ -16,9 +16,9 @@ MalusBrick::MalusBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
 
     if (!surface) {
       // Gestion de l'erreur si le chargement de l'image échoue
-      std::cerr << "Failed to load malus texture: " << IMG_GetError()
-                << std::endl;
-      return;
+      std::cerr << "Échec du chargement de la texture du malus : "
+                << IMG_GetError() << std::endl;
+      exit(1);
     }
     malus_texture_ = std::shared_ptr<SDL_Texture>(
         SDL_CreateTextureFromSurface(renderer.get(), surface),
@@ -26,9 +26,9 @@ MalusBrick::MalusBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
     SDL_FreeSurface(surface);
     if (!malus_texture_) {
       // Gestion de l'erreur si la création de la texture échoue
-      std::cerr << "Failed to create malus texture: " << SDL_GetError()
-                << std::endl;
-      return;
+      std::cerr << "Échec de la création de la texture du malus : "
+                << SDL_GetError() << std::endl;
+      exit(1);
     }
   }
 }

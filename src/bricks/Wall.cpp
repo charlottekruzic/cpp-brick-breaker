@@ -15,9 +15,8 @@ Wall::Wall(std::shared_ptr<SDL_Renderer>& renderer) : Cell(Color::Cyan) {
 
     if (!surface) {
       // Gestion de l'erreur si le chargement de l'image échoue
-      std::cerr << "Failed to load wall texture: " << IMG_GetError()
-                << std::endl;
-      return;
+      std::cerr << "Échec du chargement de la texture du mur : " << std::endl;
+      exit(1);
     }
     wall_texture_ = std::shared_ptr<SDL_Texture>(
         SDL_CreateTextureFromSurface(renderer.get(), surface),
@@ -25,9 +24,9 @@ Wall::Wall(std::shared_ptr<SDL_Renderer>& renderer) : Cell(Color::Cyan) {
     SDL_FreeSurface(surface);
     if (!wall_texture_) {
       // Gestion de l'erreur si la création de la texture échoue
-      std::cerr << "Failed to create wall texture: " << SDL_GetError()
-                << std::endl;
-      return;
+      std::cerr << "Échec de la création de la texture du mur : "
+                << SDL_GetError() << std::endl;
+      exit(1);
     }
   }
 }

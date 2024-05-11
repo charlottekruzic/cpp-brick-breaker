@@ -21,7 +21,9 @@ Grid::Grid(const std::string& filename, int width, int height,
   InputParser parser(filename);
   if (!parser.parseFile()) {
     // Gérer l'erreur de lecture du fichier
-    std::cerr << "Erreur lors de la lecture du fichier" << std::endl;
+    std::cerr << "Erreur lors de la lecture du fichier '" << filename << "'"
+              << std::endl;
+    exit(1);
     return;
   }
 
@@ -51,7 +53,8 @@ Grid::Grid(const std::string& filename, int width, int height,
       } else if (c == 'W') {
         gridRow.push_back(new Wall(renderer));
       } else {
-        std::cerr << "Caractère inconnu: " << c << std::endl;
+        std::cerr << "Caractère inconnu '" << c
+                  << "'. Remplacé par une case vide" << std::endl;
         gridRow.push_back(new Empty());
       }
     }

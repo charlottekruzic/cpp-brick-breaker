@@ -17,9 +17,9 @@ BonusBrick::BonusBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
 
     if (!surface) {
       // Gestion de l'erreur si le chargement de l'image échoue
-      std::cerr << "Failed to load wall texture: " << IMG_GetError()
-                << std::endl;
-      return;
+      std::cerr << "Échec du chargement de la texture du bonus : "
+                << IMG_GetError() << std::endl;
+      exit(1);
     }
     bonus_texture_ = std::shared_ptr<SDL_Texture>(
         SDL_CreateTextureFromSurface(renderer.get(), surface),
@@ -27,9 +27,9 @@ BonusBrick::BonusBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
     SDL_FreeSurface(surface);
     if (!bonus_texture_) {
       // Gestion de l'erreur si la création de la texture échoue
-      std::cerr << "Failed to create wall texture: " << SDL_GetError()
-                << std::endl;
-      return;
+      std::cerr << "Échec de la création de la texture du bonus : "
+                << SDL_GetError() << std::endl;
+      exit(1);
     }
   }
 }
