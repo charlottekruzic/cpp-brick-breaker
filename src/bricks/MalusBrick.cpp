@@ -12,7 +12,7 @@ MalusBrick::MalusBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!malus_texture_) {
     // Chargez la texture du mur depuis un fichier
-    SDL_Surface* surface = IMG_Load("img/goomba.jpg");
+    SDL_Surface* surface = IMG_Load("img/goomba.png");
 
     if (!surface) {
       // Gestion de l'erreur si le chargement de l'image échoue

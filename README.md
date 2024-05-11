@@ -14,7 +14,7 @@ Le jeu comprend différents types de briques, chacune ayant une force différent
 - Brique rouge : force 4
 - Brique violette : force 5
 
-Dans cette version du jeu, nous avons ajouté des briques Bonus/Malus. Ces briques spéciales sont masquées derrière une image, ce qui signifie que vous ne pouvez pas savoir à l'avance quels types de bonus [img/bonus.jpg] ou de malus [img/malus.jpg] se cachent derrière elles. Contrairement aux briques normales, ces briques n'ont pas besoin d'être cassées pour remporter la partie.
+Dans cette version du jeu, nous avons ajouté des briques Bonus/Malus. Ces briques spéciales sont masquées derrière une image, ce qui signifie que vous ne pouvez pas savoir à l'avance quels types de bonus [img/bonus.png] ou de malus [img/malus.png] se cachent derrière elles. Contrairement aux briques normales, ces briques n'ont pas besoin d'être cassées pour remporter la partie.
 
 Il esite aussi des briques indestructibles pour complexifier certaines zone d'accès, elles n'ont pas besoin d'etre détruites pour remporter la partie.
 
