@@ -54,10 +54,10 @@ Grid<SquareCell>::Grid(const std::string& filename, int width, int height,
         gridRow.push_back(new EnlargeBrick(game_, renderer));
       } else if (c == 'S') {
         gridRow.push_back(new ShrinkBrick(game_, renderer));
-      } else if (c == 'W') {
-        gridRow.push_back(new Wall(renderer));
-      }*/
-      else {
+      } */
+      else if (c == 'W') {
+        gridRow.push_back(new Wall<SquareCell>(renderer));
+      } else {
         std::cerr << "Caractère inconnu '" << c
                   << "'. Remplacé par une case vide" << std::endl;
         gridRow.push_back(new Empty<SquareCell>());
@@ -111,7 +111,9 @@ Grid<TriangleCell>::Grid(const std::string& filename, int width, int height,
       } else if (c == 'S') {
         gridRow.push_back(new ShrinkBrick(game_, renderer));
       } */
-      else {
+      else if (c == 'W') {
+        gridRow.push_back(new Wall<TriangleCell>(renderer, orientation));
+      } else {
         std::cerr << "Caractère inconnu: " << c << std::endl;
         gridRow.push_back(new Empty<TriangleCell>());
       }

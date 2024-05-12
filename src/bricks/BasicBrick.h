@@ -17,7 +17,7 @@ class BasicBrick : public Brick<Shape> {
   BasicBrick(int strength, Game* game) : Brick<Shape>(strength, game) {}
   BasicBrick(int strength, Game* game, TriangleCell::Orientation orientation)
       : Brick<Shape>(strength, game, orientation) {
-    this->shape_ = TriangleCell(orientation);
+    // this->shape_ = TriangleCell(orientation);
   }
 };
 

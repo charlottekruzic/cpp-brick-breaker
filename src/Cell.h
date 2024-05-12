@@ -29,7 +29,13 @@ class Cell {
   // constructeur accessible uniquement par les classes enfants
   Cell() : color_(Color::White) {}
   Cell(Color color) : color_(color) {}
-  Cell(TriangleCell::Orientation orientation) : orientation_(orientation) {}
+  Cell(TriangleCell::Orientation orientation) : orientation_(orientation) {
+    this->shape_ = TriangleCell(orientation);
+  }
+  Cell(Color color, TriangleCell::Orientation orientation)
+      : color_(color), orientation_(orientation) {
+    this->shape_ = TriangleCell(orientation);
+  }
 
   Color color_;
   Shape shape_;

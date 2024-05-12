@@ -17,7 +17,7 @@
 //  #include "bricks/ShrinkBrick.h"
 //  #include "bricks/SlowedDownBrick.h"
 //  #include "bricks/SpedUpBrick.h"
-//  #include "bricks/Wall.h"
+#include "bricks/Wall.h"
 
 class Game;
 
