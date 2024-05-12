@@ -3,12 +3,15 @@
 
 #include "BonusMalus.h"
 
+template <typename Shape>
 class Game;
 
-class MultiBall : public BonusMalus {
+template <typename Shape>
+class MultiBall : public BonusMalus<Shape> {
  public:
-  MultiBall(Game* game, int x, int y);
+  MultiBall(Game<Shape>* game, int x, int y);
   void applyEffect() override;
 };
 
+#include "MultiBall.hpp"
 #endif  // MULTIBALL_H

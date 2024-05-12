@@ -1,19 +1,24 @@
 // SpeedChangeBrick.h
-#ifndef SLOWED_DOWN_BRICK_H
-#define SLOWED_DOWN_BRICK_H
+#ifndef SLOWEDDOWN_BRICK_H
+#define SLOWEDDOWN_BRICK_H
 
+#include "../Game.h"
 #include "BonusBrick.h"
 
-class SlowedDownBrick : public BonusBrick {
+template <typename Shape>
+class SlowedDownBrick : public BonusBrick<Shape> {
  public:
- public:
-  SlowedDownBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
-      : BonusBrick(game, renderer) {}
+  SlowedDownBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer)
+      : BonusBrick<Shape>(game, renderer) {}
+
+  SlowedDownBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer,
+                  TriangleCell::Orientation orientation)
+      : BonusBrick<Shape>(game, renderer, orientation) {}
 
   void performAction() override {
-    // Démarrer l'accélération de la balle
-    game_->setBallDecelerating();
+    // Augmenter la largeur de la plateforme
+    this->game_->setBallDecelerating();
   }
 };
 
-#endif  // SLOWED_DOWN_BRICK_H
+#endif  // SLOWEDDOWN_BRICK_H

@@ -1,23 +1,26 @@
 #ifndef EMPTY_H
 #define EMPTY_H
 
-#include <SDL2/SDL_image.h>
-
 #include "../Cell.h"
 
 // Classe représentant une case vide
-class Empty : public Cell {
+template <typename Shape>
+class Empty : public Cell<Shape> {
  public:
   Empty();
   Empty(Color color);
-  ~Empty() override{};
+  Empty(TriangleCell::Orientation orientation);
+  ~Empty() override;
 
-  bool rebondir() const override;
-  bool hit() override;
+  // Les objets ne rebondissent pas sur une case vide
+  inline bool rebondir() const override { return false; }
+  inline bool hit() override { return true; }
+  inline Color getColor() const override { return this->color_; }
+
   void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                  int cellWidth, int cellHeight) override;
-
-  Color getColor() const override;
+                  float cellWidth, float cellHeight) override;
 };
+
+#include "Empty.hpp"
 
 #endif  // EMPTY_H

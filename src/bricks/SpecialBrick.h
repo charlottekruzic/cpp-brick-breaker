@@ -3,14 +3,16 @@
 
 #include "Brick.h"
 
-template <typename Derived>
-class SpecialBrick : public Brick {
+template <class Derived, typename Shape>
+class SpecialBrick : public Brick<Shape> {
  public:
-  SpecialBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer);
+  SpecialBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer);
+  SpecialBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer,
+               TriangleCell::Orientation orientation);
 
   // Méthode virtuelle pure pour effectuer une action spécifique
   void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                  int cellWidth, int cellHeight) override;
+                  float cellWidth, float cellHeight) override;
   virtual void performAction() = 0;
   bool hit() override;
 

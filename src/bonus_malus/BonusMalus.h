@@ -8,11 +8,13 @@
 #include "../Colors.h"
 // #include "Game.h"
 
+template <typename Shape>
 class Game;
 
+template <typename Shape>
 class BonusMalus {
  public:
-  BonusMalus(Game* game, Color color, int x, int y);
+  BonusMalus(Game<Shape>* game, Color color, int x, int y);
 
   int getX() const { return x_; }
   int getY() const { return y_; }
@@ -30,7 +32,7 @@ class BonusMalus {
 
  protected:
   Color color_{Color::DEFAULT_COLOR};
-  Game* game_;
+  Game<Shape>* game_;
 
  private:
   int x_;
@@ -40,4 +42,5 @@ class BonusMalus {
   static constexpr int fall_speed_ = 2;  // Vitesse de chute
 };
 
+#include "BonusMalus.hpp"
 #endif  // BONUS_MALUS_H

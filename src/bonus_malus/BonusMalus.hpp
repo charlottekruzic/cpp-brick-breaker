@@ -1,11 +1,12 @@
-#include "BonusMalus.h"
-
 #include <memory>
 
-BonusMalus::BonusMalus(Game* game, Color color, int x, int y)
+#include "BonusMalus.h"
+template <typename Shape>
+BonusMalus<Shape>::BonusMalus(Game<Shape>* game, Color color, int x, int y)
     : game_(game), color_(color), x_(x), y_(y) {}
 
-void BonusMalus::render(std::shared_ptr<SDL_Renderer>& renderer) {
+template <typename Shape>
+void BonusMalus<Shape>::render(std::shared_ptr<SDL_Renderer>& renderer) {
   SDL_Color color = ColorUtils::convertColor(getColor());
   SDL_SetRenderDrawColor(renderer.get(), color.r, color.g, color.b, color.a);
   SDL_Rect rect = {x_, y_, width_, height_};

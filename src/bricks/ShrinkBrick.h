@@ -1,16 +1,23 @@
+// SpeedChangeBrick.h
 #ifndef SHRINK_BRICK_H
 #define SHRINK_BRICK_H
 
+#include "../Game.h"
 #include "MalusBrick.h"
 
-class ShrinkBrick : public MalusBrick {
+template <typename Shape>
+class ShrinkBrick : public MalusBrick<Shape> {
  public:
-  ShrinkBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
-      : MalusBrick(game, renderer) {}
+  ShrinkBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer)
+      : MalusBrick<Shape>(game, renderer) {}
+
+  ShrinkBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer,
+              TriangleCell::Orientation orientation)
+      : MalusBrick<Shape>(game, renderer, orientation) {}
 
   void performAction() override {
     // Augmenter la largeur de la plateforme
-    game_->shrinkPlateformWidth();
+    this->game_->shrinkPlateformWidth();
   }
 };
 

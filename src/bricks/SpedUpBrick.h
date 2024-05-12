@@ -1,19 +1,24 @@
 // SpeedChangeBrick.h
-#ifndef SPEED_CHANGE_BRICK_H
-#define SPEED_CHANGE_BRICK_H
+#ifndef SPEDUP_BRICK_H
+#define SPEDUP_BRICK_H
 
-#include "MalusBrick.h"
+#include "../Game.h"
+#include "BonusBrick.h"
 
-class SpedUpBrick : public MalusBrick {
+template <typename Shape>
+class SpedUpBrick : public MalusBrick<Shape> {
  public:
- public:
-  SpedUpBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
-      : MalusBrick(game, renderer) {}
+  SpedUpBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer)
+      : MalusBrick<Shape>(game, renderer) {}
+
+  SpedUpBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer,
+              TriangleCell::Orientation orientation)
+      : MalusBrick<Shape>(game, renderer, orientation) {}
 
   void performAction() override {
-    // Démarrer l'accélération de la balle
-    game_->setBallAccelerating();
+    // Augmenter la largeur de la plateforme
+    this->game_->setBallAccelerating();
   }
 };
 
-#endif  // SPEED_CHANGE_BRICK_H
+#endif  // SPEDUP_BRICK_H
