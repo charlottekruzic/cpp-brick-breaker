@@ -1,8 +1,10 @@
-#include "CollisionManager.h"
-
 #include <cmath>
 
-void CollisionManager::checkCollisions(
+#if 0
+#include "Ball.h"
+#include "CollisionManager.h"
+
+void CollisionManager<SquareCell>::checkCollisions(
     Plateform& platform, std::unordered_set<std::shared_ptr<Ball>>& balls,
     std::shared_ptr<Grid<SquareCell>>& grid
     /*, std::unordered_set<std::shared_ptr<BonusMalus>>& bonus_malus*/) {
@@ -29,7 +31,8 @@ void CollisionManager::checkCollisions(
 }
 
 // Méthode pour vérifier la collision entre la balle et la grille
-void CollisionManager::checkGridBallCollision(
+
+void CollisionManager<SquareCell>::checkGridBallCollision(
     std::shared_ptr<Grid<SquareCell>>& grid, std::shared_ptr<Ball>& ball) {
   int radiusBall = ball->getRadius();
   float pos_xBall = ball->getPosX();
@@ -87,8 +90,8 @@ void CollisionManager::checkGridBallCollision(
   }
 }
 
-void CollisionManager::checkPlatformBallCollision(Plateform& platform,
-                                                  std::shared_ptr<Ball>& ball) {
+void CollisionManager<SquareCell>::checkPlatformBallCollision(
+    Plateform& platform, std::shared_ptr<Ball>& ball) {
   if (ball->getPosY() > platform.getPosY()) {
     return;
   }
@@ -163,3 +166,5 @@ void CollisionManager::checkPlatformBallCollision(Plateform& platform,
 
   return collision;
 }*/
+
+#endif

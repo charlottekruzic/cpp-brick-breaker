@@ -3,8 +3,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "Grid.h"
-#include "Plateform.h"
+#include <memory>
 
 /**
  * @brief Classe représentant une balle dans le jeu.

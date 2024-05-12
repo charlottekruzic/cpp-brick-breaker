@@ -65,6 +65,12 @@ class Brick : public Cell<Shape> {
   Brick(int strength, Game* game)
       : strength_(strength), hitsLeft_(strength), game_(game) {}
 
+  Brick(int strength, Game* game, TriangleCell::Orientation orientation)
+      : strength_(strength),
+        hitsLeft_(strength),
+        game_(game),
+        Cell<Shape>(orientation) {}
+
  protected:
   Game* game_;    // Attribut pour stocker un pointeur vers l'objet Game
   int hitsLeft_;  // Nombre de coups restants

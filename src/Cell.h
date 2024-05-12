@@ -1,11 +1,14 @@
 #ifndef CELL_H
 #define CELL_H
 
+#include <SDL2/SDL.h>
+
 #include <memory>
 
 #include "Colors.h"
-#include "SquareCell.h"
 #include "TriangleCell.h"
+// #include "SquareCell.h"
+// #include "TriangleCell.h"
 
 // Classe de base représentant une case du plateau
 template <typename Shape>
@@ -24,9 +27,11 @@ class Cell {
   // constructeur accessible uniquement par les classes enfants
   Cell() : color_(Color::White) {}
   Cell(Color color) : color_(color) {}
+  Cell(TriangleCell::Orientation orientation) : orientation_(orientation) {}
 
   Color color_;
   Shape shape_;
+  TriangleCell::Orientation orientation_;
 };
 
 #endif  // CELL_H

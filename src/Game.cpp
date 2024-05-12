@@ -59,15 +59,13 @@ void Game::createWindowAndRenderer() {
 
 void Game::initGameComponents(const std::string& nomFichierGrille,
                               const std::string& shapeCellule) {
-  if (shapeCellule == "-s") {
-    grid_ = std::make_shared<Grid<SquareCell>>(nomFichierGrille, screen_width_,
-                                               screen_height_, renderer_, this);
-  } else if (shapeCellule == "-t") {
-    /*grid_ = std::make_shared<Grid<TriangleCell>>(
-        nomFichierGrille, screen_width_, screen_height_, renderer_, this);*/
+  shapeCellule_ = shapeCellule;
+  if (shapeCellule == "-t") {
+    triangle_grid_ = std::make_shared<Grid<TriangleCell>>(
+        nomFichierGrille, screen_width_, screen_height_, renderer_, this);
   } else {
-    grid_ = std::make_shared<Grid<SquareCell>>(nomFichierGrille, screen_width_,
-                                               screen_height_, renderer_, this);
+    square_grid_ = std::make_shared<Grid<SquareCell>>(
+        nomFichierGrille, screen_width_, screen_height_, renderer_, this);
   }
 
   balls_.insert(std::make_shared<Ball>(10, 500, plateform_.getPosX(),
@@ -195,10 +193,21 @@ void Game::updateGame(float dt) {
   }
 
   // Vérifier les collisions
-  CollisionManager::checkCollisions(plateform_, balls_,
-                                    grid_ /*, bonus_maluses_*/);
+  if (shapeCellule_ == "-t") {
+    /*grid_ = std::make_shared<Grid<TriangleCell>>(
+        nomFichierGrille, screen_width_, screen_height_, renderer_, this);*/
 
-  game_finished_ = !grid_->hasRemainingBricks();
+    CollisionManager<TriangleCell>::checkCollisions(
+        plateform_, balls_, triangle_grid_ /*, bonus_maluses_*/);
+
+    game_finished_ = !triangle_grid_->hasRemainingBricks();
+  } else {
+    CollisionManager<SquareCell>::checkCollisions(
+        plateform_, balls_, square_grid_ /*, bonus_maluses_*/);
+
+    game_finished_ = !square_grid_->hasRemainingBricks();
+  }
+
   game_over_ = balls_.empty();
 }
 
@@ -207,7 +216,12 @@ void Game::render() {
   SDL_SetRenderDrawColor(renderer_.get(), 0, 0, 0, 255);
   SDL_RenderClear(renderer_.get());
 
-  grid_->renderGrid(renderer_, screen_width_, screen_height_);
+  if (shapeCellule_ == "-t") {
+    triangle_grid_->renderGrid(renderer_, screen_width_, screen_height_);
+  } else {
+    square_grid_->renderGrid(renderer_, screen_width_, screen_height_);
+  }
+  // grid_->renderGrid(renderer_, screen_width_, screen_height_);
   plateform_.render(renderer_);
   // Rendu de chaque balle dans le vecteur
   for (const auto& ball : balls_) {

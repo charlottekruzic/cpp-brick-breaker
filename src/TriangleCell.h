@@ -5,11 +5,10 @@
 
 #include <memory>
 
-#include "Cell.h"
-
 class TriangleCell {
  public:
   enum class Orientation { UP, DOWN };
+  TriangleCell() {}
   TriangleCell(Orientation orientation) : orientation_(orientation) {}
 
   void fillTriangle(SDL_Renderer* renderer, SDL_Point* points) {
@@ -62,6 +61,14 @@ class TriangleCell {
     // Ajoute contours
     SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255);
     SDL_RenderDrawLines(renderer.get(), points, 4);
+  }
+
+  SDL_Point getPoint(int i) {
+    if (i >= 0 && i <= 4) {
+      return points[i];
+    } else {
+      return points[0];
+    }
   }
 
  private:

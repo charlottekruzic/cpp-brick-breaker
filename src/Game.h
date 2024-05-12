@@ -8,15 +8,19 @@
 #include <unordered_set>
 
 #include "Ball.h"
-#include "CollisionManager.h"
 #include "Grid.h"
 #include "Plateform.h"
+#include "SquareCell.h"
+#include "TriangleCell.h"
 // #include "bonus_malus/BonusMalus.h"
+
+#include "CollisionManager.h"
 
 class Ball;
 template <typename Shape>
 class Grid;
 class BonusMalus;
+template <typename Shape>
 class CollisionManager;
 class Plateform;
 
@@ -60,11 +64,15 @@ class Game {
   std::shared_ptr<SDL_Window> window_ = nullptr; /**< Fenêtre SDL du jeu. */
   std::shared_ptr<SDL_Renderer> renderer_ = nullptr; /**< Rendu SDL du jeu. */
 
-  std::shared_ptr<Grid<SquareCell>> grid_; /**< Grille du jeu. */
+  // à modifier
+  std::shared_ptr<Grid<SquareCell>> square_grid_;     /**< Grille du jeu. */
+  std::shared_ptr<Grid<TriangleCell>> triangle_grid_; /**< Grille du jeu. */
 
   Plateform plateform_; /**< Plateforme du jeu. */
   std::unordered_set<std::shared_ptr<Ball>>
       balls_; /**< Ensemble de balles du jeu. */
+
+  std::string shapeCellule_;
 
   /**
    * @brief Initialise SDL.

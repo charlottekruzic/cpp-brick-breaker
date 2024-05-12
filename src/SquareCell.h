@@ -1,6 +1,9 @@
 #ifndef SQUARE_CELL_H
 #define SQUARE_CELL_H
-#include "Cell.h"
+
+#include <SDL2/SDL.h>
+
+#include <memory>
 
 class SquareCell {
  public:
