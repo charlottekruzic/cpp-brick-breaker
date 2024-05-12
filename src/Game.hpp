@@ -46,8 +46,6 @@ void Game<Shape>::createWindowAndRenderer() {
   if (!window_) {
     std::cerr << "Erreur lors de la création de la fenêtre : " << SDL_GetError()
               << std::endl;
-    std::cerr << "Erreur lors de la création de la fenêtre : " << SDL_GetError()
-              << std::endl;
     SDL_Quit();
     exit(1);
   }
@@ -58,8 +56,6 @@ void Game<Shape>::createWindowAndRenderer() {
         if (renderer) SDL_DestroyRenderer(renderer);
       });
   if (!renderer_) {
-    std::cerr << "Erreur lors de la création du rendu : " << SDL_GetError()
-              << std::endl;
     std::cerr << "Erreur lors de la création du rendu : " << SDL_GetError()
               << std::endl;
     SDL_DestroyWindow(window_.get());
@@ -265,118 +261,109 @@ void Game<Shape>::setBallAccelerating() {
     int newSpeed = ball->getSpeed() + 75;
     if (newSpeed <= 650) {
       ball->setSpeed(newSpeed);
-      int newSpeed = ball->getSpeed() + 75;
-      if (newSpeed <= 650) {
-        ball->setSpeed(newSpeed);
-      }
     }
   }
+}
 
-  template <typename Shape>
-  void Game<Shape>::setBallDecelerating() {
-    for (const auto& ball : balls_) {
-      int newSpeed = ball->getSpeed() - 75;
-      if (newSpeed >= 300) {
-        ball->setSpeed(newSpeed);
-        int newSpeed = ball->getSpeed() - 75;
-        if (newSpeed >= 300) {
-          ball->setSpeed(newSpeed);
-        }
-      }
+template <typename Shape>
+void Game<Shape>::setBallDecelerating() {
+  for (const auto& ball : balls_) {
+    int newSpeed = ball->getSpeed() - 75;
+    if (newSpeed >= 300) {
+      ball->setSpeed(newSpeed);
+    }
+  }
+}
+
+template <typename Shape>
+void Game<Shape>::shrinkPlateformWidth() {
+  if (plateform_.getWidth() > 50)
+    plateform_.setWidth(plateform_.getWidth() - 30);
+}
+
+template <typename Shape>
+void Game<Shape>::enlargePlateformWidth() {
+  if (plateform_.getWidth() < 150)
+    plateform_.setWidth(plateform_.getWidth() + 30);
+}
+
+template <typename Shape>
+void Game<Shape>::generateBonusMalus() {
+  // Générateur de nombres aléatoires
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> distrib(1, 100);
+
+  // Générer un nombre aléatoire entre 1 et 100
+  int random = distrib(gen);
+
+  // Si le nombre aléatoire est égal à 1, générer un objet Shrink, Enlarge,
+  // SpeedUp ou SlowDown
+  if (random == 1) {
+    // Générer une position aléatoire en largeur
+    int randomX = std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
+
+    // Générer un nombre aléatoire entre 0 et 3 pour choisir le type de
+    // BonusMalus
+    int type = std::uniform_int_distribution<>(0, 10)(gen);
+
+    std::shared_ptr<BonusMalus<Shape>> bm;
+
+    switch (type) {
+      case 0:
+      case 1:
+        bm = std::make_shared<Shrink<Shape>>(this, randomX, 0);
+        break;
+
+      case 2:
+      case 3:
+      case 4:
+        bm = std::make_shared<Enlarge<Shape>>(this, randomX, 0);
+        break;
+
+      case 5:
+      case 6:
+        bm = std::make_shared<SpedUp<Shape>>(this, randomX, 0);
+        break;
+
+      case 7:
+      case 8:
+      case 9:
+        bm = std::make_shared<SlowedDown<Shape>>(this, randomX, 0);
+        break;
+
+      case 10:
+        bm = std::make_shared<MultiBall<Shape>>(this, randomX, 0);
+        break;
+      default:
+        // En cas de type invalide, ne rien faire
+        break;
     }
 
-    template <typename Shape>
-    void Game<Shape>::shrinkPlateformWidth() {
-      if (plateform_.getWidth() > 50)
-        plateform_.setWidth(plateform_.getWidth() - 30);
-    }
+    // Ajouter l'objet au vecteur de BonusMalus
+    bonus_maluses_.insert(bm);
+  }
+}
 
-    template <typename Shape>
-    void Game<Shape>::enlargePlateformWidth() {
-      if (plateform_.getWidth() < 150)
-        plateform_.setWidth(plateform_.getWidth() + 30);
-    }
+template <typename Shape>
+void Game<Shape>::generateNewBalls() {
+  // Créer deux nouvelles balles avec des positions aléatoires
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> distrib(1, 100);
+  int random = distrib(gen);
+  int randomX1 = std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
+  int randomX2 = std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
 
-    template <typename Shape>
-    void Game<Shape>::generateBonusMalus() {
-      // Générateur de nombres aléatoires
-      std::random_device rd;
-      std::mt19937 gen(rd());
-      std::uniform_int_distribution<> distrib(1, 100);
+  auto ball1 = std::make_shared<Ball>(
+      10, 500, std::max(plateform_.getPosX() - 20, 5), plateform_.getPosY(),
+      plateform_.getWidth(), 0.5, -0.5);
 
-      // Générer un nombre aléatoire entre 1 et 100
-      int random = distrib(gen);
+  auto ball2 = std::make_shared<Ball>(
+      10, 500, std::min(plateform_.getPosX() + 20, screen_width_ - 5),
+      plateform_.getPosY(), plateform_.getWidth(), 0.5, -0.5);
 
-      // Si le nombre aléatoire est égal à 1, générer un objet Shrink, Enlarge,
-      // SpeedUp ou SlowDown
-      if (random == 1) {
-        // Générer une position aléatoire en largeur
-        int randomX =
-            std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
-
-        // Générer un nombre aléatoire entre 0 et 3 pour choisir le type de
-        // BonusMalus
-        int type = std::uniform_int_distribution<>(0, 10)(gen);
-
-        std::shared_ptr<BonusMalus<Shape>> bm;
-
-        switch (type) {
-          case 0:
-          case 1:
-            bm = std::make_shared<Shrink<Shape>>(this, randomX, 0);
-            break;
-
-          case 2:
-          case 3:
-          case 4:
-            bm = std::make_shared<Enlarge<Shape>>(this, randomX, 0);
-            break;
-
-          case 5:
-          case 6:
-            bm = std::make_shared<SpedUp<Shape>>(this, randomX, 0);
-            break;
-
-          case 7:
-          case 8:
-          case 9:
-            bm = std::make_shared<SlowedDown<Shape>>(this, randomX, 0);
-            break;
-
-          case 10:
-            bm = std::make_shared<MultiBall<Shape>>(this, randomX, 0);
-            break;
-          default:
-            // En cas de type invalide, ne rien faire
-            break;
-        }
-
-        // Ajouter l'objet au vecteur de BonusMalus
-        bonus_maluses_.insert(bm);
-      }
-    }
-
-    template <typename Shape>
-    void Game<Shape>::generateNewBalls() {
-      // Créer deux nouvelles balles avec des positions aléatoires
-      std::random_device rd;
-      std::mt19937 gen(rd());
-      std::uniform_int_distribution<> distrib(1, 100);
-      int random = distrib(gen);
-      int randomX1 =
-          std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
-      int randomX2 =
-          std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
-
-      auto ball1 = std::make_shared<Ball>(
-          10, 500, std::max(plateform_.getPosX() - 20, 5), plateform_.getPosY(),
-          plateform_.getWidth(), 0.5, -0.5);
-
-      auto ball2 = std::make_shared<Ball>(
-          10, 500, std::min(plateform_.getPosX() + 20, screen_width_ - 5),
-          plateform_.getPosY(), plateform_.getWidth(), 0.5, -0.5);
-
-      // Ajouter les nouvelles balles à la liste des balles du jeu
-      balls_.insert(ball1);
-      balls_.insert(ball2);
-    }
+  // Ajouter les nouvelles balles à la liste des balles du jeu
+  balls_.insert(ball1);
+  balls_.insert(ball2);
+}
