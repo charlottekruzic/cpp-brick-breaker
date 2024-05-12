@@ -19,7 +19,7 @@ class MalusBrick : public SpecialBrick<MalusBrick<Shape>, Shape> {
   void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
                   int cellWidth, int cellHeight);
 
-  inline Color getColor() const override { return Color::DarkRed; };
+  inline Color getColor() const override { return Color::MalusColor; };
 
  private:
   static std::shared_ptr<SDL_Texture> malus_texture_;  // Attribut pour la

@@ -38,11 +38,11 @@ class Brick : public Cell<Shape> {
   int strength_;  // Force de la brique
   Color color_;   // protected .
   std::map<int, Color> strengthColorMap_ = {
-      {1, Color::Green},
-      {2, Color::Yellow},
-      {3, Color::Orange},
-      {4, Color::Red},
-      {5, Color::Purple}};  // Dictionnaire associant une force à une couleur
+      {1, Color::BrickLight},
+      {2, Color::BrickLightMedium},
+      {3, Color::BrickMedium},
+      {4, Color::BrickDarkMedium},
+      {5, Color::BrickDark}};  // Dictionnaire associant une force à une couleur
 };
 
 #include "Brick.hpp"

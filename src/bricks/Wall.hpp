@@ -9,7 +9,7 @@ std::shared_ptr<SDL_Texture> Wall<Shape>::wall_texture_ = nullptr;
 
 template <typename Shape>
 Wall<Shape>::Wall(std::shared_ptr<SDL_Renderer>& renderer)
-    : Cell<Shape>(Color::Brown) {
+    : Cell<Shape>(Color::BrickColor) {
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!wall_texture_) {
     // Chargez la texture du mur depuis un fichier
@@ -36,7 +36,7 @@ Wall<Shape>::Wall(std::shared_ptr<SDL_Renderer>& renderer)
 template <typename Shape>
 Wall<Shape>::Wall(std::shared_ptr<SDL_Renderer>& renderer,
                   TriangleCell::Orientation orientation)
-    : Cell<Shape>(Color::Brown, orientation) {
+    : Cell<Shape>(Color::BrickColor, orientation) {
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!wall_texture_) {
     // Chargez la texture du mur depuis un fichier
