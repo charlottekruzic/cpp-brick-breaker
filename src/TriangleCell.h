@@ -3,13 +3,18 @@
 
 #include <SDL2/SDL.h>
 
+#include <iostream>
 #include <memory>
 
 class TriangleCell {
  public:
   enum class Orientation { UP, DOWN };
-  TriangleCell() {}
-  TriangleCell(Orientation orientation) : orientation_(orientation) {}
+  TriangleCell() {
+    std::cout << "création d'un triangle PAR DEFAUT" << std::endl;
+  }
+  TriangleCell(Orientation orientation) : orientation_(orientation) {
+    std::cout << "création d'un triangle" << std::endl;
+  }
 
   void fillTriangle(SDL_Renderer* renderer, SDL_Point* points) {
     // Tri des points

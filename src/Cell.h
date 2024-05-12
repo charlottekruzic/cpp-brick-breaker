@@ -21,7 +21,7 @@ class Cell {
   virtual void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
                           int cellWidth, int cellHeight) = 0;
 
-  virtual Color getColor() const { return color_; };
+  virtual Color getColor() const = 0;  //{ return color_; };
 
  protected:
   // constructeur accessible uniquement par les classes enfants
