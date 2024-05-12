@@ -78,9 +78,9 @@ class ColorUtils {
       case Color::BrickMedium:
         return {104, 134, 214, 255};  // Couleur 3
       case Color::BrickDarkMedium:
-        return {75, 0, 130, 255};  // Couleur 4
+        return {148, 0, 211, 255};  // Couleur 4
       case Color::BrickDark:
-        return {148, 0, 211, 255};  // Couleur 5 : Brique foncée
+        return {75, 0, 130, 255};  // Couleur 5 : Brique foncée
       // Couleurs pour les éléments du jeu
       case Color::BrickColor:
         return {

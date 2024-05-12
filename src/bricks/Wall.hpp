@@ -66,3 +66,15 @@ void Wall<Shape>::renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x,
   this->shape_.draw(renderer, x, y, cellWidth, cellHeight,
                     ColorUtils::convertColor(getColor()));
 }
+
+template <>
+inline void Wall<SquareCell>::renderCell(
+    std::shared_ptr<SDL_Renderer>& renderer, int x, int y, int cellWidth,
+    int cellHeight) {
+  int padding = 1;  // Espace entre chaque case
+  int size = cellWidth - 2 * padding;
+
+  // Utilisez la texture du mur pour afficher le mur
+  SDL_Rect rect = {x + padding, y + padding, size, size};
+  SDL_RenderCopy(renderer.get(), wall_texture_.get(), NULL, &rect);
+}

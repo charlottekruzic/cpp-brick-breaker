@@ -44,9 +44,14 @@ int main(int argc, char* argv[]) {
   if (shapeCellule == "-t") {
     Game<TriangleCell> game_triangle(nomFichierGrille, shapeCellule);
     ret = game_triangle.execute();
-  } else {
+  } else if (shapeCellule == "-s") {
     Game<SquareCell> game_square(nomFichierGrille, shapeCellule);
     ret = game_square.execute();
+  } else {
+    std::cerr << "Erreur : forme de cellule non reconnue. Utilisez \"-t\" pour "
+                 "Triangle ou \"-s\" pour Square."
+              << std::endl;
+    ret = EXIT_FAILURE;
   }
 
   return ret;
