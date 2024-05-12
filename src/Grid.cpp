@@ -4,7 +4,7 @@
 
 // #include "bricks/BasicBrick.h"
 // #include "bricks/Empty.h"
-//  #include "bricks/EnlargeBrick.h"
+#include "bricks/EnlargeBrick.h"
 //  #include "bricks/MalusBrick.h"
 //  #include "bricks/ShrinkBrick.h"
 //  #include "bricks/SlowedDownBrick.h"
@@ -50,12 +50,12 @@ Grid<SquareCell>::Grid(const std::string& filename, int width, int height,
         gridRow.push_back(new SpedUpBrick(game_, renderer));
       } else if (c == 'D') {
         gridRow.push_back(new SlowedDownBrick(game_, renderer));
-      } else if (c == 'E') {
-        gridRow.push_back(new EnlargeBrick(game_, renderer));
       } else if (c == 'S') {
         gridRow.push_back(new ShrinkBrick(game_, renderer));
       } */
-      else if (c == 'W') {
+      else if (c == 'E') {
+        gridRow.push_back(new EnlargeBrick<SquareCell>(game_, renderer));
+      } else if (c == 'W') {
         gridRow.push_back(new Wall<SquareCell>(renderer));
       } else {
         std::cerr << "Caractère inconnu '" << c
@@ -106,12 +106,13 @@ Grid<TriangleCell>::Grid(const std::string& filename, int width, int height,
         gridRow.push_back(new SpedUpBrick(game_, renderer));
       } else if (c == 'D') {
         gridRow.push_back(new SlowedDownBrick(game_, renderer));
-      } else if (c == 'E') {
-        gridRow.push_back(new EnlargeBrick(game_, renderer));
-      } else if (c == 'S') {
+      }  else if (c == 'S') {
         gridRow.push_back(new ShrinkBrick(game_, renderer));
       } */
-      else if (c == 'W') {
+      else if (c == 'E') {
+        gridRow.push_back(
+            new EnlargeBrick<TriangleCell>(game_, renderer, orientation));
+      } else if (c == 'W') {
         gridRow.push_back(new Wall<TriangleCell>(renderer, orientation));
       } else {
         std::cerr << "Caractère inconnu: " << c << std::endl;

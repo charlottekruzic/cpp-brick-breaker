@@ -241,7 +241,7 @@ void Game::cleanUp() {
   SDL_Quit();
 }
 
-/*void Game::setBallAccelerating() {
+void Game::setBallAccelerating() {
   for (const auto& ball : balls_) {
     int newSpeed = ball->getSpeed() + 75;
     if (newSpeed <= 650) {
@@ -266,7 +266,7 @@ void Game::shrinkPlateformWidth() {
 void Game::enlargePlateformWidth() {
   if (plateform_.getWidth() < 150)
     plateform_.setWidth(plateform_.getWidth() + 30);
-}*/
+}
 
 /*void Game::generateBonusMalus() {
   // Générateur de nombres aléatoires
@@ -332,8 +332,9 @@ bonus_maluses_.insert(bm);*/
   std::mt19937 gen(rd());
   std::uniform_int_distribution<> distrib(1, 100);
   int random = distrib(gen);
-  int randomX1 = std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
-  int randomX2 = std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
+  int randomX1 = std::uniform_int_distribution<>(0, screen_width_ -
+10)(gen); int randomX2 = std::uniform_int_distribution<>(0, screen_width_ -
+10)(gen);
 
   auto ball1 = std::make_shared<Ball>(
       10, 500, std::max(plateform_.getPosX() - 20, 5), plateform_.getPosY(),

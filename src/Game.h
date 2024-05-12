@@ -127,7 +127,7 @@ class Game {
   /**
    * @brief Génère des bonus/malus dans le jeu aléatoirement.
    */
-  // void generateBonusMalus();
+  void generateBonusMalus();
 
   /*std::unordered_set<std::shared_ptr<BonusMalus>>
       bonus_maluses_; *//**< Ensemble de bonus/malus du jeu. */
@@ -138,29 +138,29 @@ class Game {
   /**
    * @brief Accélère les balles (si elles ne sont pas déjà rapides).
    */
-  // void setBallAccelerating();
+  void setBallAccelerating();
 
   /**
    * @brief Décélère les balles (si elles ne sont pas déjà lentes).
    */
-  // void setBallDecelerating();
+  void setBallDecelerating();
 
   /**
    * @brief Réduit la largeur de la plateforme (si elle n'est pas déjà à la
    * taille minimale).
    */
-  // void shrinkPlateformWidth();
+  void shrinkPlateformWidth();
 
   /**
    * @brief Augmente la largeur de la plateform (si elle n'est pas déjà à la
    * taille maximale).
    */
-  // void enlargePlateformWidth();
+  void enlargePlateformWidth();
 
   /**
    * @brief Génère de nouvelles balles dans le jeu.
    */
-  // void generateNewBalls();
+  void generateNewBalls();
 };
 
 #endif  // GAME_H
