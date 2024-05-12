@@ -14,11 +14,15 @@ Le jeu comprend différents types de briques, chacune ayant une force différent
 - Brique violette : force 4
 - Brique violette foncée : force 5
 
-Dans cette version du jeu, nous avons ajouté des briques Bonus/Malus. Ces briques spéciales sont masquées derrière une image, ce qui signifie que vous ne pouvez pas savoir à l'avance quels types de bonus <img src="img/etoile.png" width="30" height="30">
- ou de malus <img src="img/goomba.png" width="30" height="30">
+Dans cette version du jeu, nous avons ajouté des briques Bonus/Malus. Ces briques spéciales sont masquées derrière une image, ce qui signifie que vous ne pouvez pas savoir à l'avance quels types de bonus <img src="img/etoile.png" width="30" height="30"> (ou vert foncé si le mode de jeu n'est pas celui avec des carrés)
+ ou de malus <img src="img/goomba.png" width="30" height="30"> (ou rouge foncé si le mode de jeu n'est pas celui avec des carrés)
  se cachent derrière elles. Contrairement aux briques normales, ces briques n'ont pas besoin d'être cassées pour remporter la partie.
 
-Il esite aussi des briques indestructibles pour complexifier certaines zone d'accès, elles n'ont pas besoin d'etre détruites pour remporter la partie.
+
+### Briques Indestructibles
+En plus des briques cassables, il existe des briques indestructibles qui ajoutent de la complexité d'accès à certaines zones du jeu. Ces briques ne peuvent pas être détruites et ne contribuent pas à la victoire du joueur.
+<img src="img/wall.png" width="30" height="30">
+(ou marron si le mode de jeu n'est pas celui avec des carrés)
 
 ### Bonus
 - Décélérateur de la balle : Ralentit la vitesse de la balle
@@ -28,9 +32,6 @@ Il esite aussi des briques indestructibles pour complexifier certaines zone d'ac
 - Accélérateur de la balle
 - Réduction de la taille de la raquette 
   
-### Briques Indestructibles
-En plus des briques cassables, il existe des briques indestructibles qui ajoutent de la complexité d'accès à certaines zones du jeu. Ces briques ne peuvent pas être détruites et ne contribuent pas à la victoire du joueur.
-<img src="img/wall.png" width="30" height="30">
   
 --- 
 ## Bonus et Malus
