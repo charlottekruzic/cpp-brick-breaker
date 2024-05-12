@@ -64,7 +64,11 @@ class Game {
   std::shared_ptr<SDL_Window> window_ = nullptr; /**< Fenêtre SDL du jeu. */
   std::shared_ptr<SDL_Renderer> renderer_ = nullptr; /**< Rendu SDL du jeu. */
 
-  // à modifier
+  using ShapeType = SquareCell;
+
+  // std::conditional_t<std::is_same_v<std::string, decltype("-t")>,
+  //                    TriangleCell, SquareCell>;
+  // std::shared_ptr<Grid<ShapeType>> grid_;
   std::shared_ptr<Grid<SquareCell>> square_grid_;     /**< Grille du jeu. */
   std::shared_ptr<Grid<TriangleCell>> triangle_grid_; /**< Grille du jeu. */
 
@@ -129,8 +133,8 @@ class Game {
    */
   void generateBonusMalus();
 
-  /*std::unordered_set<std::shared_ptr<BonusMalus>>
-      bonus_maluses_; *//**< Ensemble de bonus/malus du jeu. */
+  std::unordered_set<std::shared_ptr<BonusMalus>> bonus_maluses_;
+  /**< Ensemble de bonus/malus du jeu. */
 
   bool ball_accelerating_ = false; /**< Indicateur d'accélération des balles. */
 

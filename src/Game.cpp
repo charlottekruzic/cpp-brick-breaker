@@ -1,14 +1,15 @@
 #include "Game.h"
 
+#include <algorithm>
 #include <iostream>
 #include <random>
 #include <vector>
 
-// #include "bonus_malus/Enlarge.h"
-// #include "bonus_malus/MultiBall.h"
-// #include "bonus_malus/Shrink.h"
-// #include "bonus_malus/SlowedDown.h"
-// #include "bonus_malus/SpedUp.h"
+#include "bonus_malus/Enlarge.h"
+#include "bonus_malus/MultiBall.h"
+#include "bonus_malus/Shrink.h"
+#include "bonus_malus/SlowedDown.h"
+#include "bonus_malus/SpedUp.h"
 
 Game::Game(const std::string& nomFichierGrille, const std::string& shapeCellule)
     : plateform_(screen_width_, screen_height_) {
@@ -60,7 +61,10 @@ void Game::createWindowAndRenderer() {
 void Game::initGameComponents(const std::string& nomFichierGrille,
                               const std::string& shapeCellule) {
   shapeCellule_ = shapeCellule;
-  if (shapeCellule == "-t") {
+  if (shapeCellule_ == "-t") {
+    using ShapeType = TriangleCell;
+  }
+  if (shapeCellule_ == "-t") {
     triangle_grid_ = std::make_shared<Grid<TriangleCell>>(
         nomFichierGrille, screen_width_, screen_height_, renderer_, this);
   } else {
@@ -154,7 +158,7 @@ void Game::handleEvents(SDL_Event& event) {
 
 void Game::updateGame(float dt) {
   // update tous les bonus malus de bonus_maluses__
-  /*for (auto& bonusMalus : bonus_maluses_) {
+  for (auto& bonusMalus : bonus_maluses_) {
     bonusMalus->update();
   }
   // supprimer les bonus malus en bas de l'image du vector
@@ -168,7 +172,7 @@ void Game::updateGame(float dt) {
     }
   }
 
-  generateBonusMalus();*/
+  generateBonusMalus();
 
   /*
   // Supprimer les bonus/malus en bas de l'écran du vecteur
@@ -194,16 +198,13 @@ void Game::updateGame(float dt) {
 
   // Vérifier les collisions
   if (shapeCellule_ == "-t") {
-    /*grid_ = std::make_shared<Grid<TriangleCell>>(
-        nomFichierGrille, screen_width_, screen_height_, renderer_, this);*/
-
     CollisionManager<TriangleCell>::checkCollisions(
-        plateform_, balls_, triangle_grid_ /*, bonus_maluses_*/);
+        plateform_, balls_, triangle_grid_, bonus_maluses_);
 
     game_finished_ = !triangle_grid_->hasRemainingBricks();
   } else {
-    CollisionManager<SquareCell>::checkCollisions(
-        plateform_, balls_, square_grid_ /*, bonus_maluses_*/);
+    CollisionManager<SquareCell>::checkCollisions(plateform_, balls_,
+                                                  square_grid_, bonus_maluses_);
 
     game_finished_ = !square_grid_->hasRemainingBricks();
   }
@@ -217,8 +218,10 @@ void Game::render() {
   SDL_RenderClear(renderer_.get());
 
   if (shapeCellule_ == "-t") {
+    // using ShapeType_ = TriangleCell;
     triangle_grid_->renderGrid(renderer_, screen_width_, screen_height_);
   } else {
+    // using ShapeType_ = SquareCell;
     square_grid_->renderGrid(renderer_, screen_width_, screen_height_);
   }
   // grid_->renderGrid(renderer_, screen_width_, screen_height_);
@@ -229,9 +232,9 @@ void Game::render() {
   }
 
   // Rendu de chaque bonus/malus dans la liste bonus_maluses_
-  /*for (const auto& bonus_malus : bonus_maluses_) {
+  for (const auto& bonus_malus : bonus_maluses_) {
     bonus_malus->render(renderer_);
-  }*/
+  }
   SDL_RenderPresent(renderer_.get());
 }
 
@@ -268,7 +271,7 @@ void Game::enlargePlateformWidth() {
     plateform_.setWidth(plateform_.getWidth() + 30);
 }
 
-/*void Game::generateBonusMalus() {
+void Game::generateBonusMalus() {
   // Générateur de nombres aléatoires
   std::random_device rd;
   std::mt19937 gen(rd());
@@ -281,60 +284,58 @@ void Game::enlargePlateformWidth() {
   // SpeedUp ou SlowDown
   if (random == 1) {
     // Générer une position aléatoire en largeur
-    int randomX = std::uniform_int_distribution<>(0, screen_width_ -
-  10)(gen);*/
+    int randomX = std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
 
-// Générer un nombre aléatoire entre 0 et 3 pour choisir le type de
-// BonusMalus
-/*int type = std::uniform_int_distribution<>(0, 10)(gen);
+    // Générer un nombre aléatoire entre 0 et 3 pour choisir le type de
+    // BonusMalus
+    int type = std::uniform_int_distribution<>(0, 10)(gen);
 
-std::shared_ptr<BonusMalus> bm;
+    std::shared_ptr<BonusMalus> bm;
 
-switch (type) {
-  case 0:
-  case 1:
-    bm = std::make_shared<Shrink>(this, randomX, 0);
-    break;
+    switch (type) {
+      case 0:
+      case 1:
+        bm = std::make_shared<Shrink>(this, randomX, 0);
+        break;
 
-  case 2:
-  case 3:
-  case 4:
-    bm = std::make_shared<Enlarge>(this, randomX, 0);
-    break;
+      case 2:
+      case 3:
+      case 4:
+        bm = std::make_shared<Enlarge>(this, randomX, 0);
+        break;
 
-  case 5:
-  case 6:
-    bm = std::make_shared<SpedUp>(this, randomX, 0);
-    break;
+      case 5:
+      case 6:
+        bm = std::make_shared<SpedUp>(this, randomX, 0);
+        break;
 
-  case 7:
-  case 8:
-  case 9:
-    bm = std::make_shared<SlowedDown>(this, randomX, 0);
-    break;
+      case 7:
+      case 8:
+      case 9:
+        bm = std::make_shared<SlowedDown>(this, randomX, 0);
+        break;
 
-  case 10:
-    bm = std::make_shared<MultiBall>(this, randomX, 0);
-    break;
-  default:
-    // En cas de type invalide, ne rien faire
-    break;
+      case 10:
+        bm = std::make_shared<MultiBall>(this, randomX, 0);
+        break;
+      default:
+        // En cas de type invalide, ne rien faire
+        break;
+    }
+
+    // Ajouter l'objet au vecteur de BonusMalus
+    bonus_maluses_.insert(bm);
+  }
 }
 
-// Ajouter l'objet au vecteur de BonusMalus
-bonus_maluses_.insert(bm);*/
-/* }
-}*/
-
-/*void Game::generateNewBalls() {
+void Game::generateNewBalls() {
   // Créer deux nouvelles balles avec des positions aléatoires
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_int_distribution<> distrib(1, 100);
   int random = distrib(gen);
-  int randomX1 = std::uniform_int_distribution<>(0, screen_width_ -
-10)(gen); int randomX2 = std::uniform_int_distribution<>(0, screen_width_ -
-10)(gen);
+  int randomX1 = std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
+  int randomX2 = std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
 
   auto ball1 = std::make_shared<Ball>(
       10, 500, std::max(plateform_.getPosX() - 20, 5), plateform_.getPosY(),
@@ -347,4 +348,4 @@ bonus_maluses_.insert(bm);*/
   // Ajouter les nouvelles balles à la liste des balles du jeu
   balls_.insert(ball1);
   balls_.insert(ball2);
-}*/
+}
