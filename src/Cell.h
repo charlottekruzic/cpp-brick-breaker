@@ -23,6 +23,8 @@ class Cell {
 
   virtual Color getColor() const = 0;  //{ return color_; };
 
+  SDL_Point getPoint(int i) { return this->shape_.getPoint(i); };
+
  protected:
   // constructeur accessible uniquement par les classes enfants
   Cell() : color_(Color::White) {}

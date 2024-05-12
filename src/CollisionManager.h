@@ -273,10 +273,9 @@ class CollisionManager<TriangleCell> {
       for (int j = 0; j < grid->getCols(); j++) {
         Cell<TriangleCell>* cell = grid->getCell(i, j);
         if (cell && cell->rebondir()) {
-          TriangleCell* triangleCell = dynamic_cast<TriangleCell*>(cell);
-          SDL_Point points[4] = {
-              triangleCell->getPoint(0), triangleCell->getPoint(1),
-              triangleCell->getPoint(2), triangleCell->getPoint(3)};
+          // TriangleCell* triangleCell = dynamic_cast<TriangleCell*>(cell);
+          SDL_Point points[4] = {cell->getPoint(0), cell->getPoint(1),
+                                 cell->getPoint(2), cell->getPoint(3)};
 
           bool hit = false;
           for (int k = 0; k < 4; k++) {
