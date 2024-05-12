@@ -49,13 +49,19 @@ Les bonus et les malus tombent du ciel, offrant une variété d'effets différen
 ---
 ## Notions du cours utilisés / respectées 
 - CRTP : SpecialBrick est templatisé à l'aide des classes dont il hérite : BonusBrick et MalusBrick
+- CRTP : SpecialBrick est templatisé à l'aide des classes dont il hérite : BonusBrick et MalusBrick
 - polymophisme / héritage (ajouter image schéma héritage)
+
+<img src="diagramme.png">
+
 
 <img src="diagramme.png">
 
 
 ---
 ## Répartition des tâches
+- Charlotte
+- Zoé
 - Charlotte
 - Zoé
 
@@ -68,5 +74,7 @@ todo
 - render brick identique à render cell
 - ball : attributs inutiles
 - pointeur : trasnformer les texture * ...
+- const cohérent
+- réf, ptr, ...
 - const cohérent
 - réf, ptr, ...

@@ -80,7 +80,9 @@ Grid<TriangleCell>::Grid(const std::string& filename, int width, int height,
   InputParser parser(filename);
   if (!parser.parseFile()) {
     // Gérer l'erreur de lecture du fichier
-    std::cerr << "Erreur lors de la lecture du fichier" << std::endl;
+    std::cerr << "Erreur lors de la lecture du fichier '" << filename << "'"
+              << std::endl;
+    exit(1);
     return;
   }
 
