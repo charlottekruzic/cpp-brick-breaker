@@ -6,9 +6,9 @@
 // #include "bricks/Empty.h"
 #include "bricks/EnlargeBrick.h"
 //  #include "bricks/MalusBrick.h"
-//  #include "bricks/ShrinkBrick.h"
-//  #include "bricks/SlowedDownBrick.h"
-//  #include "bricks/SpedUpBrick.h"
+#include "bricks/ShrinkBrick.h"
+#include "bricks/SlowedDownBrick.h"
+#include "bricks/SpedUpBrick.h"
 //  #include "bricks/Wall.h"
 
 #include "SquareCell.h"
@@ -46,14 +46,13 @@ Grid<SquareCell>::Grid(const std::string& filename, int width, int height,
       } else if (c >= '1' && c <= '5') {
         gridRow.push_back(new BasicBrick<SquareCell>(c - '0', game_));
         remainingBricks_++;
-      } /*else if (c == 'A') {
-        gridRow.push_back(new SpedUpBrick(game_, renderer));
+      } else if (c == 'A') {
+        gridRow.push_back(new SpedUpBrick<SquareCell>(game_, renderer));
       } else if (c == 'D') {
-        gridRow.push_back(new SlowedDownBrick(game_, renderer));
+        gridRow.push_back(new SlowedDownBrick<SquareCell>(game_, renderer));
       } else if (c == 'S') {
-        gridRow.push_back(new ShrinkBrick(game_, renderer));
-      } */
-      else if (c == 'E') {
+        gridRow.push_back(new ShrinkBrick<SquareCell>(game_, renderer));
+      } else if (c == 'E') {
         gridRow.push_back(new EnlargeBrick<SquareCell>(game_, renderer));
       } else if (c == 'W') {
         gridRow.push_back(new Wall<SquareCell>(renderer));
@@ -102,14 +101,16 @@ Grid<TriangleCell>::Grid(const std::string& filename, int width, int height,
         gridRow.push_back(
             new BasicBrick<TriangleCell>(c - '0', game_, orientation));
         remainingBricks_++;
-      } /* else if (c == 'A') {
-        gridRow.push_back(new SpedUpBrick(game_, renderer));
+      } else if (c == 'A') {
+        gridRow.push_back(
+            new SpedUpBrick<TriangleCell>(game_, renderer, orientation));
       } else if (c == 'D') {
-        gridRow.push_back(new SlowedDownBrick(game_, renderer));
-      }  else if (c == 'S') {
-        gridRow.push_back(new ShrinkBrick(game_, renderer));
-      } */
-      else if (c == 'E') {
+        gridRow.push_back(
+            new SlowedDownBrick<TriangleCell>(game_, renderer, orientation));
+      } else if (c == 'S') {
+        gridRow.push_back(
+            new ShrinkBrick<TriangleCell>(game_, renderer, orientation));
+      } else if (c == 'E') {
         gridRow.push_back(
             new EnlargeBrick<TriangleCell>(game_, renderer, orientation));
       } else if (c == 'W') {

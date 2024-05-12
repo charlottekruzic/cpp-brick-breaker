@@ -6,9 +6,8 @@
 #include <memory>
 
 #include "Colors.h"
+#include "SquareCell.h"
 #include "TriangleCell.h"
-// #include "SquareCell.h"
-// #include "TriangleCell.h"
 
 // Classe de base représentant une case du plateau
 template <typename Shape>
