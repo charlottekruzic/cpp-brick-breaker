@@ -11,7 +11,7 @@ template <typename Shape>
 std::shared_ptr<SDL_Texture> MalusBrick<Shape>::malus_texture_ = nullptr;
 
 template <typename Shape>
-MalusBrick<Shape>::MalusBrick(Game* game,
+MalusBrick<Shape>::MalusBrick(Game<Shape>* game,
                               std::shared_ptr<SDL_Renderer>& renderer)
     : SpecialBrick<MalusBrick, Shape>(game, renderer) {
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
@@ -39,7 +39,7 @@ MalusBrick<Shape>::MalusBrick(Game* game,
 }
 
 template <typename Shape>
-MalusBrick<Shape>::MalusBrick(Game* game,
+MalusBrick<Shape>::MalusBrick(Game<Shape>* game,
                               std::shared_ptr<SDL_Renderer>& renderer,
                               TriangleCell::Orientation orientation)
     : SpecialBrick<MalusBrick, Shape>(game, renderer, orientation) {

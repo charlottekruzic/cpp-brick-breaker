@@ -8,10 +8,10 @@
 template <typename Shape>
 class ShrinkBrick : public MalusBrick<Shape> {
  public:
-  ShrinkBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
+  ShrinkBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer)
       : MalusBrick<Shape>(game, renderer) {}
 
-  ShrinkBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer,
+  ShrinkBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer,
               TriangleCell::Orientation orientation)
       : MalusBrick<Shape>(game, renderer, orientation) {}
 

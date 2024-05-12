@@ -14,6 +14,7 @@ class Ball;
 class Plateform;
 template <typename Shape>
 class Grid;
+template <typename Shape>
 class BonusMalus;
 
 template <typename Shape>
@@ -22,8 +23,8 @@ class CollisionManager {
   // Méthode principale pour vérifier les collisions
   static void checkCollisions(
       Plateform& platform, std::unordered_set<std::shared_ptr<Ball>>& balls,
-      std::shared_ptr<Grid<Shape>>& grid/*,
-      std::unordered_set<std::shared_ptr<BonusMalus>>& bonus_maluses__*/);
+      std::shared_ptr<Grid<Shape>>& grid,
+      std::unordered_set<std::shared_ptr<BonusMalus<Shape>>>& bonus_maluses__);
 
  private:
   // Méthode pour vérifier la collision entre la plateforme et la balle
@@ -34,7 +35,7 @@ class CollisionManager {
                                      std::shared_ptr<Ball>& ball);
 
   static bool checkCollisionPlateformBonusMalus(
-      Plateform& plateform, std::shared_ptr<BonusMalus>& bonusMalus);
+      Plateform& plateform, std::shared_ptr<BonusMalus<Shape>>& bonusMalus);
 };
 
 // Spécialisation partielle pour SquareCell
@@ -44,7 +45,8 @@ class CollisionManager<SquareCell> {
   static void checkCollisions(
       Plateform& platform, std::unordered_set<std::shared_ptr<Ball>>& balls,
       std::shared_ptr<Grid<SquareCell>>& grid,
-      std::unordered_set<std::shared_ptr<BonusMalus>>& bonus_malus) {
+      std::unordered_set<std::shared_ptr<BonusMalus<SquareCell>>>&
+          bonus_malus) {
     for (auto ball : balls) {
       checkPlatformBallCollision(platform, ball);
       // checkWindowBallCollision(bounds, ball);
@@ -52,7 +54,8 @@ class CollisionManager<SquareCell> {
     }
 
     // Vérifier la collision entre la balle et les bonus/malus
-    std::unordered_set<std::shared_ptr<BonusMalus>> bonus_maluses_to_remove;
+    std::unordered_set<std::shared_ptr<BonusMalus<SquareCell>>>
+        bonus_maluses_to_remove;
 
     for (auto bonusMalus : bonus_malus) {
       if (checkCollisionPlateformBonusMalus(platform, bonusMalus)) {
@@ -182,7 +185,8 @@ class CollisionManager<SquareCell> {
   }
 
   static bool checkCollisionPlateformBonusMalus(
-      Plateform& plateform, std::shared_ptr<BonusMalus>& bonusMalus) {
+      Plateform& plateform,
+      std::shared_ptr<BonusMalus<SquareCell>>& bonusMalus) {
     // Récupérer les coordonnées de la plateforme
     int plateformLeft = plateform.getPosX();
     int plateformRight = plateform.getPosX() + plateform.getWidth();
@@ -213,7 +217,8 @@ class CollisionManager<TriangleCell> {
   static void checkCollisions(
       Plateform& platform, std::unordered_set<std::shared_ptr<Ball>>& balls,
       std::shared_ptr<Grid<TriangleCell>>& grid,
-      std::unordered_set<std::shared_ptr<BonusMalus>>& bonus_malus) {
+      std::unordered_set<std::shared_ptr<BonusMalus<TriangleCell>>>&
+          bonus_malus) {
     for (auto ball : balls) {
       checkPlatformBallCollision(platform, ball);
       // checkWindowBallCollision(bounds, ball);
@@ -221,7 +226,8 @@ class CollisionManager<TriangleCell> {
     }
 
     // Vérifier la collision entre la balle et les bonus/malus
-    std::unordered_set<std::shared_ptr<BonusMalus>> bonus_maluses_to_remove;
+    std::unordered_set<std::shared_ptr<BonusMalus<TriangleCell>>>
+        bonus_maluses_to_remove;
 
     for (auto bonusMalus : bonus_malus) {
       if (checkCollisionPlateformBonusMalus(platform, bonusMalus)) {
@@ -356,7 +362,8 @@ class CollisionManager<TriangleCell> {
   }
 
   static bool checkCollisionPlateformBonusMalus(
-      Plateform& plateform, std::shared_ptr<BonusMalus>& bonusMalus) {
+      Plateform& plateform,
+      std::shared_ptr<BonusMalus<TriangleCell>>& bonusMalus) {
     // Récupérer les coordonnées de la plateforme
     int plateformLeft = plateform.getPosX();
     int plateformRight = plateform.getPosX() + plateform.getWidth();

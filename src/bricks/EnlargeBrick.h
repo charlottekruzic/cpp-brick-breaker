@@ -8,10 +8,10 @@
 template <typename Shape>
 class EnlargeBrick : public BonusBrick<Shape> {
  public:
-  EnlargeBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer)
+  EnlargeBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer)
       : BonusBrick<Shape>(game, renderer) {}
 
-  EnlargeBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer,
+  EnlargeBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer,
                TriangleCell::Orientation orientation)
       : BonusBrick<Shape>(game, renderer, orientation) {}
 

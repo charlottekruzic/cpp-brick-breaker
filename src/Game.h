@@ -19,6 +19,7 @@
 class Ball;
 template <typename Shape>
 class Grid;
+template <typename Shape>
 class BonusMalus;
 template <typename Shape>
 class CollisionManager;
@@ -29,6 +30,7 @@ class Plateform;
  *
  * Cette classe gère l'exécution du jeu et ses composants.
  */
+template <typename Shape>
 class Game {
  public:
   /**
@@ -64,13 +66,7 @@ class Game {
   std::shared_ptr<SDL_Window> window_ = nullptr; /**< Fenêtre SDL du jeu. */
   std::shared_ptr<SDL_Renderer> renderer_ = nullptr; /**< Rendu SDL du jeu. */
 
-  using ShapeType = SquareCell;
-
-  // std::conditional_t<std::is_same_v<std::string, decltype("-t")>,
-  //                    TriangleCell, SquareCell>;
-  // std::shared_ptr<Grid<ShapeType>> grid_;
-  std::shared_ptr<Grid<SquareCell>> square_grid_;     /**< Grille du jeu. */
-  std::shared_ptr<Grid<TriangleCell>> triangle_grid_; /**< Grille du jeu. */
+  std::shared_ptr<Grid<Shape>> grid_; /**< Grille du jeu. */
 
   Plateform plateform_; /**< Plateforme du jeu. */
   std::unordered_set<std::shared_ptr<Ball>>
@@ -133,7 +129,7 @@ class Game {
    */
   void generateBonusMalus();
 
-  std::unordered_set<std::shared_ptr<BonusMalus>> bonus_maluses_;
+  std::unordered_set<std::shared_ptr<BonusMalus<Shape>>> bonus_maluses_;
   /**< Ensemble de bonus/malus du jeu. */
 
   bool ball_accelerating_ = false; /**< Indicateur d'accélération des balles. */
@@ -166,5 +162,7 @@ class Game {
    */
   void generateNewBalls();
 };
+
+#include "Game.hpp"
 
 #endif  // GAME_H

@@ -19,13 +19,14 @@
 //  #include "bricks/SpedUpBrick.h"
 #include "bricks/Wall.h"
 
+template <typename Shape>
 class Game;
 
 template <typename Shape>
 class Grid {
  public:
   Grid(const std::string& filename, int width, int height,
-       std::shared_ptr<SDL_Renderer>& renderer, Game* game);
+       std::shared_ptr<SDL_Renderer>& renderer, Game<Shape>* game);
 
   ~Grid() {
     for (auto& row : grid_) {
@@ -86,7 +87,7 @@ class Grid {
   int cols_;
   int width_;
   int height_;
-  Game* game_;
+  Game<Shape>* game_;
   std::vector<std::vector<Cell<Shape>*>> grid_;
   std::shared_ptr<SDL_Renderer>& renderer_;
   int remainingBricks_;  // Nouvel attribut pour su

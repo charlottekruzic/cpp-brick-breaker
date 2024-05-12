@@ -16,7 +16,8 @@
 
 template <>
 Grid<SquareCell>::Grid(const std::string& filename, int width, int height,
-                       std::shared_ptr<SDL_Renderer>& renderer, Game* game)
+                       std::shared_ptr<SDL_Renderer>& renderer,
+                       Game<SquareCell>* game)
     : width_(width),
       height_(height),
       renderer_(renderer),
@@ -68,7 +69,8 @@ Grid<SquareCell>::Grid(const std::string& filename, int width, int height,
 
 template <>
 Grid<TriangleCell>::Grid(const std::string& filename, int width, int height,
-                         std::shared_ptr<SDL_Renderer>& renderer, Game* game)
+                         std::shared_ptr<SDL_Renderer>& renderer,
+                         Game<TriangleCell>* game)
     : width_(width),
       height_(height),
       renderer_(renderer),

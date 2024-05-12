@@ -3,12 +3,15 @@
 
 #include "BonusMalus.h"
 
+template <typename Shape>
 class Game;
 
-class Shrink : public BonusMalus {
+template <typename Shape>
+class Shrink : public BonusMalus<Shape> {
  public:
-  Shrink(Game* game, int x, int y);
+  Shrink(Game<Shape>* game, int x, int y);
   void applyEffect() override;
 };
 
+#include "Shrink.hpp"
 #endif  // SHRINK_H

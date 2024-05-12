@@ -3,12 +3,15 @@
 
 #include "BonusMalus.h"
 
+template <typename Shape>
 class Game;
 
-class Enlarge : public BonusMalus {
+template <typename Shape>
+class Enlarge : public BonusMalus<Shape> {
  public:
-  Enlarge(Game* game, int x, int y);
+  Enlarge(Game<Shape>* game, int x, int y);
   void applyEffect() override;
 };
 
+#include "Enlarge.hpp"
 #endif  // ENLARGE_H

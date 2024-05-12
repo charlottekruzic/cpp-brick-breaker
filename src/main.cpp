@@ -40,7 +40,14 @@ int main(int argc, char* argv[]) {
     return 0;
   }
 
-  // Démarrer le jeu avec le nom du fichier de grille fourni
-  Game game(nomFichierGrille, shapeCellule);
-  return game.execute();
+  int ret = 0;
+  if (shapeCellule == "-t") {
+    Game<TriangleCell> game_triangle(nomFichierGrille, shapeCellule);
+    ret = game_triangle.execute();
+  } else {
+    Game<SquareCell> game_square(nomFichierGrille, shapeCellule);
+    ret = game_square.execute();
+  }
+
+  return ret;
 }

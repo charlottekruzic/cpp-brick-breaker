@@ -7,6 +7,7 @@
 #include "../Cell.h"
 #include "../Colors.h"
 
+template <typename Shape>
 class Game;
 
 // Classe représentant une brique
@@ -25,13 +26,13 @@ class Brick : public Cell<Shape> {
   Color getColor() const override;
 
   // protected:
-  Brick(int strength, Game* game);
+  Brick(int strength, Game<Shape>* game);
 
-  Brick(int strength, Game* game, TriangleCell::Orientation orientation);
+  Brick(int strength, Game<Shape>* game, TriangleCell::Orientation orientation);
 
  protected:
-  Game* game_;    // Attribut pour stocker un pointeur vers l'objet Game
-  int hitsLeft_;  // Nombre de coups restants
+  Game<Shape>* game_;  // Attribut pour stocker un pointeur vers l'objet Game
+  int hitsLeft_;       // Nombre de coups restants
 
  private:
   int strength_;  // Force de la brique

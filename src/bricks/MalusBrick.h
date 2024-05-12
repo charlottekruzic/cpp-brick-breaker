@@ -6,8 +6,8 @@
 template <typename Shape>
 class MalusBrick : public SpecialBrick<MalusBrick<Shape>, Shape> {
  public:
-  MalusBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer);
-  MalusBrick(Game* game, std::shared_ptr<SDL_Renderer>& renderer,
+  MalusBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer);
+  MalusBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer,
              TriangleCell::Orientation orientation);
 
   // Méthode pour obtenir la texture du malus

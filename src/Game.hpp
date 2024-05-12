@@ -1,26 +1,31 @@
-#include "Game.h"
-
 #include <algorithm>
 #include <iostream>
 #include <random>
 #include <vector>
 
+#include "Game.h"
 #include "bonus_malus/Enlarge.h"
 #include "bonus_malus/MultiBall.h"
 #include "bonus_malus/Shrink.h"
 #include "bonus_malus/SlowedDown.h"
 #include "bonus_malus/SpedUp.h"
 
-Game::Game(const std::string& nomFichierGrille, const std::string& shapeCellule)
+template <typename Shape>
+Game<Shape>::Game(const std::string& nomFichierGrille,
+                  const std::string& shapeCellule)
     : plateform_(screen_width_, screen_height_) {
   initSDL();
   createWindowAndRenderer();
   initGameComponents(nomFichierGrille, shapeCellule);
 }
 
-Game::~Game() { cleanUp(); }
+template <typename Shape>
+Game<Shape>::~Game() {
+  cleanUp();
+}
 
-void Game::initSDL() {
+template <typename Shape>
+void Game<Shape>::initSDL() {
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
     std::cerr << "Erreur lors de l'initialisation de la SDL2: "
               << SDL_GetError() << std::endl;
@@ -28,7 +33,8 @@ void Game::initSDL() {
   }
 }
 
-void Game::createWindowAndRenderer() {
+template <typename Shape>
+void Game<Shape>::createWindowAndRenderer() {
   window_ = std::shared_ptr<SDL_Window>(
       SDL_CreateWindow("Game Board", SDL_WINDOWPOS_CENTERED,
                        SDL_WINDOWPOS_CENTERED, screen_width_, screen_height_,
@@ -58,7 +64,18 @@ void Game::createWindowAndRenderer() {
   }
 }
 
-void Game::initGameComponents(const std::string& nomFichierGrille,
+template <typename Shape>
+void Game<Shape>::initGameComponents(const std::string& nomFichierGrille,
+                                     const std::string& shapeCellule) {
+  grid_ = std::make_shared<Grid<Shape>>(nomFichierGrille, screen_width_,
+                                        screen_height_, renderer_, this);
+  balls_.insert(std::make_shared<Ball>(10, 500, plateform_.getPosX(),
+                                       plateform_.getPosY(),
+                                       plateform_.getWidth(), 0.5, -0.5));
+}
+
+/*
+void Game<Shape>::initGameComponents(const std::string& nomFichierGrille,
                               const std::string& shapeCellule) {
   shapeCellule_ = shapeCellule;
   if (shapeCellule_ == "-t") {
@@ -76,15 +93,21 @@ void Game::initGameComponents(const std::string& nomFichierGrille,
                                        plateform_.getPosY(),
                                        plateform_.getWidth(), 0.5, -0.5));
 }
+*/
 
-int Game::execute() {
+template <typename Shape>
+int Game<Shape>::execute() {
   mainLoop();
   return 0;
 }
 
-void Game::togglePause() { paused_ = !paused_; }
+template <typename Shape>
+void Game<Shape>::togglePause() {
+  paused_ = !paused_;
+}
 
-void Game::mainLoop() {
+template <typename Shape>
+void Game<Shape>::mainLoop() {
   Uint32 previousTime = SDL_GetTicks();
   const int frameRate = 50;
   const int maxFrameTime = 1000 / frameRate;
@@ -122,7 +145,8 @@ void Game::mainLoop() {
   }
 }
 
-void Game::handleEvents(SDL_Event& event) {
+template <typename Shape>
+void Game<Shape>::handleEvents(SDL_Event& event) {
   if (event.type == SDL_QUIT) {
     quit_ = true;
   }
@@ -156,7 +180,8 @@ void Game::handleEvents(SDL_Event& event) {
   }
 }
 
-void Game::updateGame(float dt) {
+template <typename Shape>
+void Game<Shape>::updateGame(float dt) {
   // update tous les bonus malus de bonus_maluses__
   for (auto& bonusMalus : bonus_maluses_) {
     bonusMalus->update();
@@ -196,35 +221,20 @@ void Game::updateGame(float dt) {
     }
   }
 
-  // Vérifier les collisions
-  if (shapeCellule_ == "-t") {
-    CollisionManager<TriangleCell>::checkCollisions(
-        plateform_, balls_, triangle_grid_, bonus_maluses_);
+  CollisionManager<Shape>::checkCollisions(plateform_, balls_, grid_,
+                                           bonus_maluses_);
 
-    game_finished_ = !triangle_grid_->hasRemainingBricks();
-  } else {
-    CollisionManager<SquareCell>::checkCollisions(plateform_, balls_,
-                                                  square_grid_, bonus_maluses_);
-
-    game_finished_ = !square_grid_->hasRemainingBricks();
-  }
+  game_finished_ = !grid_->hasRemainingBricks();
 
   game_over_ = balls_.empty();
 }
 
-void Game::render() {
+template <typename Shape>
+void Game<Shape>::render() {
   // Mise à jour affichage
   SDL_SetRenderDrawColor(renderer_.get(), 0, 0, 0, 255);
   SDL_RenderClear(renderer_.get());
-
-  if (shapeCellule_ == "-t") {
-    // using ShapeType_ = TriangleCell;
-    triangle_grid_->renderGrid(renderer_, screen_width_, screen_height_);
-  } else {
-    // using ShapeType_ = SquareCell;
-    square_grid_->renderGrid(renderer_, screen_width_, screen_height_);
-  }
-  // grid_->renderGrid(renderer_, screen_width_, screen_height_);
+  grid_->renderGrid(renderer_, screen_width_, screen_height_);
   plateform_.render(renderer_);
   // Rendu de chaque balle dans le vecteur
   for (const auto& ball : balls_) {
@@ -238,13 +248,15 @@ void Game::render() {
   SDL_RenderPresent(renderer_.get());
 }
 
-void Game::cleanUp() {
+template <typename Shape>
+void Game<Shape>::cleanUp() {
   SDL_DestroyRenderer(renderer_.get());
   SDL_DestroyWindow(window_.get());
   SDL_Quit();
 }
 
-void Game::setBallAccelerating() {
+template <typename Shape>
+void Game<Shape>::setBallAccelerating() {
   for (const auto& ball : balls_) {
     int newSpeed = ball->getSpeed() + 75;
     if (newSpeed <= 650) {
@@ -253,7 +265,8 @@ void Game::setBallAccelerating() {
   }
 }
 
-void Game::setBallDecelerating() {
+template <typename Shape>
+void Game<Shape>::setBallDecelerating() {
   for (const auto& ball : balls_) {
     int newSpeed = ball->getSpeed() - 75;
     if (newSpeed >= 300) {
@@ -262,16 +275,20 @@ void Game::setBallDecelerating() {
   }
 }
 
-void Game::shrinkPlateformWidth() {
+template <typename Shape>
+void Game<Shape>::shrinkPlateformWidth() {
   if (plateform_.getWidth() > 50)
     plateform_.setWidth(plateform_.getWidth() - 30);
 }
-void Game::enlargePlateformWidth() {
+
+template <typename Shape>
+void Game<Shape>::enlargePlateformWidth() {
   if (plateform_.getWidth() < 150)
     plateform_.setWidth(plateform_.getWidth() + 30);
 }
 
-void Game::generateBonusMalus() {
+template <typename Shape>
+void Game<Shape>::generateBonusMalus() {
   // Générateur de nombres aléatoires
   std::random_device rd;
   std::mt19937 gen(rd());
@@ -290,33 +307,33 @@ void Game::generateBonusMalus() {
     // BonusMalus
     int type = std::uniform_int_distribution<>(0, 10)(gen);
 
-    std::shared_ptr<BonusMalus> bm;
+    std::shared_ptr<BonusMalus<Shape>> bm;
 
     switch (type) {
       case 0:
       case 1:
-        bm = std::make_shared<Shrink>(this, randomX, 0);
+        bm = std::make_shared<Shrink<Shape>>(this, randomX, 0);
         break;
 
       case 2:
       case 3:
       case 4:
-        bm = std::make_shared<Enlarge>(this, randomX, 0);
+        bm = std::make_shared<Enlarge<Shape>>(this, randomX, 0);
         break;
 
       case 5:
       case 6:
-        bm = std::make_shared<SpedUp>(this, randomX, 0);
+        bm = std::make_shared<SpedUp<Shape>>(this, randomX, 0);
         break;
 
       case 7:
       case 8:
       case 9:
-        bm = std::make_shared<SlowedDown>(this, randomX, 0);
+        bm = std::make_shared<SlowedDown<Shape>>(this, randomX, 0);
         break;
 
       case 10:
-        bm = std::make_shared<MultiBall>(this, randomX, 0);
+        bm = std::make_shared<MultiBall<Shape>>(this, randomX, 0);
         break;
       default:
         // En cas de type invalide, ne rien faire
@@ -328,7 +345,8 @@ void Game::generateBonusMalus() {
   }
 }
 
-void Game::generateNewBalls() {
+template <typename Shape>
+void Game<Shape>::generateNewBalls() {
   // Créer deux nouvelles balles avec des positions aléatoires
   std::random_device rd;
   std::mt19937 gen(rd());

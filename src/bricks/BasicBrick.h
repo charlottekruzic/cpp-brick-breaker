@@ -14,8 +14,9 @@
 template <typename Shape>
 class BasicBrick : public Brick<Shape> {
  public:
-  BasicBrick(int strength, Game* game) : Brick<Shape>(strength, game) {}
-  BasicBrick(int strength, Game* game, TriangleCell::Orientation orientation)
+  BasicBrick(int strength, Game<Shape>* game) : Brick<Shape>(strength, game) {}
+  BasicBrick(int strength, Game<Shape>* game,
+             TriangleCell::Orientation orientation)
       : Brick<Shape>(strength, game, orientation) {}
 };
 

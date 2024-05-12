@@ -1,9 +1,9 @@
 template <typename Shape>
-Brick<Shape>::Brick(int strength, Game* game)
+Brick<Shape>::Brick(int strength, Game<Shape>* game)
     : strength_(strength), hitsLeft_(strength), game_(game) {}
 
 template <typename Shape>
-Brick<Shape>::Brick(int strength, Game* game,
+Brick<Shape>::Brick(int strength, Game<Shape>* game,
                     TriangleCell::Orientation orientation)
     : strength_(strength),
       hitsLeft_(strength),
