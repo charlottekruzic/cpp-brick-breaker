@@ -9,6 +9,7 @@
 
 #include "Ball.h"
 #include "Grid.h"
+#include "HexagonCell.h"
 #include "Plateform.h"
 #include "SquareCell.h"
 #include "TriangleCell.h"

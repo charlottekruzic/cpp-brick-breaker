@@ -62,15 +62,15 @@ Wall<Shape>::Wall(std::shared_ptr<SDL_Renderer>& renderer,
 
 template <typename Shape>
 void Wall<Shape>::renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x,
-                             int y, int cellWidth, int cellHeight) {
+                             int y, float cellWidth, float cellHeight) {
   this->shape_.draw(renderer, x, y, cellWidth, cellHeight,
                     ColorUtils::convertColor(getColor()));
 }
 
 template <>
 inline void Wall<SquareCell>::renderCell(
-    std::shared_ptr<SDL_Renderer>& renderer, int x, int y, int cellWidth,
-    int cellHeight) {
+    std::shared_ptr<SDL_Renderer>& renderer, int x, int y, float cellWidth,
+    float cellHeight) {
   int padding = 1;  // Espace entre chaque case
   int size = cellWidth - 2 * padding;
 

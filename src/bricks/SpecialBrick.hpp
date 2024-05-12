@@ -13,8 +13,8 @@ SpecialBrick<Derived, Shape>::SpecialBrick(
 
 template <class Derived, typename Shape>
 void SpecialBrick<Derived, Shape>::renderCell(
-    std::shared_ptr<SDL_Renderer>& renderer, int x, int y, int cellWidth,
-    int cellHeight) {
+    std::shared_ptr<SDL_Renderer>& renderer, int x, int y, float cellWidth,
+    float cellHeight) {
   static_cast<Derived*>(this)->renderCell(renderer, x, y, cellWidth,
                                           cellHeight);
 }

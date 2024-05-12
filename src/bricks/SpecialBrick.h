@@ -12,7 +12,7 @@ class SpecialBrick : public Brick<Shape> {
 
   // Méthode virtuelle pure pour effectuer une action spécifique
   void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                  int cellWidth, int cellHeight) override;
+                  float cellWidth, float cellHeight) override;
   virtual void performAction() = 0;
   bool hit() override;
 

@@ -37,23 +37,7 @@ class Grid {
   }
 
   void renderGrid(std::shared_ptr<SDL_Renderer>& renderer, int screenWidth,
-                  int screenHeight) const {
-    int cellWidth = screenWidth / cols_;    // Largeur de chaque cellule
-    int cellHeight = screenHeight / rows_;  // Hauteur de chaque cellule
-
-    int cellSize = std::min(cellWidth, cellHeight);  // carré
-
-    for (size_t i = 0; i < grid_.size(); ++i) {
-      for (size_t j = 0; j < grid_[i].size(); ++j) {
-        // Coordonnées de rendu de la cellule actuelle
-        int x = j * cellSize;
-        int y = i * cellSize;
-
-        // Rendu de la cellule
-        grid_[i][j]->renderCell(renderer, x, y, cellWidth, cellHeight);
-      }
-    }
-  }
+                  int screenHeight) const;
 
   inline int getRows() const { return rows_; }
   inline int getCols() const { return cols_; }

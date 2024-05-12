@@ -28,7 +28,7 @@ bool Brick<Shape>::hit() {
 
 template <typename Shape>
 void Brick<Shape>::renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x,
-                              int y, int cellWidth, int cellHeight) {
+                              int y, float cellWidth, float cellHeight) {
   this->shape_.draw(renderer, x, y, cellWidth, cellHeight,
                     ColorUtils::convertColor(getColor()));
 }

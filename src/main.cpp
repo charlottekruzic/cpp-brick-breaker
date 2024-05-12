@@ -7,6 +7,7 @@ int main(int argc, char* argv[]) {
   if (argc != 3) {
     //-t pour triangle
     //-s pour square
+    //-h pour hexagon
     std::cerr << "Usage: " << argv[0] << " <nom_fichier_grille>"
               << " <type_cellule>\n"
               << std::endl;
@@ -47,9 +48,13 @@ int main(int argc, char* argv[]) {
   } else if (shapeCellule == "-s") {
     Game<SquareCell> game_square(nomFichierGrille, shapeCellule);
     ret = game_square.execute();
+  } else if (shapeCellule == "-h") {
+    Game<HexagonCell> game_hexagon(nomFichierGrille, shapeCellule);
+    ret = game_hexagon.execute();
   } else {
     std::cerr << "Erreur : forme de cellule non reconnue. Utilisez \"-t\" pour "
-                 "Triangle ou \"-s\" pour Square."
+                 "Triangle,  \"-s\" pour Square ou \"-h\" pour "
+                 "Hexagone."
               << std::endl;
     ret = EXIT_FAILURE;
   }

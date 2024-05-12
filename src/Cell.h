@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "Colors.h"
+#include "HexagonCell.h"
 #include "SquareCell.h"
 #include "TriangleCell.h"
 
@@ -18,7 +19,7 @@ class Cell {
   virtual bool rebondir() const = 0;
   virtual bool hit() = 0;
   virtual void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                          int cellWidth, int cellHeight) = 0;
+                          float cellWidth, float cellHeight) = 0;
 
   virtual Color getColor() const = 0;  //{ return color_; };
 

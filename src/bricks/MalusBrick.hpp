@@ -69,8 +69,8 @@ MalusBrick<Shape>::MalusBrick(Game<Shape>* game,
 
 template <>
 void MalusBrick<SquareCell>::renderCell(std::shared_ptr<SDL_Renderer>& renderer,
-                                        int x, int y, int cellWidth,
-                                        int cellHeight) {
+                                        int x, int y, float cellWidth,
+                                        float cellHeight) {
   int padding = 1;  // Espace entre chaque case
   int size = cellWidth - 2 * padding;
 
@@ -81,8 +81,16 @@ void MalusBrick<SquareCell>::renderCell(std::shared_ptr<SDL_Renderer>& renderer,
 
 template <>
 void MalusBrick<TriangleCell>::renderCell(
-    std::shared_ptr<SDL_Renderer>& renderer, int x, int y, int cellWidth,
-    int cellHeight) {
+    std::shared_ptr<SDL_Renderer>& renderer, int x, int y, float cellWidth,
+    float cellHeight) {
+  this->shape_.draw(renderer, x, y, cellWidth, cellHeight,
+                    ColorUtils::convertColor(getColor()));
+}
+
+template <>
+void MalusBrick<HexagonCell>::renderCell(
+    std::shared_ptr<SDL_Renderer>& renderer, int x, int y, float cellWidth,
+    float cellHeight) {
   this->shape_.draw(renderer, x, y, cellWidth, cellHeight,
                     ColorUtils::convertColor(getColor()));
 }

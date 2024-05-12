@@ -18,7 +18,7 @@ class Empty : public Cell<Shape> {
   inline Color getColor() const override { return this->color_; }
 
   void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                  int cellWidth, int cellHeight) override;
+                  float cellWidth, float cellHeight) override;
 };
 
 #include "Empty.hpp"

@@ -17,7 +17,7 @@ class Wall : public Cell<Shape> {
   inline Color getColor() const override { return this->color_; }
 
   void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                  int cellWidth, int cellHeight) override;
+                  float cellWidth, float cellHeight) override;
 
  private:
   static std::shared_ptr<SDL_Texture> wall_texture_;  // Attribut pour la

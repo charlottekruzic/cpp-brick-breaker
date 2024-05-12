@@ -17,7 +17,7 @@ class Brick : public Cell<Shape> {
   bool rebondir() const override;
   bool hit();
   void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                  int cellWidth, int cellHeight);
+                  float cellWidth, float cellHeight);
 
   inline int getStrength() const { return strength_; }
   inline int getHitsLeft() const { return hitsLeft_; }

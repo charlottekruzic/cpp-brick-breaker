@@ -2,6 +2,7 @@
 #define COLLISIONMANAGER_HPP
 
 #include "CollisionManager.h"
+#include "HexagonCell.h"
 #include "SquareCell.h"
 #include "TriangleCell.h"
 
@@ -216,12 +217,54 @@ inline void CollisionManager<TriangleCell>::checkGridBallCollision(
   }
 }
 
+// Méthode pour vérifier la collision entre la balle et la grille
+template <>
+inline void CollisionManager<HexagonCell>::checkGridBallCollision(
+    std::shared_ptr<Grid<HexagonCell>>& grid, std::shared_ptr<Ball>& ball) {
+  for (int i = 0; i < grid->getRows(); i++) {
+    for (int j = 0; j < grid->getCols(); j++) {
+      Cell<HexagonCell>* cell = grid->getCell(i, j);
+      if (cell && cell->rebondir()) {
+        // Récupération des points de l'hexagone
+        SDL_Point points[7];
+        for (int p = 0; p < 7; p++) {
+          points[p] = cell->getPoint(p);
+        }
+
+        bool hit = false;
+        // Calcule des collisions sur les 6 côtés
+        for (int k = 0; k < 6; k++) {
+          int next = (k + 1) % 6;
+          if (isNear(ball->getPosX(), ball->getPosY(), points[k].x, points[k].y,
+                     points[next].x, points[next].y, ball->getRadius())) {
+            // Calcul de la normale
+            float n_x = points[next].y - points[k].y;
+            float n_y = points[k].x - points[next].x;
+            float normLength = sqrt(n_x * n_x + n_y * n_y);
+            n_x /= normLength;
+            n_y /= normLength;
+
+            // Calcul de la nouvelle vélocité (éviter que la balle accélère)
+            float product =
+                ball->getVelocityX() * n_x + ball->getVelocityY() * n_y;
+            ball->setVelocityX(ball->getVelocityX() - 2 * product * n_x);
+            ball->setVelocityY(ball->getVelocityY() - 2 * product * n_y);
+
+            grid->hitCell(i, j);
+            break;
+          }
+        }
+      }
+    }
+  }
+}
+
 template <typename Shape>
 bool CollisionManager<Shape>::isNear(float px, float py, float x1, float y1,
                                      float x2, float y2, float radius) {
   float line_height = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
   float distance;
-  if (line_height < 0) {
+  if (line_height < 0.001f) {
     distance = sqrt(pow(px - x1, 2) + pow(py - y1, 2));
   } else {
     float u = ((px - x1) * (x2 - x1) + (py - y1) * (y2 - y1)) /

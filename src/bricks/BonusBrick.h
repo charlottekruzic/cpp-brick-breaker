@@ -17,7 +17,7 @@ class BonusBrick : public SpecialBrick<BonusBrick<Shape>, Shape> {
   }
 
   void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                  int cellWidth, int cellHeight);
+                  float cellWidth, float cellHeight);
 
   inline Color getColor() const override { return Color::DarkGreen; };
 
