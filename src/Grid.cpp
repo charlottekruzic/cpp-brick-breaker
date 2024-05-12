@@ -75,7 +75,6 @@ Grid<TriangleCell>::Grid(const std::string& filename, int width, int height,
       renderer_(renderer),
       remainingBricks_(0),
       game_(game) {
-  std::cout << "dans constructeur de grid triangle cell" << std::endl;
   InputParser parser(filename);
   if (!parser.parseFile()) {
     // Gérer l'erreur de lecture du fichier

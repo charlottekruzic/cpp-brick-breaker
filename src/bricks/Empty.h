@@ -11,14 +11,9 @@
 template <typename Shape>
 class Empty : public Cell<Shape> {
  public:
-  Empty() : Cell<Shape>(Color::Black) {
-    std::cout << "création d'un empty PAR DEFAUT" << std::endl;
-  }
-  Empty(Color color) : Cell<Shape>(color) {
-    std::cout << "création d'un empty" << std::endl;
-  }
+  Empty() : Cell<Shape>(Color::Black) {}
+  Empty(Color color) : Cell<Shape>(color) {}
   Empty(TriangleCell::Orientation orientation) : Cell<Shape>(Color::Black) {
-    std::cout << "création d'un empty" << std::endl;
     this->shape_ = TriangleCell(orientation);
   }
   ~Empty() override{};
