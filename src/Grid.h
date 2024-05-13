@@ -51,18 +51,7 @@ class Grid {
     return grid_[row][col];
   }
 
-  void hitCell(int x, int y) {
-    Cell<Shape>* c = getCell(x, y);
-    BasicBrick<Shape>* basicBrick =
-        dynamic_cast<BasicBrick<Shape>*>(c);  // Vérifie si c est un BasicBrick
-
-    bool detruit = c->hit();
-    if (detruit) {
-      delete grid_[x][y];
-      grid_[x][y] = new Empty<Shape>();
-      if (basicBrick) remainingBricks_--;
-    }
-  }
+  void hitCell(int x, int y);
 
   inline bool hasRemainingBricks() const { return remainingBricks_ > 0; }
 
@@ -77,9 +66,6 @@ class Grid {
   int remainingBricks_;  // Nouvel attribut pour su
 };
 
-// #include "Grid.hpp"
-
-// Definir que Shape est un SquareCell
-// typedef Grid<SquareCell> SquareGrid;
+#include "Grid.hpp"
 
 #endif  // GRID_H

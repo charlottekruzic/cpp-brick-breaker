@@ -234,6 +234,7 @@ void Game<Shape>::cleanUp() {
 
 template <typename Shape>
 void Game<Shape>::setBallAccelerating() {
+  std::cout << "acceleration" << std::endl;
   for (const auto& ball : balls_) {
     int newSpeed = ball->getSpeed() + 75;
     if (newSpeed <= 650) {
@@ -244,6 +245,7 @@ void Game<Shape>::setBallAccelerating() {
 
 template <typename Shape>
 void Game<Shape>::setBallDecelerating() {
+  std::cout << "deceleration" << std::endl;
   for (const auto& ball : balls_) {
     int newSpeed = ball->getSpeed() - 75;
     if (newSpeed >= 300) {
@@ -254,12 +256,14 @@ void Game<Shape>::setBallDecelerating() {
 
 template <typename Shape>
 void Game<Shape>::shrinkPlateformWidth() {
+  std::cout << "plateforme retreci" << std::endl;
   if (plateform_.getWidth() > 50)
     plateform_.setWidth(plateform_.getWidth() - 30);
 }
 
 template <typename Shape>
 void Game<Shape>::enlargePlateformWidth() {
+  std::cout << "plateforme agrandi" << std::endl;
   if (plateform_.getWidth() < 150)
     plateform_.setWidth(plateform_.getWidth() + 30);
 }

@@ -99,7 +99,7 @@ Grid<TriangleCell>::Grid(const std::string& filename, int width, int height,
           ((i + j) % 2 == 0) ? TriangleCell::Orientation::UP
                              : TriangleCell::Orientation::DOWN;
       if (c == ' ') {
-        gridRow.push_back(new Empty<TriangleCell>());
+        gridRow.push_back(new Empty<TriangleCell>(orientation));
       } else if (c >= '1' && c <= '5') {
         gridRow.push_back(
             new BasicBrick<TriangleCell>(c - '0', game_, orientation));
@@ -120,7 +120,7 @@ Grid<TriangleCell>::Grid(const std::string& filename, int width, int height,
         gridRow.push_back(new Wall<TriangleCell>(renderer, orientation));
       } else {
         std::cerr << "Caractère inconnu: " << c << std::endl;
-        gridRow.push_back(new Empty<TriangleCell>());
+        gridRow.push_back(new Empty<TriangleCell>(orientation));
       }
     }
     grid_.push_back(gridRow);
@@ -242,5 +242,37 @@ void Grid<HexagonCell>::renderGrid(std::shared_ptr<SDL_Renderer>& renderer,
       // Appel de la fonction de rendu de la cellule
       grid_[i][j]->renderCell(renderer, x, y, cellWidth, cellHeight);
     }
+  }
+}
+
+template <>
+void Grid<TriangleCell>::hitCell(int x, int y) {
+  Cell<TriangleCell>* c = getCell(x, y);
+  BasicBrick<TriangleCell>* basicBrick =
+      dynamic_cast<BasicBrick<TriangleCell>*>(
+          c);  // Vérifie si c est un BasicBrick
+
+  bool detruit = c->hit();
+  if (detruit) {
+    delete grid_[x][y];
+    TriangleCell::Orientation orientation =
+        ((x + y) % 2 == 0) ? TriangleCell::Orientation::UP
+                           : TriangleCell::Orientation::DOWN;
+    grid_[x][y] = new Empty<TriangleCell>(orientation);
+    if (basicBrick) remainingBricks_--;
+  }
+}
+
+template <typename Shape>
+void Grid<Shape>::hitCell(int x, int y) {
+  Cell<Shape>* c = getCell(x, y);
+  BasicBrick<Shape>* basicBrick =
+      dynamic_cast<BasicBrick<Shape>*>(c);  // Vérifie si c est un BasicBrick
+
+  bool detruit = c->hit();
+  if (detruit) {
+    delete grid_[x][y];
+    grid_[x][y] = new Empty<Shape>();
+    if (basicBrick) remainingBricks_--;
   }
 }
