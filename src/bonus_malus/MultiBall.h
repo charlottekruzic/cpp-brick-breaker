@@ -9,7 +9,7 @@ class Game;
 template <typename Shape>
 class MultiBall : public BonusMalus<Shape> {
  public:
-  MultiBall(Game<Shape>* game, int x, int y);
+  MultiBall(std::shared_ptr<Game<Shape>> game, int x, int y);
   void applyEffect() override;
 };
 

@@ -2,7 +2,8 @@
 
 #include "BonusMalus.h"
 template <typename Shape>
-BonusMalus<Shape>::BonusMalus(Game<Shape>* game, Color color, int x, int y)
+BonusMalus<Shape>::BonusMalus(std::shared_ptr<Game<Shape>> game, Color color,
+                              int x, int y)
     : game_(game), color_(color), x_(x), y_(y) {}
 
 template <typename Shape>

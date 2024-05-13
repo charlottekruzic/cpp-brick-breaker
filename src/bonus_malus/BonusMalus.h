@@ -14,7 +14,7 @@ class Game;
 template <typename Shape>
 class BonusMalus {
  public:
-  BonusMalus(Game<Shape>* game, Color color, int x, int y);
+  BonusMalus(std::shared_ptr<Game<Shape>> game, Color color, int x, int y);
 
   int getX() const { return x_; }
   int getY() const { return y_; }
@@ -32,7 +32,7 @@ class BonusMalus {
 
  protected:
   Color color_{Color::DEFAULT_COLOR};
-  Game<Shape>* game_;
+  std::weak_ptr<Game<Shape>> game_;
 
  private:
   int x_;

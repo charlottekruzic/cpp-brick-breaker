@@ -9,7 +9,7 @@ class Game;
 template <typename Shape>
 class Shrink : public BonusMalus<Shape> {
  public:
-  Shrink(Game<Shape>* game, int x, int y);
+  Shrink(std::shared_ptr<Game<Shape>> game, int x, int y);
   void applyEffect() override;
 };
 

@@ -174,24 +174,28 @@ int main(int argc, char* argv[]) {
     SDL_DestroyWindow(window);
     SDL_Quit();
     // demarrage du jeu
-    Game<TriangleCell> game_triangle(nomFichierGrille, shapeCellule);
-    game_triangle.execute();
+    auto game_triangle =
+        std::make_shared<Game<TriangleCell>>(nomFichierGrille, shapeCellule);
+    game_triangle->execute();
   } else if (shapeCellule == "-s") {
     // fermeture fenetre
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
     // demarrage du jeu
-    Game<SquareCell> game_square(nomFichierGrille, shapeCellule);
-    game_square.execute();
+    auto game_square =
+        std::make_shared<Game<SquareCell>>(nomFichierGrille, shapeCellule);
+    game_square->execute();
+
   } else if (shapeCellule == "-h") {
     // fermeture fenetre
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
     // demarrage du jeu
-    Game<HexagonCell> game_hexagon(nomFichierGrille, shapeCellule);
-    game_hexagon.execute();
+    auto game_hexagon =
+        std::make_shared<Game<HexagonCell>>(nomFichierGrille, shapeCellule);
+    game_hexagon->execute();
   }
 
   return 0;

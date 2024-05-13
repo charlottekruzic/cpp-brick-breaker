@@ -26,7 +26,8 @@ template <typename Shape>
 class Grid {
  public:
   Grid(const std::string& filename, int width, int height,
-       std::shared_ptr<SDL_Renderer>& renderer, Game<Shape>* game);
+       std::shared_ptr<SDL_Renderer>& renderer,
+       std::shared_ptr<Game<Shape>> game);
 
   ~Grid() {
     for (auto& row : grid_) {
@@ -71,7 +72,7 @@ class Grid {
   int cols_;
   int width_;
   int height_;
-  Game<Shape>* game_;
+  std::weak_ptr<Game<Shape>> game_;
   std::vector<std::vector<Cell<Shape>*>> grid_;
   std::shared_ptr<SDL_Renderer>& renderer_;
   int remainingBricks_;  // Nouvel attribut pour su

@@ -8,16 +8,21 @@
 template <typename Shape>
 class SpedUpBrick : public MalusBrick<Shape> {
  public:
-  SpedUpBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer)
+  SpedUpBrick(std::shared_ptr<Game<Shape>> game,
+              std::shared_ptr<SDL_Renderer>& renderer)
       : MalusBrick<Shape>(game, renderer) {}
 
-  SpedUpBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer,
+  SpedUpBrick(std::shared_ptr<Game<Shape>> game,
+              std::shared_ptr<SDL_Renderer>& renderer,
               TriangleCell::Orientation orientation)
       : MalusBrick<Shape>(game, renderer, orientation) {}
 
   void performAction() override {
     // Augmenter la largeur de la plateforme
-    this->game_->setBallAccelerating();
+    auto sharedGame = this->game_.lock();  // Convertit weak_ptr en shared_ptr
+    if (sharedGame) {
+      sharedGame->setBallAccelerating();
+    }
   }
 };
 

@@ -2,12 +2,12 @@
 
 template <class Derived, typename Shape>
 SpecialBrick<Derived, Shape>::SpecialBrick(
-    Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer)
+    std::shared_ptr<Game<Shape>> game, std::shared_ptr<SDL_Renderer>& renderer)
     : Brick<Shape>(1, game) {}
 
 template <class Derived, typename Shape>
 SpecialBrick<Derived, Shape>::SpecialBrick(
-    Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer,
+    std::shared_ptr<Game<Shape>> game, std::shared_ptr<SDL_Renderer>& renderer,
     TriangleCell::Orientation orientation)
     : Brick<Shape>(1, game, orientation) {}
 

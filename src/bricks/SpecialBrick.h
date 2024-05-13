@@ -6,8 +6,10 @@
 template <class Derived, typename Shape>
 class SpecialBrick : public Brick<Shape> {
  public:
-  SpecialBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer);
-  SpecialBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer,
+  SpecialBrick(std::shared_ptr<Game<Shape>> game,
+               std::shared_ptr<SDL_Renderer>& renderer);
+  SpecialBrick(std::shared_ptr<Game<Shape>> game,
+               std::shared_ptr<SDL_Renderer>& renderer,
                TriangleCell::Orientation orientation);
 
   // Méthode virtuelle pure pour effectuer une action spécifique

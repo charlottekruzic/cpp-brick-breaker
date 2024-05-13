@@ -32,8 +32,11 @@ class Plateform;
  * Cette classe gère l'exécution du jeu et ses composants.
  */
 template <typename Shape>
-class Game {
+class Game : public std::enable_shared_from_this<Game<Shape>> {
  public:
+  std::shared_ptr<Game<Shape>> getSharedPtr() {
+    return this->shared_from_this();
+  }
   /**
    * @brief Constructeur de la classe Game.
    * @param nomFichierGrille Le nom du fichier de la grille de jeu.

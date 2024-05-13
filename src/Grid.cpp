@@ -18,7 +18,7 @@
 template <>
 Grid<SquareCell>::Grid(const std::string& filename, int width, int height,
                        std::shared_ptr<SDL_Renderer>& renderer,
-                       Game<SquareCell>* game)
+                       std::shared_ptr<Game<SquareCell>> game)
     : width_(width),
       height_(height),
       renderer_(renderer),
@@ -46,18 +46,35 @@ Grid<SquareCell>::Grid(const std::string& filename, int width, int height,
       if (c == ' ') {
         gridRow.push_back(new Empty<SquareCell>());
       } else if (c >= '1' && c <= '5') {
-        gridRow.push_back(new BasicBrick<SquareCell>(c - '0', game_));
+        auto sharedGame = game_.lock();
+        if (sharedGame) {
+          gridRow.push_back(new BasicBrick<SquareCell>(c - '0', sharedGame));
+        }
         remainingBricks_++;
       } else if (c == 'A') {
-        gridRow.push_back(new SpedUpBrick<SquareCell>(game_, renderer));
+        auto sharedGame = game_.lock();
+        if (sharedGame) {
+          gridRow.push_back(new SpedUpBrick<SquareCell>(sharedGame, renderer));
+        }
       } else if (c == 'D') {
-        gridRow.push_back(new SlowedDownBrick<SquareCell>(game_, renderer));
+        auto sharedGame = game_.lock();
+        if (sharedGame) {
+          gridRow.push_back(
+              new SlowedDownBrick<SquareCell>(sharedGame, renderer));
+        }
       } else if (c == 'S') {
-        gridRow.push_back(new ShrinkBrick<SquareCell>(game_, renderer));
+        auto sharedGame = game_.lock();
+        if (sharedGame) {
+          gridRow.push_back(new ShrinkBrick<SquareCell>(sharedGame, renderer));
+        }
       } else if (c == 'E') {
-        gridRow.push_back(new EnlargeBrick<SquareCell>(game_, renderer));
+        auto sharedGame = game_.lock();
+        if (sharedGame) {
+          gridRow.push_back(new EnlargeBrick<SquareCell>(sharedGame, renderer));
+        }
       } else if (c == 'W') {
         gridRow.push_back(new Wall<SquareCell>(renderer));
+
       } else {
         std::cerr << "Caractère inconnu '" << c
                   << "'. Remplacé par une case vide" << std::endl;
@@ -71,7 +88,7 @@ Grid<SquareCell>::Grid(const std::string& filename, int width, int height,
 template <>
 Grid<TriangleCell>::Grid(const std::string& filename, int width, int height,
                          std::shared_ptr<SDL_Renderer>& renderer,
-                         Game<TriangleCell>* game)
+                         std::shared_ptr<Game<TriangleCell>> game)
     : width_(width),
       height_(height),
       renderer_(renderer),
@@ -101,21 +118,36 @@ Grid<TriangleCell>::Grid(const std::string& filename, int width, int height,
       if (c == ' ') {
         gridRow.push_back(new Empty<TriangleCell>());
       } else if (c >= '1' && c <= '5') {
-        gridRow.push_back(
-            new BasicBrick<TriangleCell>(c - '0', game_, orientation));
+        auto sharedGame = game_.lock();
+        if (sharedGame) {
+          gridRow.push_back(
+              new BasicBrick<TriangleCell>(c - '0', sharedGame, orientation));
+        }
         remainingBricks_++;
       } else if (c == 'A') {
-        gridRow.push_back(
-            new SpedUpBrick<TriangleCell>(game_, renderer, orientation));
+        auto sharedGame = game_.lock();
+        if (sharedGame) {
+          gridRow.push_back(
+              new SpedUpBrick<TriangleCell>(sharedGame, renderer, orientation));
+        }
       } else if (c == 'D') {
-        gridRow.push_back(
-            new SlowedDownBrick<TriangleCell>(game_, renderer, orientation));
+        auto sharedGame = game_.lock();
+        if (sharedGame) {
+          gridRow.push_back(new SlowedDownBrick<TriangleCell>(
+              sharedGame, renderer, orientation));
+        }
       } else if (c == 'S') {
-        gridRow.push_back(
-            new ShrinkBrick<TriangleCell>(game_, renderer, orientation));
+        auto sharedGame = game_.lock();
+        if (sharedGame) {
+          gridRow.push_back(
+              new ShrinkBrick<TriangleCell>(sharedGame, renderer, orientation));
+        }
       } else if (c == 'E') {
-        gridRow.push_back(
-            new EnlargeBrick<TriangleCell>(game_, renderer, orientation));
+        auto sharedGame = game_.lock();
+        if (sharedGame) {
+          gridRow.push_back(new EnlargeBrick<TriangleCell>(sharedGame, renderer,
+                                                           orientation));
+        }
       } else if (c == 'W') {
         gridRow.push_back(new Wall<TriangleCell>(renderer, orientation));
       } else {
@@ -131,7 +163,7 @@ Grid<TriangleCell>::Grid(const std::string& filename, int width, int height,
 template <>
 Grid<HexagonCell>::Grid(const std::string& filename, int width, int height,
                         std::shared_ptr<SDL_Renderer>& renderer,
-                        Game<HexagonCell>* game)
+                        std::shared_ptr<Game<HexagonCell>> game)
     : width_(width),
       height_(height),
       renderer_(renderer),
@@ -159,16 +191,33 @@ Grid<HexagonCell>::Grid(const std::string& filename, int width, int height,
       if (c == ' ') {
         gridRow.push_back(new Empty<HexagonCell>());
       } else if (c >= '1' && c <= '5') {
-        gridRow.push_back(new BasicBrick<HexagonCell>(c - '0', game_));
+        auto sharedGame = game_.lock();
+        if (sharedGame) {
+          gridRow.push_back(new BasicBrick<HexagonCell>(c - '0', sharedGame));
+        }
         remainingBricks_++;
       } else if (c == 'A') {
-        gridRow.push_back(new SpedUpBrick<HexagonCell>(game_, renderer));
+        auto sharedGame = game_.lock();
+        if (sharedGame) {
+          gridRow.push_back(new SpedUpBrick<HexagonCell>(sharedGame, renderer));
+        }
       } else if (c == 'D') {
-        gridRow.push_back(new SlowedDownBrick<HexagonCell>(game_, renderer));
+        auto sharedGame = game_.lock();
+        if (sharedGame) {
+          gridRow.push_back(
+              new SlowedDownBrick<HexagonCell>(sharedGame, renderer));
+        }
       } else if (c == 'S') {
-        gridRow.push_back(new ShrinkBrick<HexagonCell>(game_, renderer));
+        auto sharedGame = game_.lock();
+        if (sharedGame) {
+          gridRow.push_back(new ShrinkBrick<HexagonCell>(sharedGame, renderer));
+        }
       } else if (c == 'E') {
-        gridRow.push_back(new EnlargeBrick<HexagonCell>(game_, renderer));
+        auto sharedGame = game_.lock();
+        if (sharedGame) {
+          gridRow.push_back(
+              new EnlargeBrick<HexagonCell>(sharedGame, renderer));
+        }
       } else if (c == 'W') {
         gridRow.push_back(new Wall<HexagonCell>(renderer));
       } else {
