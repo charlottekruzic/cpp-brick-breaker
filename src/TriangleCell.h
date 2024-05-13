@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <memory>
+#include <vector>
 
 class TriangleCell {
  public:
@@ -19,9 +20,10 @@ class TriangleCell {
 
  private:
   Orientation orientation_;
-  SDL_Point points_[4];
+  std::vector<SDL_Point> points_;
 
-  void fillTriangle(std::shared_ptr<SDL_Renderer>& renderer, SDL_Point* points);
+  void fillTriangle(std::shared_ptr<SDL_Renderer>& renderer,
+                    std::vector<SDL_Point>& points);
 };
 
 #endif  // TRIANGLE_CELL_H

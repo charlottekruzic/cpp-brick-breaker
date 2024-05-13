@@ -10,38 +10,41 @@ TriangleCell::TriangleCell(Orientation orientation)
 
 void TriangleCell::draw(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
                         int cellWidth, int cellHeight, SDL_Color color) {
-  if (orientation_ == Orientation::UP) {
-    points_[0] = {x + cellWidth / 2, y};          // Pointe haut
-    points_[1] = {x, y + cellWidth};              // Bas gauche
-    points_[2] = {x + cellWidth, y + cellWidth};  // Bas droit
+  points_.clear();
 
-  } else {                                            // Orientation::DOWN
-    points_[0] = {x, y};                              // Haut gauche
-    points_[1] = {x + cellWidth, y};                  // Haut droit
-    points_[2] = {x + cellWidth / 2, y + cellWidth};  // Pointe bas
+  if (orientation_ == Orientation::UP) {
+    points_.push_back({x + cellWidth / 2, y});          // Pointe haut
+    points_.push_back({x, y + cellWidth});              // Bas gauche
+    points_.push_back({x + cellWidth, y + cellWidth});  // Bas droit
+
+  } else {                                                  // Orientation::DOWN
+    points_.push_back({x, y});                              // Haut gauche
+    points_.push_back({x + cellWidth, y});                  // Haut droit
+    points_.push_back({x + cellWidth / 2, y + cellWidth});  // Pointe bas
   }
-  points_[3] = points_[0];
+
+  points_.push_back(points_[0]);
 
   // Remplissage
   SDL_SetRenderDrawColor(renderer.get(), color.r, color.g, color.b, color.a);
-  SDL_RenderDrawLines(renderer.get(), points_, 4);
+  SDL_RenderDrawLines(renderer.get(), points_.data(), points_.size());
   fillTriangle(renderer, points_);
 
   // Ajoute contours
   SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255);
-  SDL_RenderDrawLines(renderer.get(), points_, 4);
+  SDL_RenderDrawLines(renderer.get(), points_.data(), points_.size());
 }
 
 SDL_Point TriangleCell::getPoint(int i) {
-  if (i >= 0 && i <= 4) {
+  if (i >= 0 && i < points_.size()) {
     return points_[i];
   } else {
-    return points_[0];
+    return SDL_Point();
   }
 }
 
 void TriangleCell::fillTriangle(std::shared_ptr<SDL_Renderer>& renderer,
-                                SDL_Point* points) {
+                                std::vector<SDL_Point>& points) {
   // Tri des points
   if (points[0].y > points[1].y) std::swap(points[0], points[1]);
   if (points[1].y > points[2].y) std::swap(points[1], points[2]);
