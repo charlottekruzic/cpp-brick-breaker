@@ -1,13 +1,14 @@
-#include <SDL2/SDL.h>
-
 #include "SquareCell.h"
+
+#include <SDL2/SDL.h>
 
 SquareCell::SquareCell(int size) : size_(size) {}
 
 int SquareCell::getSize() const { return size_; }
 
-void SquareCell::draw(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                      int cellWidth, int cellHeight, SDL_Color color) const {
+void SquareCell::draw(const std::shared_ptr<SDL_Renderer>& renderer,
+                      const int x, const int y, const int cellWidth,
+                      const int cellHeight, const SDL_Color color) {
   int padding = 1;
   int size = cellWidth - 2 * padding;
   SDL_Rect rect = {x + padding, y + padding, size, size};

@@ -7,21 +7,49 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-
+/**
+ * @brief Classe représentant une cellule hexagonale
+ */
 class HexagonCell {
  public:
+  /**
+   * @brief Constructeur par défaut
+   */
   HexagonCell();
 
-  void draw(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-            int cellWidth, int cellHeight, SDL_Color color);
+  /**
+   * @brief Dessine une cellule hexagonale
+   * @param renderer Renderer
+   * @param x Position x
+   * @param y Position y
+   * @param cellWidth Largeur de la cellule
+   * @param cellHeight Hauteur de la cellule
+   * @param color Couleur de la cellule
+   * @return void
+   */
+  void draw(const std::shared_ptr<SDL_Renderer>& renderer, const int x,
+            const int y, const int cellWidth, const int cellHeight,
+            const SDL_Color color);
 
-  SDL_Point getPoint(int i);
+  /**
+   * @brief Récupère un point de la cellule
+   * @param i Indice du point à récupérer
+   * @return Point de la cellule à l'indice i
+   * @note Si l'indice est invalide, retourne un point vide (0, 0)
+   */
+  SDL_Point getPoint(const int i) const;
 
  private:
   std::vector<SDL_Point> points_;
 
-  void fillHexagon(std::shared_ptr<SDL_Renderer>& renderer,
-                   std::vector<SDL_Point>& points);
+  /**
+   * @brief Remplit un hexagone
+   * @param renderer Renderer
+   * @param points Points de l'hexagone
+   * @return void
+   */
+  void fillHexagon(const std::shared_ptr<SDL_Renderer> renderer,
+                   const std::vector<SDL_Point>& points) const;
 };
 
 #endif  // HEXAGON_CELL_H

@@ -3,13 +3,24 @@
 #include <algorithm>
 #include <memory>
 
-TriangleCell::TriangleCell() {}
+TriangleCell::TriangleCell() {
+  points_.resize(4);
+  for (int i = 0; i < 4; ++i) {
+    points_[i] = SDL_Point();
+  }
+}
 
 TriangleCell::TriangleCell(Orientation orientation)
-    : orientation_(orientation) {}
+    : orientation_(orientation) {
+  points_.resize(4);
+  for (int i = 0; i < 4; ++i) {
+    points_[i] = SDL_Point();
+  }
+}
 
-void TriangleCell::draw(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                        int cellWidth, int cellHeight, SDL_Color color) {
+void TriangleCell::draw(const std::shared_ptr<SDL_Renderer>& renderer,
+                        const int x, const int y, const int cellWidth,
+                        const int cellHeight, const SDL_Color color) {
   points_.clear();
 
   if (orientation_ == Orientation::UP) {
@@ -35,40 +46,49 @@ void TriangleCell::draw(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
   SDL_RenderDrawLines(renderer.get(), points_.data(), points_.size());
 }
 
-SDL_Point TriangleCell::getPoint(int i) {
+SDL_Point TriangleCell::getPoint(const int i) const {
   if (i >= 0 && i < points_.size()) {
     return points_[i];
   } else {
-    return SDL_Point();
+    return points_[0];
   }
 }
 
-void TriangleCell::fillTriangle(std::shared_ptr<SDL_Renderer>& renderer,
-                                std::vector<SDL_Point>& points) {
-  // Tri des points
-  if (points[0].y > points[1].y) std::swap(points[0], points[1]);
-  if (points[1].y > points[2].y) std::swap(points[1], points[2]);
-  if (points[0].y > points[1].y) std::swap(points[0], points[1]);
+void TriangleCell::fillTriangle(const std::shared_ptr<SDL_Renderer>& renderer,
+                                const std::vector<SDL_Point>& points) const {
+  std::vector<SDL_Point> sortedPoints = points;
 
-  int totalHeight = points[2].y - points[0].y;
+  // Tri des points
+  if (sortedPoints[0].y > sortedPoints[1].y)
+    std::swap(sortedPoints[0], sortedPoints[1]);
+  if (sortedPoints[1].y > sortedPoints[2].y)
+    std::swap(sortedPoints[1], sortedPoints[2]);
+  if (sortedPoints[0].y > sortedPoints[1].y)
+    std::swap(sortedPoints[0], sortedPoints[1]);
+
+  int totalHeight = sortedPoints[2].y - sortedPoints[0].y;
 
   // Remplissage du triangle
   for (int i = 0; i < totalHeight; i++) {
-    bool second_half =
-        i > points[1].y - points[0].y || points[1].y == points[0].y;
-    int segmentHeight =
-        second_half ? points[2].y - points[1].y : points[1].y - points[0].y;
+    bool second_half = i > sortedPoints[1].y - sortedPoints[0].y ||
+                       sortedPoints[1].y == sortedPoints[0].y;
+    int segmentHeight = second_half ? sortedPoints[2].y - sortedPoints[1].y
+                                    : sortedPoints[1].y - sortedPoints[0].y;
     float alpha = (float)i / totalHeight;
-    float beta = (float)(i - (second_half ? points[1].y - points[0].y : 0)) /
-                 segmentHeight;
+    float beta =
+        (float)(i - (second_half ? sortedPoints[1].y - sortedPoints[0].y : 0)) /
+        segmentHeight;
 
-    int ax = points[0].x + (points[2].x - points[0].x) * alpha;
-    int bx = second_half ? points[1].x + (points[2].x - points[1].x) * beta
-                         : points[0].x + (points[1].x - points[0].x) * beta;
+    int ax =
+        sortedPoints[0].x + (sortedPoints[2].x - sortedPoints[0].x) * alpha;
+    int bx = second_half ? sortedPoints[1].x +
+                               (sortedPoints[2].x - sortedPoints[1].x) * beta
+                         : sortedPoints[0].x +
+                               (sortedPoints[1].x - sortedPoints[0].x) * beta;
 
     if (ax > bx) std::swap(ax, bx);
 
-    SDL_RenderDrawLine(renderer.get(), ax, points[0].y + i, bx,
-                       points[0].y + i);
+    SDL_RenderDrawLine(renderer.get(), ax, sortedPoints[0].y + i, bx,
+                       sortedPoints[0].y + i);
   }
 }

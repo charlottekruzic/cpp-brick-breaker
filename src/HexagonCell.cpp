@@ -3,10 +3,16 @@
 #include <algorithm>
 #include <memory>
 
-HexagonCell::HexagonCell() {}
+HexagonCell::HexagonCell() {
+  points_.resize(7);
+  for (int i = 0; i < 7; ++i) {
+    points_[i] = SDL_Point();
+  }
+}
 
-void HexagonCell::draw(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                       int cellWidth, int cellHeight, SDL_Color color) {
+void HexagonCell::draw(const std::shared_ptr<SDL_Renderer>& renderer,
+                       const int x, const int y, const int cellWidth,
+                       const int cellHeight, const SDL_Color color) {
   points_.clear();
   double angle = M_PI / 3;
 
@@ -28,16 +34,16 @@ void HexagonCell::draw(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
   SDL_RenderDrawLines(renderer.get(), points_.data(), points_.size());
 }
 
-SDL_Point HexagonCell::getPoint(int i) {
+SDL_Point HexagonCell::getPoint(const int i) const {
   if (i >= 0 && i < points_.size()) {
     return points_[i];
   } else {
-    return SDL_Point();
+    return points_[0];
   }
 }
 
-void HexagonCell::fillHexagon(std::shared_ptr<SDL_Renderer>& renderer,
-                              std::vector<SDL_Point>& points) {
+void HexagonCell::fillHexagon(const std::shared_ptr<SDL_Renderer> renderer,
+                              const std::vector<SDL_Point>& points) const {
   int minY = points[0].y;
   int maxY = points[0].y;
   for (int i = 1; i < 6; ++i) {
@@ -49,8 +55,8 @@ void HexagonCell::fillHexagon(std::shared_ptr<SDL_Renderer>& renderer,
     int count = 0;
     int intersections[12] = {0};
     for (int i = 0; i < 6; ++i) {
-      SDL_Point& p1 = points[i];
-      SDL_Point& p2 = points[i + 1];
+      const SDL_Point& p1 = points[i];
+      const SDL_Point& p2 = points[i + 1];
       if (p1.y == p2.y) continue;
       if ((y >= p1.y && y < p2.y) || (y >= p2.y && y < p1.y)) {
         intersections[count++] =

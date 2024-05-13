@@ -7,23 +7,62 @@
 #include <memory>
 #include <vector>
 
+/**
+ * @brief Classe représentant une cellule triangulaire
+ */
 class TriangleCell {
  public:
+  /**
+   * @brief Enumération représentant l'orientation de la cellule
+   */
   enum class Orientation { UP, DOWN };
+
+  /**
+   * @brief Constructeur par défaut
+   */
   TriangleCell();
+
+  /**
+   * @brief Constructeur avec orientation
+   * @param orientation Orientation de la cellule
+   * @return void
+   */
   TriangleCell(Orientation orientation);
 
-  void draw(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-            int cellWidth, int cellHeight, SDL_Color color);
+  /**
+   * @brief Dessine une cellule triangulaire
+   * @param renderer Renderer
+   * @param x Position x
+   * @param y Position y
+   * @param cellWidth Largeur de la cellule
+   * @param cellHeight Hauteur de la cellule
+   * @param color Couleur de la cellule
+   * @return void
+   */
+  void draw(const std::shared_ptr<SDL_Renderer>& renderer, const int x,
+            const int y, const int cellWidth, const int cellHeight,
+            const SDL_Color color);
 
-  SDL_Point getPoint(int i);
+  /**
+   * @brief Récupère un point de la cellule
+   * @param i Indice du point à récupérer
+   * @return Point de la cellule à l'indice i
+   * @note Si l'indice est invalide, retourne un point vide (0, 0)
+   */
+  SDL_Point getPoint(const int i) const;
 
  private:
   Orientation orientation_;
   std::vector<SDL_Point> points_;
 
-  void fillTriangle(std::shared_ptr<SDL_Renderer>& renderer,
-                    std::vector<SDL_Point>& points);
+  /**
+   * @brief Remplit un triangle
+   * @param renderer Renderer
+   * @param points Points du triangle
+   * @return void
+   */
+  void fillTriangle(const std::shared_ptr<SDL_Renderer>& renderer,
+                    const std::vector<SDL_Point>& points) const;
 };
 
 #endif  // TRIANGLE_CELL_H
