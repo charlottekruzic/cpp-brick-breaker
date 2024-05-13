@@ -5,7 +5,8 @@
 
 #include "Game.h"
 
-void startInterface(SDL_Renderer* renderer, std::string& shapeCellule) {
+void startInterface(std::shared_ptr<SDL_Renderer>& renderer,
+                    std::string& shapeCellule) {
   bool selected = false;
   SDL_Event event;
 
@@ -46,17 +47,17 @@ void startInterface(SDL_Renderer* renderer, std::string& shapeCellule) {
   SDL_Surface* textSurfaceHexagon =
       TTF_RenderText_Solid(font_button, "Hexagon", textColor);
   SDL_Texture* textTextureSquare =
-      SDL_CreateTextureFromSurface(renderer, textSurfaceSquare);
+      SDL_CreateTextureFromSurface(renderer.get(), textSurfaceSquare);
   SDL_Texture* textTextureTriangle =
-      SDL_CreateTextureFromSurface(renderer, textSurfaceTriangle);
+      SDL_CreateTextureFromSurface(renderer.get(), textSurfaceTriangle);
   SDL_Texture* textTextureHexagon =
-      SDL_CreateTextureFromSurface(renderer, textSurfaceHexagon);
+      SDL_CreateTextureFromSurface(renderer.get(), textSurfaceHexagon);
 
   // Texte titre
   SDL_Surface* titleSurface =
       TTF_RenderText_Solid(font_title, "Brick Breaker", textColor);
   SDL_Texture* titleTexture =
-      SDL_CreateTextureFromSurface(renderer, titleSurface);
+      SDL_CreateTextureFromSurface(renderer.get(), titleSurface);
   int titleWidth, titleHeight;
   TTF_SizeText(font_title, "Brick Breaker", &titleWidth, &titleHeight);
   SDL_Rect titleRect = {(400 - titleWidth) / 2, 50, titleWidth, titleHeight};
@@ -93,12 +94,12 @@ void startInterface(SDL_Renderer* renderer, std::string& shapeCellule) {
     }
 
     // Affichage fond
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 169, 40, 255, 255);
-    SDL_RenderFillRect(renderer, &squareButton);
-    SDL_RenderFillRect(renderer, &triangleButton);
-    SDL_RenderFillRect(renderer, &hexagonButton);
+    SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255);
+    SDL_RenderClear(renderer.get());
+    SDL_SetRenderDrawColor(renderer.get(), 169, 40, 255, 255);
+    SDL_RenderFillRect(renderer.get(), &squareButton);
+    SDL_RenderFillRect(renderer.get(), &triangleButton);
+    SDL_RenderFillRect(renderer.get(), &hexagonButton);
 
     // Affichage texte
     TTF_SizeText(font_button, "Square", &textWidth, &textHeight);
@@ -117,14 +118,15 @@ void startInterface(SDL_Renderer* renderer, std::string& shapeCellule) {
         hexagonButton.y + (hexagonButton.h - textHeight) / 2, textWidth,
         textHeight};
 
-    SDL_RenderCopy(renderer, textTextureSquare, NULL, &textRectSquare);
-    SDL_RenderCopy(renderer, textTextureTriangle, NULL, &textRectTriangle);
-    SDL_RenderCopy(renderer, textTextureHexagon, NULL, &textRectHexagon);
+    SDL_RenderCopy(renderer.get(), textTextureSquare, NULL, &textRectSquare);
+    SDL_RenderCopy(renderer.get(), textTextureTriangle, NULL,
+                   &textRectTriangle);
+    SDL_RenderCopy(renderer.get(), textTextureHexagon, NULL, &textRectHexagon);
 
     // Affichage du titre
-    SDL_RenderCopy(renderer, titleTexture, NULL, &titleRect);
+    SDL_RenderCopy(renderer.get(), titleTexture, NULL, &titleRect);
 
-    SDL_RenderPresent(renderer);
+    SDL_RenderPresent(renderer.get());
   }
 
   // Libérer ressources
@@ -158,8 +160,9 @@ int main(int argc, char* argv[]) {
   SDL_Window* window =
       SDL_CreateWindow("Game Board", SDL_WINDOWPOS_CENTERED,
                        SDL_WINDOWPOS_CENTERED, 400, 800, SDL_WINDOW_SHOWN);
-  SDL_Renderer* renderer =
-      SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+  std::shared_ptr<SDL_Renderer> renderer(
+      SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED),
+      SDL_DestroyRenderer);
 
   std::string shapeCellule;
 
@@ -168,7 +171,7 @@ int main(int argc, char* argv[]) {
 
   if (shapeCellule == "-t") {
     // fermeture fenetre
-    SDL_DestroyRenderer(renderer);
+    SDL_DestroyRenderer(renderer.get());
     SDL_DestroyWindow(window);
     SDL_Quit();
     // demarrage du jeu
@@ -176,7 +179,7 @@ int main(int argc, char* argv[]) {
     game_triangle.execute();
   } else if (shapeCellule == "-s") {
     // fermeture fenetre
-    SDL_DestroyRenderer(renderer);
+    SDL_DestroyRenderer(renderer.get());
     SDL_DestroyWindow(window);
     SDL_Quit();
     // demarrage du jeu
@@ -184,7 +187,7 @@ int main(int argc, char* argv[]) {
     game_square.execute();
   } else if (shapeCellule == "-h") {
     // fermeture fenetre
-    SDL_DestroyRenderer(renderer);
+    SDL_DestroyRenderer(renderer.get());
     SDL_DestroyWindow(window);
     SDL_Quit();
     // demarrage du jeu

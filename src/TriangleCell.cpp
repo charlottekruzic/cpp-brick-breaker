@@ -1,6 +1,7 @@
 #include "TriangleCell.h"
 
 #include <algorithm>
+#include <memory>
 
 TriangleCell::TriangleCell() {}
 
@@ -24,7 +25,7 @@ void TriangleCell::draw(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
   // Remplissage
   SDL_SetRenderDrawColor(renderer.get(), color.r, color.g, color.b, color.a);
   SDL_RenderDrawLines(renderer.get(), points_, 4);
-  fillTriangle(renderer.get(), points_);
+  fillTriangle(renderer, points_);
 
   // Ajoute contours
   SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255);
@@ -39,7 +40,8 @@ SDL_Point TriangleCell::getPoint(int i) {
   }
 }
 
-void TriangleCell::fillTriangle(SDL_Renderer* renderer, SDL_Point* points) {
+void TriangleCell::fillTriangle(std::shared_ptr<SDL_Renderer>& renderer,
+                                SDL_Point* points) {
   // Tri des points
   if (points[0].y > points[1].y) std::swap(points[0], points[1]);
   if (points[1].y > points[2].y) std::swap(points[1], points[2]);
@@ -63,6 +65,7 @@ void TriangleCell::fillTriangle(SDL_Renderer* renderer, SDL_Point* points) {
 
     if (ax > bx) std::swap(ax, bx);
 
-    SDL_RenderDrawLine(renderer, ax, points[0].y + i, bx, points[0].y + i);
+    SDL_RenderDrawLine(renderer.get(), ax, points[0].y + i, bx,
+                       points[0].y + i);
   }
 }

@@ -1,6 +1,7 @@
 #include "HexagonCell.h"
 
 #include <algorithm>
+#include <memory>
 
 HexagonCell::HexagonCell() {}
 
@@ -18,7 +19,7 @@ void HexagonCell::draw(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
   SDL_SetRenderDrawColor(renderer.get(), color.r, color.g, color.b, color.a);
   SDL_RenderDrawLines(renderer.get(), points_, 7);
 
-  fillHexagon(renderer.get(), points_);
+  fillHexagon(renderer, points_);
 
   // Contours noirs
   SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255);
@@ -33,7 +34,8 @@ SDL_Point HexagonCell::getPoint(int i) {
   }
 }
 
-void HexagonCell::fillHexagon(SDL_Renderer* renderer, SDL_Point* points) {
+void HexagonCell::fillHexagon(std::shared_ptr<SDL_Renderer>& renderer,
+                              SDL_Point* points) {
   int minY = points[0].y;
   int maxY = points[0].y;
   for (int i = 1; i < 6; ++i) {
@@ -56,8 +58,8 @@ void HexagonCell::fillHexagon(SDL_Renderer* renderer, SDL_Point* points) {
     std::sort(intersections, intersections + count);
     for (int i = 0; i < count; i += 2) {
       if (i + 1 < count) {
-        SDL_RenderDrawLine(renderer, intersections[i], y, intersections[i + 1],
-                           y);
+        SDL_RenderDrawLine(renderer.get(), intersections[i], y,
+                           intersections[i + 1], y);
       }
     }
   }

@@ -21,7 +21,7 @@ class TriangleCell {
   Orientation orientation_;
   SDL_Point points_[4];
 
-  void fillTriangle(SDL_Renderer* renderer, SDL_Point* points);
+  void fillTriangle(std::shared_ptr<SDL_Renderer>& renderer, SDL_Point* points);
 };
 
 #endif  // TRIANGLE_CELL_H

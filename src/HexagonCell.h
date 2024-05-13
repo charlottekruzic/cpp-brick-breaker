@@ -19,7 +19,7 @@ class HexagonCell {
  private:
   SDL_Point points_[7];
 
-  void fillHexagon(SDL_Renderer* renderer, SDL_Point* points);
+  void fillHexagon(std::shared_ptr<SDL_Renderer>& renderer, SDL_Point* points);
 };
 
 #endif  // HEXAGON_CELL_H
