@@ -6,6 +6,7 @@
 #include <cmath>
 #include <iostream>
 #include <memory>
+#include <vector>
 
 class HexagonCell {
  public:
@@ -17,9 +18,10 @@ class HexagonCell {
   SDL_Point getPoint(int i);
 
  private:
-  SDL_Point points_[7];
+  std::vector<SDL_Point> points_;
 
-  void fillHexagon(std::shared_ptr<SDL_Renderer>& renderer, SDL_Point* points);
+  void fillHexagon(std::shared_ptr<SDL_Renderer>& renderer,
+                   std::vector<SDL_Point>& points);
 };
 
 #endif  // HEXAGON_CELL_H
