@@ -188,29 +188,35 @@ inline void CollisionManager<TriangleCell>::checkGridBallCollision(
       auto& cell = grid->getCell(i, j);
       if (cell && cell->rebondir()) {
         std::vector<SDL_Point> points = {cell->getPoint(0), cell->getPoint(1),
-                                         cell->getPoint(2), cell->getPoint(3)};
+                                         cell->getPoint(2)};
+
         bool hit = false;
-        for (int k = 0; k < 4; k++) {
-          int next = (k + 1) % 4;
+        for (int k = 0; k < 3; k++) {
+          int next = (k + 1) % 3;
           if (isNear(ball->getPosX(), ball->getPosY(), points[k].x, points[k].y,
                      points[next].x, points[next].y, ball->getRadius())) {
             hit = true;
-
             // Direction collision
             float dx = ball->getVelocityX();
             float dy = ball->getVelocityY();
 
-            if ((k == 0 || k == 2) &&
-                fabs(dy) > fabs(dx)) {  // collision horizontale
-              ball->reverseVelocityY();
-            } else if ((k == 1 || k == 3) &&
-                       fabs(dx) > fabs(dy)) {  // collision verticale
-              ball->reverseVelocityX();
-            } else {
-              ball->reverseVelocityX();
-              ball->reverseVelocityY();
-            }
-            // Détruit cellule
+            // Vecteur ligne de collision
+            float lineDx = points[next].x - points[k].x;
+            float lineDy = points[next].y - points[k].y;
+
+            // Normale de la ligne de collision
+            float length = sqrt(lineDx * lineDx + lineDy * lineDy);
+            lineDx /= length;
+            lineDy /= length;
+            float normalX = -lineDy;
+            float normalY = lineDx;
+
+            float scalarProduct = (dx * normalX + dy * normalY);
+
+            // Calcul de la nouvelle vélocité
+            ball->setVelocityX(dx - 2 * scalarProduct * normalX);
+            ball->setVelocityY(dy - 2 * scalarProduct * normalY);
+
             grid->hitCell(i, j);
             break;
           }
