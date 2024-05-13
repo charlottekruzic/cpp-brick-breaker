@@ -187,10 +187,8 @@ inline void CollisionManager<TriangleCell>::checkGridBallCollision(
     for (int j = 0; j < grid->getCols(); j++) {
       auto& cell = grid->getCell(i, j);
       if (cell && cell->rebondir()) {
-        SDL_Point points[4] = {cell->getPoint(0), cell->getPoint(1),
-                               cell->getPoint(2), cell->getPoint(3)};
-        // TODO Charlotte
-
+        std::vector<SDL_Point> points = {cell->getPoint(0), cell->getPoint(1),
+                                         cell->getPoint(2), cell->getPoint(3)};
         bool hit = false;
         for (int k = 0; k < 4; k++) {
           int next = (k + 1) % 4;

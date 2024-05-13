@@ -10,39 +10,87 @@
 template <typename Shape>
 class Game;
 
-// Classe représentant une brique
+/**
+ * @brief Classe représentant une brique
+ * @tparam Shape Type de cellule de la grille
+ */
 template <typename Shape>
 class Brick : public Cell<Shape> {
  public:
-  bool rebondir() const override;
-  bool hit();
-  void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,
-                  float cellWidth, float cellHeight);
+  /**
+   * @brief Constructeur de la classe Brick
+   * @param strength Force de la brique
+   * @param game Game auquel appartient la brique
+   */
+  Brick(const int strength, Game<Shape>* game);
 
+  /**
+   * @brief Constructeur de la classe Brick avec orientation pour les briques
+   * triangulaires
+   * @param strength Force de la brique
+   * @param game Game auquel appartient la brique
+   * @param orientation Orientation de la brique
+   */
+  Brick(const int strength, Game<Shape>* game,
+        const TriangleCell::Orientation orientation);
+
+  /**
+   * @brief Savoir si un objet rebondit sur la brique
+   * @return bool Vrai si l'objet rebondit, faux sinon
+   * @note Les balles rebondissent sur une brique tant qu'elle n'est pas cassée
+   */
+  bool rebondir() const override;
+
+  /**
+   * @brief Action quand la brique est touchée
+   * @return bool Vrai si la brique est cassée, faux sinon
+   * @note Diminue le nombre de coups restants si la brique n'est pas cassée
+   */
+  bool hit();
+
+  /**
+   * @brief Afficher la brique
+   * @param renderer Renderer SDL
+   * @param x Position x de la brique
+   * @param y Position y de la brique
+   * @param cellWidth Largeur d'une cellule
+   * @param cellHeight Hauteur d'une cellule
+   * @return void
+   */
+  void renderCell(std::shared_ptr<SDL_Renderer>& renderer, const int x,
+                  const int y, const float cellWidth, const float cellHeight);
+  /**
+   * @brief Obtenir la force de la brique
+   * @return int Force de la brique
+   */
   inline int getStrength() const { return strength_; }
+
+  /**
+   * @brief Obtenir le nombre de coups restants
+   * @return int Nombre de coups restants
+   */
   inline int getHitsLeft() const { return hitsLeft_; }
 
-  // Méthode pour obtenir le nombre de coups restants
+  /**
+   * @brief Obtenir la couleur de la brique
+   * @return Color Couleur de la brique
+   */
   Color getColor() const override;
 
-  // protected:
-  Brick(int strength, Game<Shape>* game);
-
-  Brick(int strength, Game<Shape>* game, TriangleCell::Orientation orientation);
-
  protected:
-  Game<Shape>* game_;  // Attribut pour stocker un pointeur vers l'objet Game
-  int hitsLeft_;       // Nombre de coups restants
+  Game<Shape>* game_; /**< Pointeur vers le jeu */
+  int hitsLeft_;      /**< Nombre de coups restants */
 
  private:
-  int strength_;  // Force de la brique
-  Color color_;   // protected .
+  int strength_; /**< Force de la brique */
+  Color color_;  /**< Couleur de la brique */
   std::map<int, Color> strengthColorMap_ = {
       {1, Color::BrickLight},
       {2, Color::BrickLightMedium},
       {3, Color::BrickMedium},
       {4, Color::BrickDarkMedium},
-      {5, Color::BrickDark}};  // Dictionnaire associant une force à une couleur
+      {5, Color::BrickDark}}; /**< Dictionnaire associant une force à une
+                                 couleur */
 };
 
 #include "Brick.hpp"

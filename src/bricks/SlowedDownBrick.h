@@ -5,20 +5,37 @@
 #include "../Game.h"
 #include "BonusBrick.h"
 
+/**
+ * @brief Classe représentant une brique bonus ralentissant la balle
+ * @tparam Shape Type de cellule de la grille
+ */
 template <typename Shape>
 class SlowedDownBrick : public BonusBrick<Shape> {
  public:
+  /**
+   * @brief Constructeur de la classe SlowedDownBrick
+   * @param game Game auquel appartient la brique
+   * @param renderer Renderer utilisé pour afficher la brique
+   */
   SlowedDownBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer)
       : BonusBrick<Shape>(game, renderer) {}
 
+  /**
+   * @brief Constructeur de la classe SlowedDownBrick avec orientation pour les
+   * cases triangulaires
+   * @param game Game auquel appartient la brique
+   * @param renderer Renderer utilisé pour afficher la brique
+   * @param orientation Orientation de la brique
+   */
   SlowedDownBrick(Game<Shape>* game, std::shared_ptr<SDL_Renderer>& renderer,
-                  TriangleCell::Orientation orientation)
+                  const TriangleCell::Orientation orientation)
       : BonusBrick<Shape>(game, renderer, orientation) {}
 
-  void performAction() override {
-    // Augmenter la largeur de la plateforme
-    this->game_->setBallDecelerating();
-  }
+  /**
+   * @brief Appliquer l'effet du bonus
+   * @note Ralentit la balle
+   */
+  void performAction() override { this->game_->setBallDecelerating(); }
 };
 
 #endif  // SLOWEDDOWN_BRICK_H

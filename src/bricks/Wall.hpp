@@ -3,17 +3,19 @@
 #include <iostream>
 
 #include "Wall.h"
-// pointeur statique pour la texture
+
+// Initialisation du pointeur statique sur la texture du mur
 template <typename Shape>
 std::shared_ptr<SDL_Texture> Wall<Shape>::wall_texture_ = nullptr;
 
+// Constructeurs de la classe Wall
 template <typename Shape>
 Wall<Shape>::Wall(std::shared_ptr<SDL_Renderer>& renderer)
     : Cell<Shape>(Color::BrickColor) {
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!wall_texture_) {
     // Chargez la texture du mur depuis un fichier
-    SDL_Surface* surface = IMG_Load("img/wall.png");
+    SDL_Surface* surface = IMG_Load("../img/wall.png");
 
     if (!surface) {
       // Gestion de l'erreur si le chargement de l'image échoue
@@ -35,12 +37,12 @@ Wall<Shape>::Wall(std::shared_ptr<SDL_Renderer>& renderer)
 
 template <typename Shape>
 Wall<Shape>::Wall(std::shared_ptr<SDL_Renderer>& renderer,
-                  TriangleCell::Orientation orientation)
+                  const TriangleCell::Orientation orientation)
     : Cell<Shape>(Color::BrickColor, orientation) {
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!wall_texture_) {
     // Chargez la texture du mur depuis un fichier
-    SDL_Surface* surface = IMG_Load("img/wall.png");
+    SDL_Surface* surface = IMG_Load("../img/wall.png");
 
     if (!surface) {
       // Gestion de l'erreur si le chargement de l'image échoue
@@ -60,13 +62,16 @@ Wall<Shape>::Wall(std::shared_ptr<SDL_Renderer>& renderer,
   }
 }
 
+// Afficher le mur
 template <typename Shape>
-void Wall<Shape>::renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x,
-                             int y, float cellWidth, float cellHeight) {
+void Wall<Shape>::renderCell(std::shared_ptr<SDL_Renderer>& renderer,
+                             const int x, const int y, const float cellWidth,
+                             const float cellHeight) {
   this->shape_.draw(renderer, x, y, cellWidth, cellHeight,
                     ColorUtils::convertColor(getColor()));
 }
 
+// Spécialisation de la méthode renderCell pour les cases carrées
 template <>
 inline void Wall<SquareCell>::renderCell(
     std::shared_ptr<SDL_Renderer>& renderer, int x, int y, float cellWidth,

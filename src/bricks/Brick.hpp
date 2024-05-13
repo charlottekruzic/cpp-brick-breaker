@@ -1,20 +1,24 @@
+
+// Constructeurs de la classe Brick
 template <typename Shape>
-Brick<Shape>::Brick(int strength, Game<Shape>* game)
+Brick<Shape>::Brick(const int strength, Game<Shape>* game)
     : strength_(strength), hitsLeft_(strength), game_(game) {}
 
 template <typename Shape>
-Brick<Shape>::Brick(int strength, Game<Shape>* game,
-                    TriangleCell::Orientation orientation)
+Brick<Shape>::Brick(const int strength, Game<Shape>* game,
+                    const TriangleCell::Orientation orientation)
     : strength_(strength),
       hitsLeft_(strength),
       game_(game),
       Cell<Shape>(orientation) {}
 
+// Savoir si un objet rebondit sur la brique
 template <typename Shape>
 bool Brick<Shape>::rebondir() const {
   return (hitsLeft_ > 0);  // Les objets rebondissent sur une brique
 }
 
+// Action quand la brique est touchée
 template <typename Shape>
 bool Brick<Shape>::hit() {
   if (hitsLeft_ > 0) {
@@ -26,13 +30,16 @@ bool Brick<Shape>::hit() {
   return false;
 }
 
+// Afficher la brique
 template <typename Shape>
-void Brick<Shape>::renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x,
-                              int y, float cellWidth, float cellHeight) {
+void Brick<Shape>::renderCell(std::shared_ptr<SDL_Renderer>& renderer,
+                              const int x, const int y, const float cellWidth,
+                              const float cellHeight) {
   this->shape_.draw(renderer, x, y, cellWidth, cellHeight,
                     ColorUtils::convertColor(getColor()));
 }
 
+// Obtenir la couleur de la brique
 template <typename Shape>
 Color Brick<Shape>::getColor() const {
   auto it = strengthColorMap_.find(hitsLeft_);

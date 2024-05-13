@@ -123,7 +123,7 @@ void Game<Shape>::mainLoop() {
 }
 
 template <typename Shape>
-void Game<Shape>::handleEvents(SDL_Event& event) {
+void Game<Shape>::handleEvents(const SDL_Event& event) {
   if (event.type == SDL_QUIT) {
     quit_ = true;
   }
@@ -175,6 +175,8 @@ void Game<Shape>::updateGame(float dt) {
   }
 
   generateBonusMalus();
+
+  // TODO Zoé : On peut supprimer ça ?
 
   /*
   // Supprimer les bonus/malus en bas de l'écran du vecteur

@@ -13,8 +13,8 @@
 #include "Plateform.h"
 #include "SquareCell.h"
 #include "TriangleCell.h"
-// #include "bonus_malus/BonusMalus.h"
 
+// Doit être sous les includes des classes Ball, Grid, BonusMalus et Plateform
 #include "CollisionManager.h"
 
 class Ball;
@@ -98,7 +98,7 @@ class Game {
    * @brief Gère les événements SDL.
    * @param event L'événement SDL à gérer.
    */
-  void handleEvents(SDL_Event& event);
+  void handleEvents(const SDL_Event& event);
 
   /**
    * @brief Initialise les composants du jeu.

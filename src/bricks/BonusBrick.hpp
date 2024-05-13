@@ -5,11 +5,11 @@
 
 #include "BonusBrick.h"
 
-// pointeur statique pour la texture
-
+// Initialisation du pointeur statique de la texture du bonus
 template <typename Shape>
 std::shared_ptr<SDL_Texture> BonusBrick<Shape>::bonus_texture_ = nullptr;
 
+// Constructeur de la classe BonusBrick
 template <typename Shape>
 BonusBrick<Shape>::BonusBrick(Game<Shape>* game,
                               std::shared_ptr<SDL_Renderer>& renderer)
@@ -17,7 +17,7 @@ BonusBrick<Shape>::BonusBrick(Game<Shape>* game,
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!bonus_texture_) {
     // Chargez la texture du mur depuis un fichier
-    SDL_Surface* surface = IMG_Load("img/etoile.png");
+    SDL_Surface* surface = IMG_Load("../img/etoile.png");
 
     if (!surface) {
       // Gestion de l'erreur si le chargement de l'image échoue
@@ -38,15 +38,17 @@ BonusBrick<Shape>::BonusBrick(Game<Shape>* game,
   }
 }
 
+// Constructeur de la classe BonusBrick avec orientation pour les briques
+// triangulaires
 template <typename Shape>
 BonusBrick<Shape>::BonusBrick(Game<Shape>* game,
                               std::shared_ptr<SDL_Renderer>& renderer,
-                              TriangleCell::Orientation orientation)
+                              const TriangleCell::Orientation orientation)
     : SpecialBrick<BonusBrick, Shape>(game, renderer, orientation) {
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!bonus_texture_) {
     // Chargez la texture du mur depuis un fichier
-    SDL_Surface* surface = IMG_Load("img/etoile.png");
+    SDL_Surface* surface = IMG_Load("../img/etoile.png");
 
     if (!surface) {
       // Gestion de l'erreur si le chargement de l'image échoue
@@ -67,10 +69,11 @@ BonusBrick<Shape>::BonusBrick(Game<Shape>* game,
   }
 }
 
+// Afficher la brique carrée
 template <>
-void BonusBrick<SquareCell>::renderCell(std::shared_ptr<SDL_Renderer>& renderer,
-                                        int x, int y, float cellWidth,
-                                        float cellHeight) {
+void BonusBrick<SquareCell>::renderCell(
+    const std::shared_ptr<SDL_Renderer>& renderer, const int x, const int y,
+    const float cellWidth, const float cellHeight) {
   int padding = 1;  // Espace entre chaque case
   int size = cellWidth - 2 * padding;
 
@@ -79,18 +82,20 @@ void BonusBrick<SquareCell>::renderCell(std::shared_ptr<SDL_Renderer>& renderer,
   SDL_RenderCopy(renderer.get(), getTexture().get(), NULL, &rect);
 }
 
+// Afficher la brique triangulaire
 template <>
 void BonusBrick<TriangleCell>::renderCell(
-    std::shared_ptr<SDL_Renderer>& renderer, int x, int y, float cellWidth,
-    float cellHeight) {
+    const std::shared_ptr<SDL_Renderer>& renderer, const int x, const int y,
+    const float cellWidth, const float cellHeight) {
   this->shape_.draw(renderer, x, y, cellWidth, cellHeight,
                     ColorUtils::convertColor(getColor()));
 }
 
+// Afficher la brique hexagonale
 template <>
 void BonusBrick<HexagonCell>::renderCell(
-    std::shared_ptr<SDL_Renderer>& renderer, int x, int y, float cellWidth,
-    float cellHeight) {
+    const std::shared_ptr<SDL_Renderer>& renderer, const int x, const int y,
+    const float cellWidth, const float cellHeight) {
   this->shape_.draw(renderer, x, y, cellWidth, cellHeight,
                     ColorUtils::convertColor(getColor()));
 }

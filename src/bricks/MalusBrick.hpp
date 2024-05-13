@@ -5,11 +5,11 @@
 
 #include "MalusBrick.h"
 
-// pointeur statique pour la texture
-
+// Initialisation du pointeur statique pour la texture
 template <typename Shape>
 std::shared_ptr<SDL_Texture> MalusBrick<Shape>::malus_texture_ = nullptr;
 
+// Constructeurs de la classe MalusBrick
 template <typename Shape>
 MalusBrick<Shape>::MalusBrick(Game<Shape>* game,
                               std::shared_ptr<SDL_Renderer>& renderer)
@@ -17,7 +17,7 @@ MalusBrick<Shape>::MalusBrick(Game<Shape>* game,
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!malus_texture_) {
     // Chargez la texture du mur depuis un fichier
-    SDL_Surface* surface = IMG_Load("img/goomba.png");
+    SDL_Surface* surface = IMG_Load("../img/goomba.png");
 
     if (!surface) {
       // Gestion de l'erreur si le chargement de l'image échoue
@@ -41,12 +41,12 @@ MalusBrick<Shape>::MalusBrick(Game<Shape>* game,
 template <typename Shape>
 MalusBrick<Shape>::MalusBrick(Game<Shape>* game,
                               std::shared_ptr<SDL_Renderer>& renderer,
-                              TriangleCell::Orientation orientation)
+                              const TriangleCell::Orientation orientation)
     : SpecialBrick<MalusBrick, Shape>(game, renderer, orientation) {
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!malus_texture_) {
     // Chargez la texture du mur depuis un fichier
-    SDL_Surface* surface = IMG_Load("img/etoile.png");
+    SDL_Surface* surface = IMG_Load("../img/etoile.png");
 
     if (!surface) {
       // Gestion de l'erreur si le chargement de l'image échoue
@@ -67,10 +67,12 @@ MalusBrick<Shape>::MalusBrick(Game<Shape>* game,
   }
 }
 
+// Spécialisation de la méthode renderCell pour chaque type de cellule
 template <>
 void MalusBrick<SquareCell>::renderCell(std::shared_ptr<SDL_Renderer>& renderer,
-                                        int x, int y, float cellWidth,
-                                        float cellHeight) {
+                                        const int x, const int y,
+                                        const float cellWidth,
+                                        const float cellHeight) {
   int padding = 1;  // Espace entre chaque case
   int size = cellWidth - 2 * padding;
 
@@ -81,16 +83,16 @@ void MalusBrick<SquareCell>::renderCell(std::shared_ptr<SDL_Renderer>& renderer,
 
 template <>
 void MalusBrick<TriangleCell>::renderCell(
-    std::shared_ptr<SDL_Renderer>& renderer, int x, int y, float cellWidth,
-    float cellHeight) {
+    std::shared_ptr<SDL_Renderer>& renderer, const int x, const int y,
+    const float cellWidth, const float cellHeight) {
   this->shape_.draw(renderer, x, y, cellWidth, cellHeight,
                     ColorUtils::convertColor(getColor()));
 }
 
 template <>
 void MalusBrick<HexagonCell>::renderCell(
-    std::shared_ptr<SDL_Renderer>& renderer, int x, int y, float cellWidth,
-    float cellHeight) {
+    std::shared_ptr<SDL_Renderer>& renderer, const int x, const int y,
+    const float cellWidth, const float cellHeight) {
   this->shape_.draw(renderer, x, y, cellWidth, cellHeight,
                     ColorUtils::convertColor(getColor()));
 }
