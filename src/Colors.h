@@ -3,7 +3,9 @@
 
 #include <SDL2/SDL.h>
 
-// Énumération pour représenter les couleurs
+/**
+ * @brief Enumération pour représenter les couleurs
+ */
 enum class Color {
   Red,
   Green,
@@ -33,9 +35,13 @@ enum class Color {
   // Ajoutez d'autres couleurs selon vos besoins
 };
 
+/**
+ * @brief Classe utilitaire pour convertir les couleurs
+ * en SDL_Color
+ */
 class ColorUtils {
  public:
-  static SDL_Color convertColor(Color color) {
+  static SDL_Color convertColor(const Color color) {
     switch (color) {
       case Color::Red:
         return {255, 0, 0, 255};

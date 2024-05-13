@@ -4,13 +4,6 @@
 #include <memory>
 #include <unordered_set>
 
-// #include "Ball.h"
-// #include "Grid.h"
-// #include "Plateform.h"
-// #include "SquareCell.h"
-// #include "TriangleCell.h"
-// #include "bonus_malus/BonusMalus.h"
-
 class Ball;
 class Plateform;
 template <typename Shape>
@@ -18,28 +11,74 @@ class Grid;
 template <typename Shape>
 class BonusMalus;
 
+/**
+ * @brief Classe utilitaire pour gérer les collisions
+ * @tparam Shape Type de cellule de la grille
+ */
 template <typename Shape>
 class CollisionManager {
  public:
-  // Méthode principale pour vérifier les collisions
+  /**
+   * @brief Méthode pour vérifier les collisions entre les différentes entités
+   * du jeu
+   * @param platform Plateforme du jeu
+   * @param balls Ensemble des balles du jeu
+   * @param grid Grille du jeu
+   * @param bonus_maluses Ensemble des bonus/malus du jeu
+   * @return void
+   */
   static void checkCollisions(
-      Plateform& platform, std::unordered_set<std::shared_ptr<Ball>>& balls,
-      std::shared_ptr<Grid<Shape>>& grid,
+      const Plateform& platform,
+      const std::unordered_set<std::shared_ptr<Ball>>& balls,
+      const std::shared_ptr<Grid<Shape>>& grid,
       std::unordered_set<std::shared_ptr<BonusMalus<Shape>>>& bonus_maluses__);
 
  private:
-  // Méthode pour vérifier la collision entre la plateforme et la balle
-  static void checkPlatformBallCollision(Plateform& platform,
-                                         std::shared_ptr<Ball>& ball);
-  // Méthode pour vérifier la collision entre la balle et la grille
-  static void checkGridBallCollision(std::shared_ptr<Grid<Shape>>& grid,
-                                     std::shared_ptr<Ball>& ball);
+  /**
+   * @brief Méthode pour vérifier la collision entre la plateforme et la balle
+   * @param platform Plateforme du jeu
+   * @param ball Balle du jeu
+   * @return void
+   */
+  static void checkPlatformBallCollision(const Plateform& platform,
+                                         const std::shared_ptr<Ball>& ball);
 
+  /**
+   * @brief Méthode pour vérifier la collision entre la balle et la grille
+   * @param grid Grille du jeu
+   * @param ball Balle du jeu
+   * @return void
+   */
+  static void checkGridBallCollision(const std::shared_ptr<Grid<Shape>>& grid,
+                                     const std::shared_ptr<Ball>& ball);
+
+  /**
+   * @brief Méthode pour vérifier la collision entre la plateforme et un
+   * bonus/malus
+   * @param plateform Plateforme du jeu
+   * @param bonusMalus Bonus/Malus du jeu
+   * @return true si il y a collision, false sinon
+   */
   static bool checkCollisionPlateformBonusMalus(
-      Plateform& plateform, std::shared_ptr<BonusMalus<Shape>>& bonusMalus);
+      const Plateform& plateform,
+      const std::shared_ptr<BonusMalus<Shape>>& bonusMalus);
 
-  static bool isNear(float px, float py, float x1, float y1, float x2, float y2,
-                     float radius);
+  /**
+   * @brief Méthode pour vérifier si la balle est proche d'un segment
+   * @param px Position x de la balle
+   * @param py Position y de la balle
+   * @param x1 Position x du premier point du segment
+   * @param y1 Position y du premier point du segment
+   * @param x2 Position x du deuxième point du segment
+   * @param y2 Position y du deuxième point du segment
+   * @param radius Rayon de la balle
+   * @return true si la balle est proche du segment, false sinon
+   * @note La méthode est utilisée pour détecter les collisions entre la balle
+   * et les cellules de la grille de type TriangleCell et HexagonCell.
+   */
+  static bool isNear(const float px, const float py, const float x1,
+                     const float y1, const float x2, const float y2,
+                     const float radius);
 };
 
 #include "CollisionManager.hpp"

@@ -1,22 +1,15 @@
 #include "Grid.h"
-
-// #include <iostream>
-
-// #include "bricks/BasicBrick.h"
-// #include "bricks/Empty.h"
-#include "bricks/EnlargeBrick.h"
-//  #include "bricks/MalusBrick.h"
-#include "bricks/ShrinkBrick.h"
-#include "bricks/SlowedDownBrick.h"
-#include "bricks/SpedUpBrick.h"
-//  #include "bricks/Wall.h"
-
 #include "HexagonCell.h"
 #include "SquareCell.h"
 #include "TriangleCell.h"
+#include "bricks/EnlargeBrick.h"
+#include "bricks/ShrinkBrick.h"
+#include "bricks/SlowedDownBrick.h"
+#include "bricks/SpedUpBrick.h"
 
 template <>
-Grid<SquareCell>::Grid(const std::string& filename, int width, int height,
+Grid<SquareCell>::Grid(const std::string& filename, const int width,
+                       const int height,
                        std::shared_ptr<SDL_Renderer>& renderer,
                        Game<SquareCell>* game)
     : width_(width),
@@ -69,7 +62,8 @@ Grid<SquareCell>::Grid(const std::string& filename, int width, int height,
 }
 
 template <>
-Grid<TriangleCell>::Grid(const std::string& filename, int width, int height,
+Grid<TriangleCell>::Grid(const std::string& filename, const int width,
+                         const int height,
                          std::shared_ptr<SDL_Renderer>& renderer,
                          Game<TriangleCell>* game)
     : width_(width),
@@ -129,7 +123,8 @@ Grid<TriangleCell>::Grid(const std::string& filename, int width, int height,
 
 // TODO
 template <>
-Grid<HexagonCell>::Grid(const std::string& filename, int width, int height,
+Grid<HexagonCell>::Grid(const std::string& filename, const int width,
+                        const int height,
                         std::shared_ptr<SDL_Renderer>& renderer,
                         Game<HexagonCell>* game)
     : width_(width),
@@ -183,7 +178,8 @@ Grid<HexagonCell>::Grid(const std::string& filename, int width, int height,
 
 template <>
 void Grid<SquareCell>::renderGrid(std::shared_ptr<SDL_Renderer>& renderer,
-                                  int screenWidth, int screenHeight) const {
+                                  const int screenWidth,
+                                  const int screenHeight) const {
   float cellWidth = screenWidth / cols_;    // Largeur de chaque cellule
   float cellHeight = screenHeight / rows_;  // Hauteur de chaque cellule
 
@@ -203,7 +199,8 @@ void Grid<SquareCell>::renderGrid(std::shared_ptr<SDL_Renderer>& renderer,
 
 template <>
 void Grid<TriangleCell>::renderGrid(std::shared_ptr<SDL_Renderer>& renderer,
-                                    int screenWidth, int screenHeight) const {
+                                    const int screenWidth,
+                                    const int screenHeight) const {
   float cellWidth = (screenWidth / (cols_ + 1)) * 2.0;
   float cellHeight = ((screenWidth / (cols_)) * std::sqrt(3));
 
@@ -225,7 +222,8 @@ void Grid<TriangleCell>::renderGrid(std::shared_ptr<SDL_Renderer>& renderer,
 
 template <>
 void Grid<HexagonCell>::renderGrid(std::shared_ptr<SDL_Renderer>& renderer,
-                                   int screenWidth, int screenHeight) const {
+                                   const int screenWidth,
+                                   const int screenHeight) const {
   float cellWidth = screenWidth / (cols_ + 3);
   float cellHeight = cellWidth * (std::sqrt(3) / 2);
 
@@ -246,11 +244,11 @@ void Grid<HexagonCell>::renderGrid(std::shared_ptr<SDL_Renderer>& renderer,
 }
 
 template <>
-void Grid<TriangleCell>::hitCell(int x, int y) {
+void Grid<TriangleCell>::hitCell(const int x, const int y) {
   Cell<TriangleCell>* c = getCell(x, y);
   BasicBrick<TriangleCell>* basicBrick =
       dynamic_cast<BasicBrick<TriangleCell>*>(
-          c);  // Vérifie si c est un BasicBrick
+          c);  // Vérifie si c'est un BasicBrick
 
   bool detruit = c->hit();
   if (detruit) {
@@ -264,10 +262,10 @@ void Grid<TriangleCell>::hitCell(int x, int y) {
 }
 
 template <typename Shape>
-void Grid<Shape>::hitCell(int x, int y) {
+void Grid<Shape>::hitCell(const int x, const int y) {
   Cell<Shape>* c = getCell(x, y);
   BasicBrick<Shape>* basicBrick =
-      dynamic_cast<BasicBrick<Shape>*>(c);  // Vérifie si c est un BasicBrick
+      dynamic_cast<BasicBrick<Shape>*>(c);  // Vérifie si c'est un BasicBrick
 
   bool detruit = c->hit();
   if (detruit) {

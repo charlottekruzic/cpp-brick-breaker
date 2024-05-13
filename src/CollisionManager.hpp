@@ -8,12 +8,12 @@
 
 template <typename Shape>
 void CollisionManager<Shape>::checkCollisions(
-    Plateform& platform, std::unordered_set<std::shared_ptr<Ball>>& balls,
-    std::shared_ptr<Grid<Shape>>& grid,
+    const Plateform& platform,
+    const std::unordered_set<std::shared_ptr<Ball>>& balls,
+    const std::shared_ptr<Grid<Shape>>& grid,
     std::unordered_set<std::shared_ptr<BonusMalus<Shape>>>& bonus_malus) {
   for (auto ball : balls) {
     checkPlatformBallCollision(platform, ball);
-    // checkWindowBallCollision(bounds, ball);
     checkGridBallCollision(grid, ball);
   }
 
@@ -37,7 +37,7 @@ void CollisionManager<Shape>::checkCollisions(
 // Méthode pour vérifier la collision entre la plateforme et la balle
 template <typename Shape>
 void CollisionManager<Shape>::checkPlatformBallCollision(
-    Plateform& platform, std::shared_ptr<Ball>& ball) {
+    const Plateform& platform, const std::shared_ptr<Ball>& ball) {
   if (ball->getPosY() > platform.getPosY()) {
     return;
   }
@@ -92,7 +92,8 @@ void CollisionManager<Shape>::checkPlatformBallCollision(
 
 template <typename Shape>
 bool CollisionManager<Shape>::checkCollisionPlateformBonusMalus(
-    Plateform& plateform, std::shared_ptr<BonusMalus<Shape>>& bonusMalus) {
+    const Plateform& plateform,
+    const std::shared_ptr<BonusMalus<Shape>>& bonusMalus) {
   // Récupérer les coordonnées de la plateforme
   int plateformLeft = plateform.getPosX();
   int plateformRight = plateform.getPosX() + plateform.getWidth();
@@ -114,10 +115,12 @@ bool CollisionManager<Shape>::checkCollisionPlateformBonusMalus(
   return collision;
 }
 
-// Méthode pour vérifier la collision entre la balle et la grille
+// Méthode pour vérifier la collision entre la balle et les cellules de la
+// grille carrée
 template <>
 inline void CollisionManager<SquareCell>::checkGridBallCollision(
-    std::shared_ptr<Grid<SquareCell>>& grid, std::shared_ptr<Ball>& ball) {
+    const std::shared_ptr<Grid<SquareCell>>& grid,
+    const std::shared_ptr<Ball>& ball) {
   int radiusBall = ball->getRadius();
   float pos_xBall = ball->getPosX();
   float pos_yBall = ball->getPosY();
@@ -174,15 +177,16 @@ inline void CollisionManager<SquareCell>::checkGridBallCollision(
   }
 }
 
-// Méthode pour vérifier la collision entre la balle et la grille
+// Méthode pour vérifier la collision entre la balle et les cellules de la
+// grille triangulaire
 template <>
 inline void CollisionManager<TriangleCell>::checkGridBallCollision(
-    std::shared_ptr<Grid<TriangleCell>>& grid, std::shared_ptr<Ball>& ball) {
+    const std::shared_ptr<Grid<TriangleCell>>& grid,
+    const std::shared_ptr<Ball>& ball) {
   for (int i = 0; i < grid->getRows(); i++) {
     for (int j = 0; j < grid->getCols(); j++) {
       Cell<TriangleCell>* cell = grid->getCell(i, j);
       if (cell && cell->rebondir()) {
-        // TriangleCell* triangleCell = dynamic_cast<TriangleCell*>(cell);
         SDL_Point points[4] = {cell->getPoint(0), cell->getPoint(1),
                                cell->getPoint(2), cell->getPoint(3)};
 
@@ -217,10 +221,12 @@ inline void CollisionManager<TriangleCell>::checkGridBallCollision(
   }
 }
 
-// Méthode pour vérifier la collision entre la balle et la grille
+// Méthode pour vérifier la collision entre la balle et les cellules de la
+// grille hexagonale
 template <>
 inline void CollisionManager<HexagonCell>::checkGridBallCollision(
-    std::shared_ptr<Grid<HexagonCell>>& grid, std::shared_ptr<Ball>& ball) {
+    const std::shared_ptr<Grid<HexagonCell>>& grid,
+    const std::shared_ptr<Ball>& ball) {
   for (int i = 0; i < grid->getRows(); i++) {
     for (int j = 0; j < grid->getCols(); j++) {
       Cell<HexagonCell>* cell = grid->getCell(i, j);
@@ -260,8 +266,10 @@ inline void CollisionManager<HexagonCell>::checkGridBallCollision(
 }
 
 template <typename Shape>
-bool CollisionManager<Shape>::isNear(float px, float py, float x1, float y1,
-                                     float x2, float y2, float radius) {
+bool CollisionManager<Shape>::isNear(const float px, const float py,
+                                     const float x1, const float y1,
+                                     const float x2, const float y2,
+                                     const float radius) {
   float line_height = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
   float distance;
   if (line_height < 0.001f) {
