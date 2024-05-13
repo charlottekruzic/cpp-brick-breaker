@@ -14,7 +14,7 @@ class Empty : public Cell<Shape> {
 
   // Les objets ne rebondissent pas sur une case vide
   inline bool rebondir() const override { return false; }
-  inline bool hit() override { return true; }
+  inline bool hit() override { return false; }
   inline Color getColor() const override { return this->color_; }
 
   void renderCell(std::shared_ptr<SDL_Renderer>& renderer, int x, int y,

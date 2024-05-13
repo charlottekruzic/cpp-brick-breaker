@@ -137,7 +137,7 @@ inline void CollisionManager<SquareCell>::checkGridBallCollision(
        row <= std::min(cell_pos_y + 1, grid->getRows() - 1); ++row) {
     for (int col = std::max(cell_pos_x - 1, 0);
          col <= std::min(cell_pos_x + 1, grid->getCols() - 1); ++col) {
-      Cell<SquareCell>* cell = grid->getCell(row, col);
+      auto& cell = grid->getCell(row, col);
       if (cell && cell->rebondir()) {
         bool intersect_x = pos_xBall + radiusBall >= (col * cell_size) &&
                            pos_xBall - radiusBall <= ((col + 1) * cell_size);
@@ -185,10 +185,11 @@ inline void CollisionManager<TriangleCell>::checkGridBallCollision(
     const std::shared_ptr<Ball>& ball) {
   for (int i = 0; i < grid->getRows(); i++) {
     for (int j = 0; j < grid->getCols(); j++) {
-      Cell<TriangleCell>* cell = grid->getCell(i, j);
+      auto& cell = grid->getCell(i, j);
       if (cell && cell->rebondir()) {
         SDL_Point points[4] = {cell->getPoint(0), cell->getPoint(1),
                                cell->getPoint(2), cell->getPoint(3)};
+        // TODO Charlotte
 
         bool hit = false;
         for (int k = 0; k < 4; k++) {
@@ -229,7 +230,7 @@ inline void CollisionManager<HexagonCell>::checkGridBallCollision(
     const std::shared_ptr<Ball>& ball) {
   for (int i = 0; i < grid->getRows(); i++) {
     for (int j = 0; j < grid->getCols(); j++) {
-      Cell<HexagonCell>* cell = grid->getCell(i, j);
+      auto& cell = grid->getCell(i, j);
       if (cell && cell->rebondir()) {
         // Récupération des points de l'hexagone
         SDL_Point points[7];

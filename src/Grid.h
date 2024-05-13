@@ -36,13 +36,7 @@ class Grid {
    * @brief Destructeur de la classe Grid.
    * Libère la mémoire allouée pour les cellules de la grille.
    */
-  ~Grid() {
-    for (auto& row : grid_) {
-      for (auto& cell : row) {
-        delete cell;
-      }
-    }
-  }
+  ~Grid();
 
   /**
    * @brief Fonction pour afficher la grille de jeu.
@@ -81,12 +75,7 @@ class Grid {
    * @param col Colonne de la cellule.
    * @return La cellule de la grille à la position (row, col).
    */
-  Cell<Shape>* getCell(const int row, const int col) const {
-    if (row < 0 || row >= rows_ || col < 0 || col >= cols_) {
-      return nullptr;
-    }
-    return grid_[row][col];
-  }
+  std::shared_ptr<Cell<Shape>>& getCell(const int row, const int col);
 
   // TODO : Zoé
   void hitCell(const int x, const int y);
@@ -104,7 +93,8 @@ class Grid {
   int width_;         /**< Largeur de la fenêtre de jeu. */
   int height_;        /**< Hauteur de la fenêtre de jeu. */
   Game<Shape>* game_; /**< Game associé à la grille. */
-  std::vector<std::vector<Cell<Shape>*>> grid_; /**< Grille de jeu. */
+  std::vector<std::vector<std::shared_ptr<Cell<Shape>>>>
+      grid_; /**< Grille de jeu. */
   std::shared_ptr<SDL_Renderer>&
       renderer_;        /**< Renderer de la fenêtre de jeu. */
   int remainingBricks_; /**< Nombre de briques restantes à casser. */

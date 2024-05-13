@@ -59,4 +59,8 @@ BonusMalus <|-- SlowedDown
 BonusMalus <|-- SpedUp 
  
 
+class SquareCell
+class TriangleCell
+class HexagonCell
+
 @enduml

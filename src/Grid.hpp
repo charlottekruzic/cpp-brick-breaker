@@ -1,3 +1,5 @@
+#include <cassert>
+
 #include "Grid.h"
 #include "HexagonCell.h"
 #include "SquareCell.h"
@@ -34,30 +36,35 @@ Grid<SquareCell>::Grid(const std::string& filename, const int width,
   const auto& board = parser.getBoard();
 
   for (const auto& row : board) {
-    std::vector<Cell<SquareCell>*> gridRow;
+    std::vector<std::shared_ptr<Cell<SquareCell>>> gridRow;
     for (char c : row) {
       if (c == ' ') {
-        gridRow.push_back(new Empty<SquareCell>());
+        gridRow.push_back(std::make_shared<Empty<SquareCell>>());
       } else if (c >= '1' && c <= '5') {
-        gridRow.push_back(new BasicBrick<SquareCell>(c - '0', game_));
+        gridRow.push_back(
+            std::make_shared<BasicBrick<SquareCell>>(c - '0', game_));
         remainingBricks_++;
       } else if (c == 'A') {
-        gridRow.push_back(new SpedUpBrick<SquareCell>(game_, renderer));
+        gridRow.push_back(
+            std::make_shared<SpedUpBrick<SquareCell>>(game_, renderer));
       } else if (c == 'D') {
-        gridRow.push_back(new SlowedDownBrick<SquareCell>(game_, renderer));
+        gridRow.push_back(
+            std::make_shared<SlowedDownBrick<SquareCell>>(game_, renderer));
       } else if (c == 'S') {
-        gridRow.push_back(new ShrinkBrick<SquareCell>(game_, renderer));
+        gridRow.push_back(
+            std::make_shared<ShrinkBrick<SquareCell>>(game_, renderer));
       } else if (c == 'E') {
-        gridRow.push_back(new EnlargeBrick<SquareCell>(game_, renderer));
+        gridRow.push_back(
+            std::make_shared<EnlargeBrick<SquareCell>>(game_, renderer));
       } else if (c == 'W') {
-        gridRow.push_back(new Wall<SquareCell>(renderer));
+        gridRow.push_back(std::make_shared<Wall<SquareCell>>(renderer));
       } else {
         std::cerr << "Caractère inconnu '" << c
                   << "'. Remplacé par une case vide" << std::endl;
-        gridRow.push_back(new Empty<SquareCell>());
+        gridRow.push_back(std::make_shared<Empty<SquareCell>>());
       }
     }
-    grid_.push_back(gridRow);
+    grid_.push_back(std::move(gridRow));
   }
 }
 
@@ -86,42 +93,42 @@ Grid<TriangleCell>::Grid(const std::string& filename, const int width,
   const auto& board = parser.getBoard();
 
   for (size_t i = 0; i < board.size(); i++) {
-    std::vector<Cell<TriangleCell>*> gridRow;
+    std::vector<std::shared_ptr<Cell<TriangleCell>>> gridRow;
     for (size_t j = 0; j < board[i].size(); j++) {
       char c = board[i][j];
       TriangleCell::Orientation orientation =
           ((i + j) % 2 == 0) ? TriangleCell::Orientation::UP
                              : TriangleCell::Orientation::DOWN;
       if (c == ' ') {
-        gridRow.push_back(new Empty<TriangleCell>(orientation));
+        gridRow.push_back(std::make_shared<Empty<TriangleCell>>(orientation));
       } else if (c >= '1' && c <= '5') {
-        gridRow.push_back(
-            new BasicBrick<TriangleCell>(c - '0', game_, orientation));
+        gridRow.push_back(std::make_shared<BasicBrick<TriangleCell>>(
+            c - '0', game_, orientation));
         remainingBricks_++;
       } else if (c == 'A') {
-        gridRow.push_back(
-            new SpedUpBrick<TriangleCell>(game_, renderer, orientation));
+        gridRow.push_back(std::make_shared<SpedUpBrick<TriangleCell>>(
+            game_, renderer, orientation));
       } else if (c == 'D') {
-        gridRow.push_back(
-            new SlowedDownBrick<TriangleCell>(game_, renderer, orientation));
+        gridRow.push_back(std::make_shared<SlowedDownBrick<TriangleCell>>(
+            game_, renderer, orientation));
       } else if (c == 'S') {
-        gridRow.push_back(
-            new ShrinkBrick<TriangleCell>(game_, renderer, orientation));
+        gridRow.push_back(std::make_shared<ShrinkBrick<TriangleCell>>(
+            game_, renderer, orientation));
       } else if (c == 'E') {
-        gridRow.push_back(
-            new EnlargeBrick<TriangleCell>(game_, renderer, orientation));
+        gridRow.push_back(std::make_shared<EnlargeBrick<TriangleCell>>(
+            game_, renderer, orientation));
       } else if (c == 'W') {
-        gridRow.push_back(new Wall<TriangleCell>(renderer, orientation));
+        gridRow.push_back(
+            std::make_shared<Wall<TriangleCell>>(renderer, orientation));
       } else {
         std::cerr << "Caractère inconnu: " << c << std::endl;
-        gridRow.push_back(new Empty<TriangleCell>(orientation));
+        gridRow.push_back(std::make_shared<Empty<TriangleCell>>(orientation));
       }
     }
-    grid_.push_back(gridRow);
+    grid_.push_back(std::move(gridRow));
   }
 }
 
-// TODO
 template <>
 Grid<HexagonCell>::Grid(const std::string& filename, const int width,
                         const int height,
@@ -149,30 +156,35 @@ Grid<HexagonCell>::Grid(const std::string& filename, const int width,
   const auto& board = parser.getBoard();
 
   for (const auto& row : board) {
-    std::vector<Cell<HexagonCell>*> gridRow;
+    std::vector<std::shared_ptr<Cell<HexagonCell>>> gridRow;
     for (char c : row) {
       if (c == ' ') {
-        gridRow.push_back(new Empty<HexagonCell>());
+        gridRow.push_back(std::make_shared<Empty<HexagonCell>>());
       } else if (c >= '1' && c <= '5') {
-        gridRow.push_back(new BasicBrick<HexagonCell>(c - '0', game_));
+        gridRow.push_back(
+            std::make_shared<BasicBrick<HexagonCell>>(c - '0', game_));
         remainingBricks_++;
       } else if (c == 'A') {
-        gridRow.push_back(new SpedUpBrick<HexagonCell>(game_, renderer));
+        gridRow.push_back(
+            std::make_shared<SpedUpBrick<HexagonCell>>(game_, renderer));
       } else if (c == 'D') {
-        gridRow.push_back(new SlowedDownBrick<HexagonCell>(game_, renderer));
+        gridRow.push_back(
+            std::make_shared<SlowedDownBrick<HexagonCell>>(game_, renderer));
       } else if (c == 'S') {
-        gridRow.push_back(new ShrinkBrick<HexagonCell>(game_, renderer));
+        gridRow.push_back(
+            std::make_shared<ShrinkBrick<HexagonCell>>(game_, renderer));
       } else if (c == 'E') {
-        gridRow.push_back(new EnlargeBrick<HexagonCell>(game_, renderer));
+        gridRow.push_back(
+            std::make_shared<EnlargeBrick<HexagonCell>>(game_, renderer));
       } else if (c == 'W') {
-        gridRow.push_back(new Wall<HexagonCell>(renderer));
+        gridRow.push_back(std::make_shared<Wall<HexagonCell>>(renderer));
       } else {
         std::cerr << "Caractère inconnu '" << c
                   << "'. Remplacé par une case vide" << std::endl;
-        gridRow.push_back(new Empty<HexagonCell>());
+        gridRow.push_back(std::make_shared<Empty<HexagonCell>>());
       }
     }
-    grid_.push_back(gridRow);
+    grid_.push_back(std::move(gridRow));
   }
 }
 
@@ -245,32 +257,60 @@ void Grid<HexagonCell>::renderGrid(std::shared_ptr<SDL_Renderer>& renderer,
 
 template <>
 void Grid<TriangleCell>::hitCell(const int x, const int y) {
-  Cell<TriangleCell>* c = getCell(x, y);
-  BasicBrick<TriangleCell>* basicBrick =
-      dynamic_cast<BasicBrick<TriangleCell>*>(
-          c);  // Vérifie si c'est un BasicBrick
-
-  bool detruit = c->hit();
+  // auto& cell = grid_[x][y];
+  auto& cell = getCell(x, y);
+  bool detruit = cell->hit();
   if (detruit) {
-    delete grid_[x][y];
     TriangleCell::Orientation orientation =
         ((x + y) % 2 == 0) ? TriangleCell::Orientation::UP
                            : TriangleCell::Orientation::DOWN;
-    grid_[x][y] = new Empty<TriangleCell>(orientation);
+    auto basicBrick = std::dynamic_pointer_cast<BasicBrick<TriangleCell>>(cell);
+    // Créer une nouvelle instance d'Empty
+    auto newCell = std::make_shared<Empty<TriangleCell>>(orientation);
+    // Réinitialiser le shared_ptr avec la nouvelle instance
+    cell = newCell;
     if (basicBrick) remainingBricks_--;
   }
 }
 
 template <typename Shape>
 void Grid<Shape>::hitCell(const int x, const int y) {
-  Cell<Shape>* c = getCell(x, y);
-  BasicBrick<Shape>* basicBrick =
-      dynamic_cast<BasicBrick<Shape>*>(c);  // Vérifie si c'est un BasicBrick
+  // auto& cell = grid_[x][y];
 
-  bool detruit = c->hit();
+  auto& cell = getCell(x, y);
+  bool detruit = cell->hit();
   if (detruit) {
-    delete grid_[x][y];
-    grid_[x][y] = new Empty<Shape>();
+    auto basicBrick = std::dynamic_pointer_cast<BasicBrick<Shape>>(cell);
+    // Créer une nouvelle instance d'Empty
+    auto newCell = std::make_shared<Empty<Shape>>();
+    // Réinitialiser le shared_ptr avec la nouvelle instance
+    cell = newCell;
     if (basicBrick) remainingBricks_--;
+  }
+}
+
+template <typename Shape>
+std::shared_ptr<Cell<Shape>>& Grid<Shape>::getCell(const int row,
+                                                   const int col) {
+  assert(row >= 0 && row < rows_ && col >= 0 && col < cols_);
+  return grid_[row][col];
+}
+/*
+template <typename Shape>
+std::shared_ptr<Cell<Shape>> Grid<Shape>::getCell(const int row,
+                                                  const int col) {
+  if (row < 0 || row >= rows_ || col < 0 || col >= cols_) {
+    return nullptr;
+  }
+  return grid_[row][col];
+}
+*/
+
+template <typename Shape>
+Grid<Shape>::~Grid() {
+  for (auto& row : grid_) {
+    for (auto& cell : row) {
+      cell.reset();  // Réinitialise le pointeur unique, libérant la mémoire.
+    }
   }
 }
