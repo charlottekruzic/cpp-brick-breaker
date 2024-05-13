@@ -196,7 +196,6 @@ void Grid<HexagonCell>::renderGrid(std::shared_ptr<SDL_Renderer>& renderer,
 
 template <>
 void Grid<TriangleCell>::hitCell(const int x, const int y) {
-  // auto& cell = grid_[x][y];
   auto& cell = getCell(x, y);
   bool detruit = cell->hit();
   if (detruit) {
@@ -204,9 +203,7 @@ void Grid<TriangleCell>::hitCell(const int x, const int y) {
         ((x + y) % 2 == 0) ? TriangleCell::Orientation::UP
                            : TriangleCell::Orientation::DOWN;
     auto basicBrick = std::dynamic_pointer_cast<BasicBrick<TriangleCell>>(cell);
-    // Créer une nouvelle instance d'Empty
     auto newCell = std::make_shared<Empty<TriangleCell>>(orientation);
-    // Réinitialiser le shared_ptr avec la nouvelle instance
     cell = newCell;
     if (basicBrick) remainingBricks_--;
   }
@@ -214,15 +211,11 @@ void Grid<TriangleCell>::hitCell(const int x, const int y) {
 
 template <typename Shape>
 void Grid<Shape>::hitCell(const int x, const int y) {
-  // auto& cell = grid_[x][y];
-
   auto& cell = getCell(x, y);
   bool detruit = cell->hit();
   if (detruit) {
     auto basicBrick = std::dynamic_pointer_cast<BasicBrick<Shape>>(cell);
-    // Créer une nouvelle instance d'Empty
     auto newCell = std::make_shared<Empty<Shape>>();
-    // Réinitialiser le shared_ptr avec la nouvelle instance
     cell = newCell;
     if (basicBrick) remainingBricks_--;
   }

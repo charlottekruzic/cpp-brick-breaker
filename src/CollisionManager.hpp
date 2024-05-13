@@ -234,6 +234,8 @@ inline void CollisionManager<HexagonCell>::checkGridBallCollision(
       if (cell && cell->rebondir()) {
         // Récupération des points de l'hexagone
         SDL_Point points[7];
+        // TODO Charlotte
+
         for (int p = 0; p < 7; p++) {
           points[p] = cell->getPoint(p);
         }
