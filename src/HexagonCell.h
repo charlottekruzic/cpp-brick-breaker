@@ -40,7 +40,7 @@ class HexagonCell {
   SDL_Point getPoint(const int i) const;
 
  private:
-  std::vector<SDL_Point> points_;
+  std::vector<SDL_Point> points_; /**< Points de la cellule */
 
   /**
    * @brief Remplit un hexagone

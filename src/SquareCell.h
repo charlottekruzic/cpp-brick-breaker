@@ -36,7 +36,7 @@ class SquareCell {
             const SDL_Color color);
 
  private:
-  int size_;  // Dimension du carré
+  int size_; /**< Dimension du carré */
 };
 
 #endif  // SQUARE_CELL_H

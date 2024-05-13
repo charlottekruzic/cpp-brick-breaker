@@ -35,14 +35,15 @@ class Ball {
    * @param velocity_x La vitesse horizontale initiale de la balle.
    * @param velocity_y La vitesse verticale initiale de la balle.
    */
-  Ball(int radius, int speed, float platformPosX, float platformPosY,
-       int platformLength, float velocity_x, float velocity_y);
+  Ball(const int radius, const int speed, const float platformPosX,
+       const float platformPosY, const int platformLength,
+       const float velocity_x, const float velocity_y);
 
   /**
    * @brief Affiche la balle sur le rendu SDL.
    * @param renderer Le rendu SDL sur lequel afficher la balle.
    */
-  void render(std::shared_ptr<SDL_Renderer>& renderer);
+  void render(const std::shared_ptr<SDL_Renderer>& renderer);
 
   /**
    * @brief Met à jour la position de la balle en fonction du temps écoulé et de
@@ -53,7 +54,8 @@ class Ball {
    * @return True si la balle est encore dans les limites de l'écran, sinon
    * false.
    */
-  bool updatePosition(float dt, int screenWidth, int screenHeight);
+  bool updatePosition(const float dt, const int screenWidth,
+                      const int screenHeight);
   // void checkCollide(const Plateform& p, const Grid& grid);
 
   // Méthodes set et get
@@ -102,7 +104,7 @@ class Ball {
    * @brief Définit la vitesse de la balle.
    * @param speed La nouvelle vitesse de la balle.
    */
-  inline void setSpeed(int speed) { speed_ = speed; }
+  inline void setSpeed(const int speed) { speed_ = speed; }
   /**
    * @brief Définit la position horizontale de la balle.
    * @param pos_x La nouvelle position horizontale de la balle.

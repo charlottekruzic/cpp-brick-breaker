@@ -52,8 +52,8 @@ class TriangleCell {
   SDL_Point getPoint(const int i) const;
 
  private:
-  Orientation orientation_;
-  std::vector<SDL_Point> points_;
+  Orientation orientation_;       /**< Orientation de la cellule */
+  std::vector<SDL_Point> points_; /**< Points de la cellule */
 
   /**
    * @brief Remplit un triangle

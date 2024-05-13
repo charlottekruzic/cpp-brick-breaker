@@ -32,7 +32,7 @@ class Plateform {
    * @param width_window La largeur de la fenêtre du jeu.
    * @param height_window La hauteur de la fenêtre du jeu.
    */
-  Plateform(float width_window, float height_window);
+  Plateform(const float width_window, const float height_window);
 
   // Get
   /**
@@ -65,7 +65,7 @@ class Plateform {
    * @brief Définit la largeur de la plateforme.
    * @param width La nouvelle largeur de la plateforme.
    */
-  void setWidth(int width);
+  void setWidth(const int width);
 
  private:
   // Set
@@ -73,43 +73,44 @@ class Plateform {
    * @brief Définit la hauteur de la plateforme.
    * @param height La nouvelle hauteur de la plateforme.
    */
-  void setHeight(int height);
+  void setHeight(const int height);
   /**
    * @brief Définit la position horizontale de la plateforme.
    * @param pos_x La nouvelle position horizontale de la plateforme.
    */
-  void setPosX(int pos_x);
+  void setPosX(const int pos_x);
   /**
    * @brief Définit la position verticale de la plateforme.
    * @param pos_y La nouvelle position verticale de la plateforme.
    */
-  void setPosY(int pos_y);
+  void setPosY(const int pos_y);
   /**
    * @brief Définit la vitesse de déplacement de la plateforme.
    * @param speed La nouvelle vitesse de déplacement de la plateforme.
    */
-  void setSpeed(float speed);
+  void setSpeed(const float speed);
 
  public:
   /**
    * @brief Affiche la plateforme sur le rendu SDL.
    * @param renderer Le rendu SDL sur lequel afficher la plateforme.
    */
-  void render(std::shared_ptr<SDL_Renderer>& renderer);
+  void render(const std::shared_ptr<SDL_Renderer>& renderer);
   /**
    * @brief Déplace la plateforme en fonction des touches du clavier.
    * @param keyCode Le code de la touche du clavier.
    * @param screenWidth La largeur de l'écran.
    * @param dt Le temps écoulé depuis la dernière mise à jour.
    */
-  void move_keyboard(SDL_Keycode keyCode, int screenWidth, float dt);
+  void move_keyboard(const SDL_Keycode keyCode, const int screenWidth,
+                     const float dt);
   /**
    * @brief Déplace la plateforme en fonction de la position de la souris.
    * @param mouseX La position horizontale de la souris.
    * @param mouseY La position verticale de la souris.
    * @param screenWidth La largeur de l'écran.
    */
-  void move_mouse(int mouseX, int mouseY, int screenWidth);
+  void move_mouse(const int mouseX, const int mouseY, const int screenWidth);
 };
 
 #endif  // PLATEFORM_H

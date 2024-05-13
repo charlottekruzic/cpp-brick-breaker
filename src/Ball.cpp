@@ -10,8 +10,9 @@ Ball::Ball()
       velocity_x_(1),
       velocity_y_(-1) {}
 
-Ball::Ball(int radius, int speed, float platformPosX, float platformPosY,
-           int platformLength, float velocity_x, float velocity_y)
+Ball::Ball(const int radius, const int speed, const float platformPosX,
+           const float platformPosY, const int platformLength,
+           const float velocity_x, const float velocity_y)
     : radius_(radius),
       speed_(speed),
       velocity_x_(velocity_x),
@@ -20,7 +21,7 @@ Ball::Ball(int radius, int speed, float platformPosX, float platformPosY,
   pos_y_ = platformPosY - radius_ * 2;
 }
 
-void Ball::render(std::shared_ptr<SDL_Renderer>& renderer) {
+void Ball::render(const std::shared_ptr<SDL_Renderer>& renderer) {
   SDL_SetRenderDrawColor(renderer.get(), 255, 255, 255, 255);
   for (int y = -radius_; y <= radius_; y++)
     for (int x = -radius_; x <= radius_; x++)
@@ -28,13 +29,12 @@ void Ball::render(std::shared_ptr<SDL_Renderer>& renderer) {
         SDL_RenderDrawPoint(renderer.get(), pos_x_ + x, pos_y_ + y);
 }
 
-bool Ball::updatePosition(float dt, int screenWidth, int screenHeight) {
+bool Ball::updatePosition(const float dt, const int screenWidth,
+                          const int screenHeight) {
   prev_pos_x_ = pos_x_;
   prev_pos_y_ = pos_y_;
 
   float new_pos_x = pos_x_ + speed_ * dt * velocity_x_;
-
-  // pos_x_ += speed_ * dt * velocity_x_;
 
   if ((new_pos_x - radius_ < 0)) {
     velocity_x_ = -velocity_x_;
@@ -46,13 +46,13 @@ bool Ball::updatePosition(float dt, int screenWidth, int screenHeight) {
     pos_x_ = new_pos_x;
   }
 
-  // pos_y_ += speed_ * dt * velocity_y_;
   float new_pos_y = pos_y_ + speed_ * dt * velocity_y_;
 
   if (new_pos_y - radius_ < 0) {
     velocity_y_ = -velocity_y_;
     pos_y_ = radius_;
   }
+
   // Balle sous la plateforme = GAME OVER
   else if (new_pos_y + radius_ > screenHeight) {
     return true;

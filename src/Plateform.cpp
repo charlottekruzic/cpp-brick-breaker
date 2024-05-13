@@ -4,7 +4,7 @@
 Plateform::Plateform()
     : height_(20), width_(100), pos_x_(25), pos_y_(25), speed_(10) {}
 
-Plateform::Plateform(float window_width, float window_height)
+Plateform::Plateform(const float window_width, const float window_height)
     : height_(20), width_(100), speed_(20) {
   pos_x_ = (window_width - width_) / 2;
   pos_y_ = window_height * (7.0 / 8.0) - height_ / 2;
@@ -25,7 +25,7 @@ void Plateform::setPosY(int pos_y) { pos_y_ = pos_y; }
 void Plateform::setSpeed(float speed) { speed_ = speed; }
 
 // Fonction d'affichage
-void Plateform::render(std::shared_ptr<SDL_Renderer>& renderer) {
+void Plateform::render(const std::shared_ptr<SDL_Renderer>& renderer) {
   SDL_SetRenderDrawColor(renderer.get(), 255, 255, 255, 255);
   plateformRect = {pos_x_, pos_y_, width_, height_};
 
@@ -33,8 +33,9 @@ void Plateform::render(std::shared_ptr<SDL_Renderer>& renderer) {
 }
 
 // Fonction déplacement clavier
-void Plateform::move_keyboard(SDL_Keycode keyCode, int screenWidth, float dt) {
-  float speed_factor = 50.0;  // obligé sinon plateform ne bouge pas à droite
+void Plateform::move_keyboard(const SDL_Keycode keyCode, const int screenWidth,
+                              const float dt) {
+  float speed_factor = 50.0;
   float movement = speed_ * dt * speed_factor;
   switch (keyCode) {
     case SDLK_LEFT:
@@ -57,7 +58,8 @@ void Plateform::move_keyboard(SDL_Keycode keyCode, int screenWidth, float dt) {
 }
 
 // Fonction déplacement souris
-void Plateform::move_mouse(int mouseX, int mouseY, int screenWidth) {
+void Plateform::move_mouse(const int mouseX, const int mouseY,
+                           const int screenWidth) {
   if (mouseX - width_ / 2 >= 0) {
     if (mouseX + width_ / 2 <= screenWidth) {
       pos_x_ = mouseX - width_ / 2;
