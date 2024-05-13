@@ -171,6 +171,11 @@ int main(int argc, char* argv[]) {
   // Lancement de la fenêtre de choix + attente du choix
   startInterface(renderer, shapeCellule);
 
+  // fermeture fenetre de choix
+  SDL_DestroyRenderer(renderer.get());
+  SDL_DestroyWindow(window);
+  SDL_Quit();
+
   if (shapeCellule == "-t") {
     // demarrage du jeu
     Game<TriangleCell> game_triangle(nomFichierGrille);
@@ -184,11 +189,6 @@ int main(int argc, char* argv[]) {
     Game<HexagonCell> game_hexagon(nomFichierGrille);
     game_hexagon.execute();
   }
-
-  // fermeture fenetre de choix
-  SDL_DestroyRenderer(renderer.get());
-  SDL_DestroyWindow(window);
-  SDL_Quit();
 
   return 0;
 }
