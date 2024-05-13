@@ -38,7 +38,7 @@ class Game {
    * @brief Constructeur de la classe Game.
    * @param nomFichierGrille Le nom du fichier de la grille de jeu.
    */
-  Game(const std::string& nomFichierGrille, const std::string& shapeCellule);
+  Game(const std::string& nomFichierGrille);
 
   /**
    * @brief Destructeur de la classe Game.
@@ -73,8 +73,6 @@ class Game {
   std::unordered_set<std::shared_ptr<Ball>>
       balls_; /**< Ensemble de balles du jeu. */
 
-  std::string shapeCellule_;
-
   /**
    * @brief Initialise SDL.
    */
@@ -106,8 +104,7 @@ class Game {
    * @brief Initialise les composants du jeu.
    * @param nomFichierGrille Le nom du fichier de la grille de jeu.
    */
-  void initGameComponents(const std::string& nomFichierGrille,
-                          const std::string& shapeCellule);
+  void initGameComponents(const std::string& nomFichierGrille);
 
   /**
    * @brief Met à jour le jeu.

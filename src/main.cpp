@@ -17,16 +17,14 @@ void startInterface(SDL_Renderer* renderer, std::string& shapeCellule) {
   }
 
   // Charger les polices
-  TTF_Font* font_button =
-      TTF_OpenFont("../ttf/Super Creamy Personal Use.ttf", 24);
+  TTF_Font* font_button = TTF_OpenFont("ttf/Super Creamy Personal Use.ttf", 24);
   if (!font_button) {
     std::cerr << "Erreur lors du chargement de la police  pour les boutons"
               << std::endl;
     return;
   }
 
-  TTF_Font* font_title =
-      TTF_OpenFont("../ttf/Super Creamy Personal Use.ttf", 50);
+  TTF_Font* font_title = TTF_OpenFont("ttf/Super Creamy Personal Use.ttf", 50);
   if (!font_title) {
     std::cerr << "Erreur lors du chargement de la police pour le titre"
               << std::endl;
@@ -174,7 +172,7 @@ int main(int argc, char* argv[]) {
     SDL_DestroyWindow(window);
     SDL_Quit();
     // demarrage du jeu
-    Game<TriangleCell> game_triangle(nomFichierGrille, shapeCellule);
+    Game<TriangleCell> game_triangle(nomFichierGrille);
     game_triangle.execute();
   } else if (shapeCellule == "-s") {
     // fermeture fenetre
@@ -182,7 +180,7 @@ int main(int argc, char* argv[]) {
     SDL_DestroyWindow(window);
     SDL_Quit();
     // demarrage du jeu
-    Game<SquareCell> game_square(nomFichierGrille, shapeCellule);
+    Game<SquareCell> game_square(nomFichierGrille);
     game_square.execute();
   } else if (shapeCellule == "-h") {
     // fermeture fenetre
@@ -190,7 +188,7 @@ int main(int argc, char* argv[]) {
     SDL_DestroyWindow(window);
     SDL_Quit();
     // demarrage du jeu
-    Game<HexagonCell> game_hexagon(nomFichierGrille, shapeCellule);
+    Game<HexagonCell> game_hexagon(nomFichierGrille);
     game_hexagon.execute();
   }
 

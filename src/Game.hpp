@@ -11,12 +11,11 @@
 #include "bonus_malus/SpedUp.h"
 
 template <typename Shape>
-Game<Shape>::Game(const std::string& nomFichierGrille,
-                  const std::string& shapeCellule)
+Game<Shape>::Game(const std::string& nomFichierGrille)
     : plateform_(screen_width_, screen_height_) {
   initSDL();
   createWindowAndRenderer();
-  initGameComponents(nomFichierGrille, shapeCellule);
+  initGameComponents(nomFichierGrille);
 }
 
 template <typename Shape>
@@ -65,35 +64,13 @@ void Game<Shape>::createWindowAndRenderer() {
 }
 
 template <typename Shape>
-void Game<Shape>::initGameComponents(const std::string& nomFichierGrille,
-                                     const std::string& shapeCellule) {
+void Game<Shape>::initGameComponents(const std::string& nomFichierGrille) {
   grid_ = std::make_shared<Grid<Shape>>(nomFichierGrille, screen_width_,
                                         screen_height_, renderer_, this);
   balls_.insert(std::make_shared<Ball>(10, 500, plateform_.getPosX(),
                                        plateform_.getPosY(),
                                        plateform_.getWidth(), 0.5, -0.5));
 }
-
-/*
-void Game<Shape>::initGameComponents(const std::string& nomFichierGrille,
-                              const std::string& shapeCellule) {
-  shapeCellule_ = shapeCellule;
-  if (shapeCellule_ == "-t") {
-    using ShapeType = TriangleCell;
-  }
-  if (shapeCellule_ == "-t") {
-    triangle_grid_ = std::make_shared<Grid<TriangleCell>>(
-        nomFichierGrille, screen_width_, screen_height_, renderer_, this);
-  } else {
-    square_grid_ = std::make_shared<Grid<SquareCell>>(
-        nomFichierGrille, screen_width_, screen_height_, renderer_, this);
-  }
-
-  balls_.insert(std::make_shared<Ball>(10, 500, plateform_.getPosX(),
-                                       plateform_.getPosY(),
-                                       plateform_.getWidth(), 0.5, -0.5));
-}
-*/
 
 template <typename Shape>
 int Game<Shape>::execute() {
