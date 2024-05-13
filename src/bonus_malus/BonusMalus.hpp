@@ -2,8 +2,9 @@
 
 #include "BonusMalus.h"
 template <typename Shape>
-BonusMalus<Shape>::BonusMalus(Game<Shape>* game, Color color, int x, int y)
-    : game_(game), color_(color), x_(x), y_(y) {}
+BonusMalus<Shape>::BonusMalus(std::weak_ptr<Game<Shape>> game, Color color,
+                              int x, int y)
+    : game_(std::move(game)), color_(color), x_(x), y_(y) {}
 
 template <typename Shape>
 void BonusMalus<Shape>::render(std::shared_ptr<SDL_Renderer>& renderer) {

@@ -9,8 +9,11 @@ class Game;
 template <typename Shape>
 class SlowedDown : public BonusMalus<Shape> {
  public:
-  SlowedDown(Game<Shape>* game, int x, int y);
+  SlowedDown(std::weak_ptr<Game<Shape>> game, int x, int y);
   void applyEffect() override;
+
+ protected:
+  std::weak_ptr<Game<Shape>> game_;
 };
 
 #include "SlowedDown.hpp"

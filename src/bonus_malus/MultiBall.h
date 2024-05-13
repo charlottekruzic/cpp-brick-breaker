@@ -9,8 +9,11 @@ class Game;
 template <typename Shape>
 class MultiBall : public BonusMalus<Shape> {
  public:
-  MultiBall(Game<Shape>* game, int x, int y);
+  MultiBall(std::weak_ptr<Game<Shape>> game, int x, int y);
   void applyEffect() override;
+
+ protected:
+  std::weak_ptr<Game<Shape>> game_;
 };
 
 #include "MultiBall.hpp"

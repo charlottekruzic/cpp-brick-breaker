@@ -9,8 +9,11 @@ class Game;
 template <typename Shape>
 class Enlarge : public BonusMalus<Shape> {
  public:
-  Enlarge(Game<Shape>* game, int x, int y);
+  Enlarge(std::weak_ptr<Game<Shape>> game, int x, int y);
   void applyEffect() override;
+
+ protected:
+  std::weak_ptr<Game<Shape>> game_;
 };
 
 #include "Enlarge.hpp"

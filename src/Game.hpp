@@ -293,28 +293,33 @@ void Game<Shape>::generateBonusMalus() {
     switch (type) {
       case 0:
       case 1:
-        bm = std::make_shared<Shrink<Shape>>(this, randomX, 0);
+        bm =
+            std::make_shared<Shrink<Shape>>(this->weak_from_this(), randomX, 0);
         break;
 
       case 2:
       case 3:
       case 4:
-        bm = std::make_shared<Enlarge<Shape>>(this, randomX, 0);
+        bm = std::make_shared<Enlarge<Shape>>(this->weak_from_this(), randomX,
+                                              0);
         break;
 
       case 5:
       case 6:
-        bm = std::make_shared<SpedUp<Shape>>(this, randomX, 0);
+        bm =
+            std::make_shared<SpedUp<Shape>>(this->weak_from_this(), randomX, 0);
         break;
 
       case 7:
       case 8:
       case 9:
-        bm = std::make_shared<SlowedDown<Shape>>(this, randomX, 0);
+        bm = std::make_shared<SlowedDown<Shape>>(this->weak_from_this(),
+                                                 randomX, 0);
         break;
 
       case 10:
-        bm = std::make_shared<MultiBall<Shape>>(this, randomX, 0);
+        bm = std::make_shared<MultiBall<Shape>>(this->weak_from_this(), randomX,
+                                                0);
         break;
       default:
         // En cas de type invalide, ne rien faire
