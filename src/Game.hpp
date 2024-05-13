@@ -67,9 +67,9 @@ void Game<Shape>::createWindowAndRenderer() {
 template <typename Shape>
 void Game<Shape>::initGameComponents(const std::string& nomFichierGrille,
                                      const std::string& shapeCellule) {
-  grid_ =
-      std::make_shared<Grid<Shape>>(nomFichierGrille, screen_width_,
-                                    screen_height_, renderer_, getSharedPtr());
+  grid_ = std::make_shared<Grid<Shape>>(nomFichierGrille, screen_width_,
+                                        screen_height_, renderer_,
+                                        this->shared_from_this());
   balls_.insert(std::make_shared<Ball>(10, 500, plateform_.getPosX(),
                                        plateform_.getPosY(),
                                        plateform_.getWidth(), 0.5, -0.5));
@@ -314,28 +314,33 @@ void Game<Shape>::generateBonusMalus() {
       case 0:
       case 1:
 
-        bm = std::make_shared<Shrink<Shape>>(getSharedPtr(), randomX, 0);
+        bm = std::make_shared<Shrink<Shape>>(this->shared_from_this(), randomX,
+                                             0);
         break;
 
       case 2:
       case 3:
       case 4:
-        bm = std::make_shared<Enlarge<Shape>>(getSharedPtr(), randomX, 0);
+        bm = std::make_shared<Enlarge<Shape>>(this->shared_from_this(), randomX,
+                                              0);
         break;
 
       case 5:
       case 6:
-        bm = std::make_shared<SpedUp<Shape>>(getSharedPtr(), randomX, 0);
+        bm = std::make_shared<SpedUp<Shape>>(this->shared_from_this(), randomX,
+                                             0);
         break;
 
       case 7:
       case 8:
       case 9:
-        bm = std::make_shared<SlowedDown<Shape>>(getSharedPtr(), randomX, 0);
+        bm = std::make_shared<SlowedDown<Shape>>(this->shared_from_this(),
+                                                 randomX, 0);
         break;
 
       case 10:
-        bm = std::make_shared<MultiBall<Shape>>(getSharedPtr(), randomX, 0);
+        bm = std::make_shared<MultiBall<Shape>>(this->shared_from_this(),
+                                                randomX, 0);
         break;
       default:
         // En cas de type invalide, ne rien faire
