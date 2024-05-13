@@ -2,28 +2,55 @@
 
 class Ball 
 
-class CollisionManager 
+class Plateform
+
+class CollisionManager<Shape>
+
+class Game<Shape>
 
 enum Color
 
 class ColorUtils
 
-class Game
-
-class Grid
-
 class InputParser
 
-class Plateform
+class Grid<Shape>
 
+class Cell<Shape>
 
+class Brick<Shape>
+class Empty<Shape>
+class Wall <Shape>
+Cell <|-- Brick
+Cell <|-- Empty
+Cell <|-- Wall 
 
-class BonusMalus
-class MultiBall
-class Enlarge
-class Shrink
-class SlowedDown
-class SpedUp 
+class BasicBrick<Shape>
+class SpecialBrick<Derived, Shape>
+Brick <|-- BasicBrick
+Brick <|-- SpecialBrick
+
+class BonusBrick<Shape>
+class MalusBrick<Shape>
+SpecialBrick <|-- BonusBrick
+SpecialBrick <|-- MalusBrick
+
+class SlowedDownBrick<Shape>
+class EnlargeBrick<Shape>
+BonusBrick <|-- EnlargeBrick 
+BonusBrick <|-- SlowedDownBrick
+
+class ShrinkBrick<Shape>
+class SpedUpBrick<Shape>
+MalusBrick <|-- SpedUpBrick 
+MalusBrick <|-- ShrinkBrick 
+
+class BonusMalus<Shape>
+class MultiBall<Shape>
+class Enlarge<Shape>
+class Shrink<Shape>
+class SlowedDown<Shape>
+class SpedUp<Shape>
 
 BonusMalus <|-- MultiBall 
 BonusMalus <|-- Enlarge 
@@ -31,36 +58,5 @@ BonusMalus <|-- Shrink
 BonusMalus <|-- SlowedDown 
 BonusMalus <|-- SpedUp 
  
-
-interface Cell
-
-class Brick
-class Empty
-class Wall 
-Cell <|-- Brick
-Cell <|-- Empty
-Cell <|-- Wall 
-
-class BasicBrick
-class SpecialBrick
-Brick <|-- BasicBrick
-Brick <|-- SpecialBrick
-
-class BonusBrick
-class MalusBrick
-SpecialBrick <|-- BonusBrick
-SpecialBrick <|-- MalusBrick
-
-class SlowedDownBrick
-class EnlargeBrick
-BonusBrick <|-- EnlargeBrick 
-BonusBrick <|-- SlowedDownBrick
-
-class ShrinkBrick
-class SpedUpBrick
-MalusBrick <|-- SpedUpBrick 
-MalusBrick <|-- ShrinkBrick 
-
-
 
 @enduml
