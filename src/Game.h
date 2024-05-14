@@ -58,11 +58,7 @@ class Game {
   bool quit_ = false;          /**< Indicateur pour quitter le jeu. */
   bool game_over_ = false;     /**< Indicateur de fin de jeu. */
   bool game_finished_ = false; /**< Indicateur de fin de partie. */
-  bool left_key_down_ =
-      false; /**< Indicateur de pression de la touche gauche. */
-  bool right_key_down_ =
-      false;           /**< Indicateur de pression de la touche droite. */
-  bool paused_ = true; /**< Indicateur de pause du jeu. */
+  bool paused_ = true;         /**< Indicateur de pause du jeu. */
 
   std::shared_ptr<SDL_Window> window_ = nullptr; /**< Fenêtre SDL du jeu. */
   std::shared_ptr<SDL_Renderer> renderer_ = nullptr; /**< Rendu SDL du jeu. */
@@ -97,8 +93,9 @@ class Game {
   /**
    * @brief Gère les événements SDL.
    * @param event L'événement SDL à gérer.
+   * @param dt Le temps écoulé depuis la dernière mise à jour.
    */
-  void handleEvents(const SDL_Event& event);
+  void handleEvents(SDL_Event& event, float dt);
 
   /**
    * @brief Initialise les composants du jeu.

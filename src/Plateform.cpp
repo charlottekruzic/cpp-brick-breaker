@@ -2,7 +2,7 @@
 
 // Constructeur par défaut
 Plateform::Plateform()
-    : height_(20), width_(100), pos_x_(25), pos_y_(25), speed_(10) {}
+    : height_(20), width_(100), pos_x_(25), pos_y_(25), speed_(20) {}
 
 Plateform::Plateform(const float window_width, const float window_height)
     : height_(20), width_(100), speed_(20) {
@@ -35,7 +35,7 @@ void Plateform::render(const std::shared_ptr<SDL_Renderer>& renderer) {
 // Fonction déplacement clavier
 void Plateform::move_keyboard(const SDL_Keycode keyCode, const int screenWidth,
                               const float dt) {
-  float speed_factor = 50.0;
+  float speed_factor = 100.0;
   float movement = speed_ * dt * speed_factor;
   switch (keyCode) {
     case SDLK_LEFT:

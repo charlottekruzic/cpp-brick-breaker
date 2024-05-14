@@ -97,7 +97,7 @@ void Game<Shape>::mainLoop() {
     previousTime = startTime;
 
     while (SDL_PollEvent(&event)) {
-      handleEvents(event);
+      handleEvents(event, dt);
     }
 
     if (premiere_iter || !paused_) {
@@ -123,29 +123,21 @@ void Game<Shape>::mainLoop() {
 }
 
 template <typename Shape>
-void Game<Shape>::handleEvents(const SDL_Event& event) {
+void Game<Shape>::handleEvents(SDL_Event& event, float dt) {
   if (event.type == SDL_QUIT) {
     quit_ = true;
   }
   // Clavier
   else if (event.type == SDL_KEYDOWN) {
-    if (event.key.keysym.sym == SDLK_LEFT) {
-      left_key_down_ = true;
-    } else if (event.key.keysym.sym == SDLK_RIGHT) {
-      right_key_down_ = true;
+    if (event.key.keysym.sym == SDLK_LEFT ||
+        event.key.keysym.sym == SDLK_RIGHT) {
+      plateform_.move_keyboard(event.key.keysym.sym, screen_width_, dt);
     } else if (event.key.keysym.sym == SDLK_SPACE) {
       // Mettre en pause ou reprendre le jeu lorsque la barre d'espace est
       // enfoncée
       togglePause();
     }
-  } else if (event.type == SDL_KEYUP) {
-    if (event.key.keysym.sym == SDLK_LEFT) {
-      left_key_down_ = false;
-    } else if (event.key.keysym.sym == SDLK_RIGHT) {
-      right_key_down_ = false;
-    }
   }
-
   // Souris
   else if (event.type == SDL_MOUSEMOTION) {
     int mouseX, mouseY;
