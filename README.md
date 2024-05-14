@@ -60,24 +60,27 @@ Les bonus et les malus tombent du haut de la fenêtre, offrant une variété d'e
 - [x] supporter différentes formes de grilles de briques : hexagonales et triangulaires
 - [x] Utilisez la STL au maximum  :
   - [x] Pas de tableau! des conteneurs STL
-  - [ ] Pas de pointeur! des unique/shared/weak_ptr
-  <p style="color:red;">
+  - [ ] Pas de pointeur! des unique/shared/weak_ptr  
+  <span style="color:red;">
     Nous avons nettoyé un maximum de pointeur "classique" pour n'utiliser que des unique / shared / weak_ptr, sauf dans un cas : 
     L'objet *Game* doit créer et gérer les *BonusMalus* (ainsi que les *SpecialBrick*). *BonusMalus* et *SpecialBrick* ont besoin de connaitre le *Game* pour pouvoir accélérer/décélérer les balles, agrandir/rétrécir la raquette, créer de nouvelles balles... En bref, toutes les interactions du jeu lié au bonus et malus.
     Nous devons donc utilisé un pointeur dans ces classes vers un objet *Game*, nécessaire lors de la construction de ces objets.
     Nous pensons qu'il faut remplacer ce pointeur par un weak_ptr. Par manque de temps nous n'avons pas réussi à l'implémenter correctemetnt. Vous pourrez néanomoins retrouver le code associé dans la branche **test-weak-ptr** notamment, où la classe *Game* hérite de **std::enable_shared_from_this<Game<Shape>>** et où nous avons essayé de passer en argument des constructeurs de BonusMalus des *weak_from_this()*. Cela compile, mais malheureusement, la condition **if (auto game = game_.lock())** des différents *BonusMalus* est toujours fausse.  
-  </p>  
+  </span>  
+ 
   - [x] Utilisez les algorithmes de la STL
 - [x] Écrivez des classes pour vos objets et encapsulez la SDL2
 - [x] Utilisez de l'héritage et du polymorphisme
 <img src="diagramme.png">
-- [ ] Soyez const-correct et efficaces, pas de copie inutile
-    <p style="color:red;">
+
+- [ ] Soyez const-correct et efficaces, pas de copie inutile  
+    <span style="color:red;">
     Nous pensons avoir essayé de le faire au maximum, mais par manque de temps il est possible qu'il y ait encore des choses à améliorer.
-  </p> 
-- [x] Documentez votre code
-    - Nous avons utilisé *Doxygen*
-- [x] Utilisez une convention de codage
+  </span> 
+
+- [x] Documentez votre code  
+    Nous avons utilisé *Doxygen*
+- [x] Utilisez une convention de codage  
      Nous avons utilisé la convention de codage "Google" utilisée avec l'outil de formatage de code *clang-format*. Nous avons écrit un maximum le code en anglais, les commentaires en français.
 
 
