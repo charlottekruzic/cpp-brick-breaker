@@ -36,7 +36,7 @@ Les bonus et les malus tombent du haut de la fenêtre, offrant une variété d'e
 
 ### Bonus
 - Bleu Foncé : Décélérateur de la balle.
-- Vert : Agrandissement de la taille de la raquette
+- Vert : Agrandissement de la taille de la raquette.
 - Magenta : Multiballe - Génère 2 nouvelles balles pour des actions plus dynamiques.
 
 ### Malus 
@@ -49,12 +49,7 @@ Les bonus et les malus tombent du haut de la fenêtre, offrant une variété d'e
 - Charlotte s'est occupée de la plateforme, de la balle, des collisions entre la plateforme, les briques et la balle, et en partie de la gestion de jeu. Elle a aussi réalisé les différentes formes pour Carré / Triangle / Hexagone.
   
 - Zoé s'est occupée de la grille, des différentes briques (polymorphisme, CRTP), des différents bonus/malus ainsi que leurs interactions avec le reste du jeu. Elle a aussi réalisé la *"templatisation"* afin de pouvoir réaliser les différentes formes de grille.
-
----
-## todo 
-- weak_ptr
-- to do zoé
-- h / hpp / cpp comme il faut ?
+  
 ----
 ## Énoncé : 
 - [x] une plateforme déplaçable au clavier ou à la souris
@@ -65,34 +60,42 @@ Les bonus et les malus tombent du haut de la fenêtre, offrant une variété d'e
 - [x] supporter différentes formes de grilles de briques : hexagonales et triangulaires
 - [x] Utilisez la STL au maximum  :
   - [x] Pas de tableau! des conteneurs STL
-  - [x] Pas de pointeur! des unique/shared/weak_ptr
-  <p style="color:purple;">
-    ... on a fait au maximum
-    - des fois pas nécessaires : SDL2 typiquement quand dans la meme fonction on ouvre et ferme proprement, pas nécessaire d'utiliser ce genre de pointeur, qui ne sont présents que dans ce bloc </p>  
+  - [ ] Pas de pointeur! des unique/shared/weak_ptr
+  <p style="color:red;">
+    Nous avons nettoyé un maximum de pointeur "classique" pour n'utiliser que des unique / shared / weak_ptr, sauf dans un cas : 
+    L'objet *Game* doit créer et gérer les *BonusMalus* (ainsi que les *SpecialBrick*). *BonusMalus* et *SpecialBrick* ont besoin de connaitre le *Game* pour pouvoir accélérer/décélérer les balles, agrandir/rétrécir la raquette, créer de nouvelles balles... En bref, toutes les interactions du jeu lié au bonus et malus.
+    Nous devons donc utilisé un pointeur dans ces classes vers un objet *Game*, nécessaire lors de la construction de ces objets.
+    Nous pensons qu'il faut remplacer ce pointeur par un weak_ptr. Par manque de temps nous n'avons pas réussi à l'implémenter correctemetnt. Vous pourrez néanomoins retrouver le code associé dans la branche **test-weak-ptr** notamment, où la classe *Game* hérite de **std::enable_shared_from_this<Game<Shape>>** et où nous avons essayé de passer en argument des constructeurs de BonusMalus des *weak_from_this()*. Cela compile, mais malheureusement, la condition **if (auto game = game_.lock())** des différents *BonusMalus* est toujours fausse.  
+  </p>  
   - [x] Utilisez les algorithmes de la STL
-    - donner un exemple
 - [x] Écrivez des classes pour vos objets et encapsulez la SDL2
 - [x] Utilisez de l'héritage et du polymorphisme
 <img src="diagramme.png">
 - [ ] Soyez const-correct et efficaces, pas de copie inutile
-    - on pense que c'est fait, mais il reste certainement des choses à améliorer ! 
-    - par manque de temps, on n'a pas pu s'en assurer
+    <p style="color:red;">
+    Nous pensons avoir essayé de le faire au maximum, mais par manque de temps il est possible qu'il y ait encore des choses à améliorer.
+  </p> 
 - [x] Documentez votre code
-    - Doxygen
+    - Nous avons utilisé *Doxygen*
 - [x] Utilisez une convention de codage
-  - mettre convention, langue etc
+     Nous avons utilisé la convention de codage "Google" utilisée avec l'outil de formatage de code *clang-format*. Nous avons écrit un maximum le code en anglais, les commentaires en français.
 
 
 ---
-## Notions du cours utilisées
-- **CRTP** : *SpecialBrick* est templatisée à l'aide des classes dont il hérite : *BonusBrick* et *MalusBrick* (qui ont un cacun attribut *static* pour ne charger qu'une fois les images dans le jeu avec la forme carré).
-- **Mixin** : *SquareCell*, *TriangleCell* et *HexagonCell* partagent des fonctionnalités (typiquement la fonction *draw*)
+## Autres notions du cours utilisées
+- **CRTP** : *SpecialBrick* est "templatisée" à l'aide des classes dont il hérite : *BonusBrick* et *MalusBrick* (qui ont un cacun attribut *static* pour ne charger qu'une fois les images dans le jeu avec la forme carré).
+- **Mixin** : *SquareCell*, *TriangleCell* et *HexagonCell* partagent des fonctionnalités (typiquement la fonction *draw* ou *getPoint*).
 
 ---
-
+## Usage
 ```
 mkdir build
 cd build
 cmake ..
 make 
+./project_programmation ../grilles/12345.txt
 ```
+
+--- 
+## todo 
+- sdl_surface *
