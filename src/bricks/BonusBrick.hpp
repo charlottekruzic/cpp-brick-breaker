@@ -69,7 +69,15 @@ BonusBrick<Shape>::BonusBrick(Game<Shape>* game,
   }
 }
 
-// Afficher la brique carrée
+/**
+ * @brief Afficher la brique carrée
+ * @param renderer Renderer SDL
+ * @param x Position x de la brique
+ * @param y Position y de la brique
+ * @param cellWidth Largeur d'une cellule
+ * @param cellHeight Hauteur d'une cellule
+ * @return void
+ */
 template <>
 void BonusBrick<SquareCell>::renderCell(
     const std::shared_ptr<SDL_Renderer>& renderer, const int x, const int y,
@@ -82,7 +90,15 @@ void BonusBrick<SquareCell>::renderCell(
   SDL_RenderCopy(renderer.get(), getTexture().get(), NULL, &rect);
 }
 
-// Afficher la brique triangulaire
+/**
+ * @brief Afficher la brique triangulaire
+ * @param renderer Renderer SDL
+ * @param x Position x de la brique
+ * @param y Position y de la brique
+ * @param cellWidth Largeur d'une cellule
+ * @param cellHeight Hauteur d'une cellule
+ * @return void
+ */
 template <>
 void BonusBrick<TriangleCell>::renderCell(
     const std::shared_ptr<SDL_Renderer>& renderer, const int x, const int y,
@@ -91,7 +107,15 @@ void BonusBrick<TriangleCell>::renderCell(
                     ColorUtils::convertColor(getColor()));
 }
 
-// Afficher la brique hexagonale
+/**
+ * @brief Afficher la brique hexagonale
+ * @param renderer Renderer SDL
+ * @param x Position x de la brique
+ * @param y Position y de la brique
+ * @param cellWidth Largeur d'une cellule
+ * @param cellHeight Hauteur d'une cellule
+ * @return void
+ */
 template <>
 void BonusBrick<HexagonCell>::renderCell(
     const std::shared_ptr<SDL_Renderer>& renderer, const int x, const int y,

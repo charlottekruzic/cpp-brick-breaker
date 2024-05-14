@@ -41,6 +41,11 @@ enum class Color {
  */
 class ColorUtils {
  public:
+  /**
+   * @brief Convertit une couleur de l'énumération Color en SDL_Color
+   * @param color La couleur à convertir
+   * @return La couleur SDL correspondante
+   */
   static SDL_Color convertColor(const Color color) {
     switch (color) {
       case Color::Red:

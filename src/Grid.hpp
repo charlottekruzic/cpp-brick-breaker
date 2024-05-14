@@ -66,6 +66,14 @@ Grid<Shape>::Grid(const std::string& filename, const int width,
   }
 }
 
+/**
+ * @brief Constructeur de la classe Grid.
+ * @param filename Nom du fichier contenant la grille de jeu.
+ * @param width Largeur de la fenêtre de jeu.
+ * @param height Hauteur de la fenêtre de jeu.
+ * @param renderer Renderer de la fenêtre de jeu.
+ * @param game Game associé à la grille.
+ */
 template <>
 Grid<TriangleCell>::Grid(const std::string& filename, const int width,
                          const int height,
@@ -127,6 +135,12 @@ Grid<TriangleCell>::Grid(const std::string& filename, const int width,
   }
 }
 
+/**
+ * @brief Fonction pour afficher la grille de jeu.
+ * @param renderer Renderer de la fenêtre de jeu.
+ * @param screenWidth Largeur de la fenêtre de jeu.
+ * @param screenHeight Hauteur de la fenêtre de jeu.
+ */
 template <>
 void Grid<SquareCell>::renderGrid(std::shared_ptr<SDL_Renderer>& renderer,
                                   const int screenWidth,
@@ -148,6 +162,12 @@ void Grid<SquareCell>::renderGrid(std::shared_ptr<SDL_Renderer>& renderer,
   }
 }
 
+/**
+ * @brief Fonction pour afficher la grille de jeu.
+ * @param renderer Renderer de la fenêtre de jeu.
+ * @param screenWidth Largeur de la fenêtre de jeu.
+ * @param screenHeight Hauteur de la fenêtre de jeu.
+ */
 template <>
 void Grid<TriangleCell>::renderGrid(std::shared_ptr<SDL_Renderer>& renderer,
                                     const int screenWidth,
@@ -171,6 +191,12 @@ void Grid<TriangleCell>::renderGrid(std::shared_ptr<SDL_Renderer>& renderer,
   }
 }
 
+/**
+ * @brief Fonction pour afficher la grille de jeu.
+ * @param renderer Renderer de la fenêtre de jeu.
+ * @param screenWidth Largeur de la fenêtre de jeu.
+ * @param screenHeight Hauteur de la fenêtre de jeu.
+ */
 template <>
 void Grid<HexagonCell>::renderGrid(std::shared_ptr<SDL_Renderer>& renderer,
                                    const int screenWidth,
@@ -194,6 +220,13 @@ void Grid<HexagonCell>::renderGrid(std::shared_ptr<SDL_Renderer>& renderer,
   }
 }
 
+/**
+ * @brief Fonction pour gérer le hit d'une cellule de la grille.
+ * @param x Position horizontale du hit.
+ * @param y Position verticale du hit.
+ * @note Cette fonction est appelée lorsqu'une cellule de la grille est
+ * touchée par une balle.
+ */
 template <>
 void Grid<TriangleCell>::hitCell(const int x, const int y) {
   // auto& cell = grid_[x][y];

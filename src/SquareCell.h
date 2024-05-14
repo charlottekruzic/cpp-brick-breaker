@@ -5,6 +5,9 @@
 
 #include <memory>
 
+/**
+ * @brief Classe représentant une cellule carrée
+ */
 class SquareCell {
  public:
   /**

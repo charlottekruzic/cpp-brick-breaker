@@ -77,7 +77,13 @@ class Grid {
    */
   std::shared_ptr<Cell<Shape>>& getCell(const int row, const int col);
 
-  // TODO : Zoé
+  /**
+   * @brief Fonction pour gérer le hit d'une cellule de la grille.
+   * @param x Position horizontale du hit.
+   * @param y Position verticale du hit.
+   * @note Cette fonction est appelée lorsqu'une cellule de la grille est
+   * touchée par une balle.
+   */
   void hitCell(const int x, const int y);
 
   /**

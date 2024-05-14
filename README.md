@@ -59,7 +59,8 @@ Les bonus et les malus tombent du ciel, offrant une variété d'effets différen
 - simplifier les include / foward declaration
 - écrire ce qu'on a implémenté / pas implémenté
 - weak_ptr
-- 
+- to do zoé
+- h / hpp / cpp comme il faut ?
 ----
 ## Énoncé : 
 - [x] une plateforme déplaçable au clavier ou à la souris
@@ -80,6 +81,8 @@ Les bonus et les malus tombent du ciel, offrant une variété d'effets différen
 - [x] Utilisez de l'héritage et du polymorphisme
 <img src="diagramme.png">
 - [ ] Soyez const-correct et efficaces, pas de copie inutile
+    - on pense que c'est fait, mais il reste certainement des choses à améliorer ! 
+    - par manque de temps, on n'a pas pu s'en assurer
 - [x] Documentez votre code
     - Doxygen
 - [x] Utilisez une convention de codage
@@ -90,4 +93,3 @@ Les bonus et les malus tombent du ciel, offrant une variété d'effets différen
 ## Notions du cours utilisées
 - **CRTP** : *SpecialBrick* est templatisée à l'aide des classes dont il hérite : *BonusBrick* et *MalusBrick* (qui ont un cacun attribut *static* pour ne charger qu'une fois les images dans le jeu avec la forme carré).
 - **Mixin** : *SquareCell*, *TriangleCell* et *HexagonCell* partagent des fonctionnalités (typiquement la fonction *draw*)
-

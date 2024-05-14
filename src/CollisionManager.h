@@ -24,14 +24,14 @@ class CollisionManager {
    * @param platform Plateforme du jeu
    * @param balls Ensemble des balles du jeu
    * @param grid Grille du jeu
-   * @param bonus_maluses Ensemble des bonus/malus du jeu
+   * @param bonus_malus Ensemble des bonus/malus du jeu
    * @return void
    */
   static void checkCollisions(
       const Plateform& platform,
       const std::unordered_set<std::shared_ptr<Ball>>& balls,
       const std::shared_ptr<Grid<Shape>>& grid,
-      std::unordered_set<std::shared_ptr<BonusMalus<Shape>>>& bonus_maluses__);
+      std::unordered_set<std::shared_ptr<BonusMalus<Shape>>>& bonus_malus);
 
  private:
   /**
