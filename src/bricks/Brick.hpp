@@ -10,7 +10,8 @@ Brick<Shape>::Brick(const int strength, Game<Shape>* game,
     : strength_(strength),
       hitsLeft_(strength),
       game_(game),
-      Cell<Shape>(orientation) {}
+      orientation_(orientation),
+      shape_(orientation) {}
 
 // Savoir si un objet rebondit sur la brique
 template <typename Shape>

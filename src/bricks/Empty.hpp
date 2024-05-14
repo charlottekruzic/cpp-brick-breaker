@@ -1,17 +1,14 @@
 
 // Constructeurs de la classe Empty
 template <typename Shape>
-Empty<Shape>::Empty() : Cell<Shape>(Color::Black) {}
+Empty<Shape>::Empty() : color_(Color::Black) {}
 
 template <typename Shape>
-Empty<Shape>::Empty(const Color color) : Cell<Shape>(color) {}
+Empty<Shape>::Empty(const Color color) : color_(color) {}
 
 template <typename Shape>
 Empty<Shape>::Empty(const TriangleCell::Orientation orientation)
-    : Cell<Shape>(Color::Black) {
-  this->shape_ = TriangleCell(orientation);
-}
-
+    : color_(Color::Black), shape_(orientation) {}
 // Destructeur de la classe Empty
 template <typename Shape>
 Empty<Shape>::~Empty() {}

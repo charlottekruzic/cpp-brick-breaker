@@ -4,8 +4,6 @@
 
 SquareCell::SquareCell(int size) : size_(size) {}
 
-int SquareCell::getSize() const { return size_; }
-
 void SquareCell::draw(const std::shared_ptr<SDL_Renderer>& renderer,
                       const int x, const int y, const int cellWidth,
                       const int cellHeight, const SDL_Color color) {

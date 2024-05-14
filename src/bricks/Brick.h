@@ -46,7 +46,7 @@ class Brick : public Cell<Shape> {
    * @return bool Vrai si la brique est cassée, faux sinon
    * @note Diminue le nombre de coups restants si la brique n'est pas cassée
    */
-  bool hit();
+  bool hit() override;
 
   /**
    * @brief Afficher la brique
@@ -77,13 +77,22 @@ class Brick : public Cell<Shape> {
    */
   Color getColor() const override;
 
+  /**
+   * @brief Obtenir un point de la forme de la brique
+   * @param i Indice du point
+   * @return SDL_Point Point de la forme de la brique
+   */
+  inline SDL_Point getPoint(int i) override { return shape_.getPoint(i); };
+
  protected:
-  Game<Shape>* game_; /**< Pointeur vers le jeu */
-  int hitsLeft_;      /**< Nombre de coups restants */
+  Color color_;                           /**< Couleur de la cellule */
+  Shape shape_;                           /**< Forme de la cellule */
+  TriangleCell::Orientation orientation_; /**< Orientation de la cellule */
+  Game<Shape>* game_;                     /**< Pointeur vers le jeu */
+  int hitsLeft_;                          /**< Nombre de coups restants */
 
  private:
   int strength_; /**< Force de la brique */
-  Color color_;  /**< Couleur de la brique */
   std::map<int, Color> strengthColorMap_ = {
       {1, Color::BrickLight},
       {2, Color::BrickLightMedium},

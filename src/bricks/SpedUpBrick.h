@@ -35,7 +35,7 @@ class SpedUpBrick : public MalusBrick<Shape> {
    * @brief Appliquer l'effet du malus
    * @note Accélère la balle
    */
-  void performAction() override { this->game_->setBallAccelerating(); }
+  inline void performAction() override { this->game_->setBallAccelerating(); }
 };
 
 #endif  // SPEDUP_BRICK_H

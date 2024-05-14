@@ -32,7 +32,7 @@ En plus des briques cassables, il existe des briques indestructibles, des murs
   
 --- 
 ## Bonus et Malus
-Les bonus et les malus tombent du ciel, offrant une variété d'effets différents pour pimenter le jeu. Voici les différents types de bonus et de malus disponibles :
+Les bonus et les malus tombent du haut de la fenêtre, offrant une variété d'effets différents pour pimenter le jeu. Voici les différents types de bonus et de malus disponibles :
 
 ### Bonus
 - Bleu Foncé : Décélérateur de la balle.
@@ -48,16 +48,10 @@ Les bonus et les malus tombent du ciel, offrant une variété d'effets différen
 
 - Charlotte s'est occupée de la plateforme, de la balle, des collisions entre la plateforme, les briques et la balle, et en partie de la gestion de jeu. Elle a aussi réalisé les différentes formes pour Carré / Triangle / Hexagone.
   
-- Zoé s'est occupée de la grille, des différentes briques (polymorphisme, CRTP), des différents bonus/malus ainsi que leurs interactions avec le reste du jeu. Elle a aussi réalisé la *"templitasion"* afin de pouvoir réaliser les différentes formes de grille.
+- Zoé s'est occupée de la grille, des différentes briques (polymorphisme, CRTP), des différents bonus/malus ainsi que leurs interactions avec le reste du jeu. Elle a aussi réalisé la *"templatisation"* afin de pouvoir réaliser les différentes formes de grille.
 
 ---
 ## todo 
-- police : dire qu'on a utilisé une police ilbre de droit ?
-- documentation
-- const et ref ?
-- écrire ce qu'on a implémenté / pas implémenté
-- simplifier les include / foward declaration
-- écrire ce qu'on a implémenté / pas implémenté
 - weak_ptr
 - to do zoé
 - h / hpp / cpp comme il faut ?
@@ -93,3 +87,12 @@ Les bonus et les malus tombent du ciel, offrant une variété d'effets différen
 ## Notions du cours utilisées
 - **CRTP** : *SpecialBrick* est templatisée à l'aide des classes dont il hérite : *BonusBrick* et *MalusBrick* (qui ont un cacun attribut *static* pour ne charger qu'une fois les images dans le jeu avec la forme carré).
 - **Mixin** : *SquareCell*, *TriangleCell* et *HexagonCell* partagent des fonctionnalités (typiquement la fonction *draw*)
+
+---
+
+```
+mkdir build
+cd build
+cmake ..
+make 
+```

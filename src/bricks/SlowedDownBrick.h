@@ -35,7 +35,7 @@ class SlowedDownBrick : public BonusBrick<Shape> {
    * @brief Appliquer l'effet du bonus
    * @note Ralentit la balle
    */
-  void performAction() override { this->game_->setBallDecelerating(); }
+  inline void performAction() override { this->game_->setBallDecelerating(); }
 };
 
 #endif  // SLOWEDDOWN_BRICK_H

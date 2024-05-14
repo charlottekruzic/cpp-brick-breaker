@@ -36,7 +36,7 @@ class ShrinkBrick : public MalusBrick<Shape> {
    * @brief Appliquer l'effet du malus
    * @note Réduit la largeur de la plateforme
    */
-  void performAction() override { this->game_->shrinkPlateformWidth(); }
+  inline void performAction() override { this->game_->shrinkPlateformWidth(); }
 };
 
 #endif  // SHRINK_BRICK_H

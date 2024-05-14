@@ -66,6 +66,18 @@ class Empty : public Cell<Shape> {
   void renderCell(std::shared_ptr<SDL_Renderer>& renderer, const int x,
                   const int y, const float cellWidth,
                   const float cellHeight) override;
+
+  /**
+   * @brief Obtenir un point de la forme de la case vide
+   * @param i Indice du point
+   * @return SDL_Point Point de la forme de la case vide
+   */
+  inline SDL_Point getPoint(int i) override { return shape_.getPoint(i); };
+
+ private:
+  Color color_;                           /**< Couleur de la cellule */
+  Shape shape_;                           /**< Forme de la cellule */
+  TriangleCell::Orientation orientation_; /**< Orientation de la cellule */
 };
 
 #include "Empty.hpp"

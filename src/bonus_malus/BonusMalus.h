@@ -30,38 +30,38 @@ class BonusMalus {
    * @brief Récupérer la position x du bonus/malus
    * @return Position x du bonus/malus
    */
-  int getX() const { return x_; }
+  inline int getX() const { return x_; }
 
   /**
    * @brief Récupérer la position y du bonus/malus
    * @return Position y du bonus/malus
    */
-  int getY() const { return y_; }
+  inline int getY() const { return y_; }
 
   /**
    * @brief Récupérer la largeur du bonus/malus
    * @return Largeur du bonus/malus
    */
-  int getWidth() const { return width_; }
+  inline int getWidth() const { return width_; }
 
   /**
    * @brief Récupérer la hauteur du bonus/malus
    * @return Hauteur du bonus/malus
    */
-  int getHeight() const { return height_; }
+  inline int getHeight() const { return height_; }
 
   /**
    * @brief Mettre à jour la position du bonus/malus
    * @details Déplacer le bonus/malus vers le bas pour simuler la chute
    * @return void
    */
-  void update() { y_ += fall_speed_; }
+  inline void update() { y_ += fall_speed_; }
 
   /**
    * @brief Récupérer la couleur du bonus/malus
    * @return Couleur du bonus/malus
    */
-  Color getColor() const { return color_; }
+  inline Color getColor() const { return color_; }
 
   /**
    * @brief Appliquer l'effet du bonus/malus

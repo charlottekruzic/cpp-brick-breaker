@@ -16,7 +16,7 @@ class InputParser
 
 class Grid<Shape>
 
-class Cell<Shape>
+interface Cell<Shape>
 
 class Brick<Shape>
 class Empty<Shape>
@@ -26,7 +26,7 @@ Cell <|-- Empty
 Cell <|-- Wall 
 
 class BasicBrick<Shape>
-class SpecialBrick<Derived, Shape>
+abstract class SpecialBrick<Derived, Shape>
 Brick <|-- BasicBrick
 Brick <|-- SpecialBrick
 
@@ -45,7 +45,7 @@ class SpedUpBrick<Shape>
 MalusBrick <|-- SpedUpBrick 
 MalusBrick <|-- ShrinkBrick 
 
-class BonusMalus<Shape>
+abstract class BonusMalus<Shape>
 class MultiBall<Shape>
 class Enlarge<Shape>
 class Shrink<Shape>

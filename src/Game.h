@@ -127,8 +127,6 @@ class Game {
   std::unordered_set<std::shared_ptr<BonusMalus<Shape>>> bonus_maluses_;
   /**< Ensemble de bonus/malus du jeu. */
 
-  bool ball_accelerating_ = false; /**< Indicateur d'accélération des balles. */
-
  public:
   /**
    * @brief Accélère les balles (si elles ne sont pas déjà rapides).

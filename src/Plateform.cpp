@@ -10,20 +10,6 @@ Plateform::Plateform(const float window_width, const float window_height)
   pos_y_ = window_height * (7.0 / 8.0) - height_ / 2;
 }
 
-// Get
-int Plateform::getHeight() const { return height_; }
-int Plateform::getWidth() const { return width_; }
-int Plateform::getPosX() const { return pos_x_; }
-int Plateform::getPosY() const { return pos_y_; }
-float Plateform::getSpeed() const { return speed_; }
-
-// Set
-void Plateform::setHeight(int height) { height_ = height; }
-void Plateform::setWidth(int width) { width_ = width; }
-void Plateform::setPosX(int pos_x) { pos_x_ = pos_x; }
-void Plateform::setPosY(int pos_y) { pos_y_ = pos_y; }
-void Plateform::setSpeed(float speed) { speed_ = speed; }
-
 // Fonction d'affichage
 void Plateform::render(const std::shared_ptr<SDL_Renderer>& renderer) {
   SDL_SetRenderDrawColor(renderer.get(), 255, 255, 255, 255);

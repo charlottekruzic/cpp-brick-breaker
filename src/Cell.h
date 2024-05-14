@@ -57,43 +57,7 @@ class Cell {
    * @param i Indice du point
    * @return SDL_Point Point de la forme de la cellule
    */
-  SDL_Point getPoint(int i) { return this->shape_.getPoint(i); };
-
- protected:
-  /**
-   * @brief Constructeur par défaut de la classe Cell
-   */
-  Cell() : color_(Color::DEFAULT_COLOR) {}
-
-  /**
-   * @brief Constructeur de la classe Cell
-   * @param color Couleur de la cellule
-   */
-  Cell(Color color) : color_(color) {}
-
-  /**
-   * @brief Constructeur de la classe Cell
-   * @param orientation Orientation de la cellule
-   * @note Pour les cases triangulaires
-   */
-  Cell(TriangleCell::Orientation orientation) : orientation_(orientation) {
-    this->shape_ = TriangleCell(orientation);
-  }
-
-  /**
-   * @brief Constructeur de la classe Cell
-   * @param color Couleur de la cellule
-   * @param orientation Orientation de la cellule
-   * @note Pour les cases triangulaires
-   */
-  Cell(Color color, TriangleCell::Orientation orientation)
-      : color_(color), orientation_(orientation) {
-    this->shape_ = TriangleCell(orientation);
-  }
-
-  Color color_;                           /**< Couleur de la cellule */
-  Shape shape_;                           /**< Forme de la cellule */
-  TriangleCell::Orientation orientation_; /**< Orientation de la cellule */
+  virtual SDL_Point getPoint(int i) = 0;
 };
 
 #endif  // CELL_H

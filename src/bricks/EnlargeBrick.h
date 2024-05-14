@@ -36,7 +36,7 @@ class EnlargeBrick : public BonusBrick<Shape> {
    * @brief Appliquer l'effet du bonus
    * @note Augmente la largeur de la plateforme
    */
-  void performAction() override { this->game_->enlargePlateformWidth(); }
+  inline void performAction() override { this->game_->enlargePlateformWidth(); }
 };
 
 #endif  // ENLARGE_BRICK_H

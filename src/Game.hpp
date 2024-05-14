@@ -168,17 +168,6 @@ void Game<Shape>::updateGame(float dt) {
 
   generateBonusMalus();
 
-  // TODO Zoé : On peut supprimer ça ?
-
-  /*
-  // Supprimer les bonus/malus en bas de l'écran du vecteur
-  bonus_maluses_.erase(
-      std::remove_if(bonus_maluses_.begin(), bonus_maluses_.end(),
-                     [this](const auto& bonusMalus) {
-                       return bonusMalus->getY() >= screen_height_;
-                     }),
-      bonus_maluses_.end());
-  */
   // Mise à jour de la position de chaque balle dans le vecteur balls_
   for (auto it = balls_.begin(); it != balls_.end();) {
     // Mettre à jour la position de la balle et vérifier si elle est en dehors

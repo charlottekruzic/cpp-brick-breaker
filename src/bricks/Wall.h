@@ -58,8 +58,19 @@ class Wall : public Cell<Shape> {
                   const int y, const float cellWidth,
                   const float cellHeight) override;
 
+  /**
+   * @brief Obtenir un point de la forme du mur
+   * @param i Indice du point
+   * @return SDL_Point Point de la forme du mur
+   */
+  inline SDL_Point getPoint(int i) override { return shape_.getPoint(i); };
+
  private:
   static std::shared_ptr<SDL_Texture> wall_texture_; /**< Texture du mur */
+
+  Color color_;                           /**< Couleur de la cellule */
+  Shape shape_;                           /**< Forme de la cellule */
+  TriangleCell::Orientation orientation_; /**< Orientation de la cellule */
 
   /**
    * @brief Obtenir la texture du mur

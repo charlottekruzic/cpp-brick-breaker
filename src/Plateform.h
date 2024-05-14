@@ -39,33 +39,33 @@ class Plateform {
    * @brief Récupère la hauteur de la plateforme.
    * @return La hauteur de la plateforme.
    */
-  int getHeight() const;
+  inline int getHeight() const { return height_; }
   /**
    * @brief Récupère la largeur de la plateforme.
    * @return La largeur de la plateforme.
    */
-  int getWidth() const;
+  inline int getWidth() const { return width_; }
   /**
    * @brief Récupère la position horizontale de la plateforme.
    * @return La position horizontale de la plateforme.
    */
-  int getPosX() const;
+  inline int getPosX() const { return pos_x_; }
   /**
    * @brief Récupère la position verticale de la plateforme.
    * @return La position verticale de la plateforme.
    */
-  int getPosY() const;
+  inline int getPosY() const { return pos_y_; }
   /**
    * @brief Récupère la vitesse de déplacement de la plateforme.
    * @return La vitesse de déplacement de la plateforme.
    */
-  float getSpeed() const;
+  inline float getSpeed() const { return speed_; }
 
   /**
    * @brief Définit la largeur de la plateforme.
    * @param width La nouvelle largeur de la plateforme.
    */
-  void setWidth(const int width);
+  inline void setWidth(const int width) { width_ = width; }
 
  private:
   // Set
@@ -73,22 +73,22 @@ class Plateform {
    * @brief Définit la hauteur de la plateforme.
    * @param height La nouvelle hauteur de la plateforme.
    */
-  void setHeight(const int height);
+  inline void setHeight(const int height) { height_ = height; }
   /**
    * @brief Définit la position horizontale de la plateforme.
    * @param pos_x La nouvelle position horizontale de la plateforme.
    */
-  void setPosX(const int pos_x);
+  inline void setPosX(const int pos_x) { pos_x_ = pos_x; }
   /**
    * @brief Définit la position verticale de la plateforme.
    * @param pos_y La nouvelle position verticale de la plateforme.
    */
-  void setPosY(const int pos_y);
+  inline void setPosY(const int pos_y) { pos_y_ = pos_y; }
   /**
    * @brief Définit la vitesse de déplacement de la plateforme.
    * @param speed La nouvelle vitesse de déplacement de la plateforme.
    */
-  void setSpeed(const float speed);
+  inline void setSpeed(const float speed) { speed_ = speed; }
 
  public:
   /**
