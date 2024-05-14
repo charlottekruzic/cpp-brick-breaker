@@ -52,42 +52,39 @@ Les bonus et les malus tombent du haut de la fenêtre, offrant une variété d'e
   
 ----
 ## Énoncé : 
-- [x] une plateforme déplaçable au clavier ou à la souris
-- [x] une balle qui rebondit en fonction de son angle d'impact
-- [x] des briques de différents types avec différentes résistances
-- [x] au moins trois types de bonus/malus dont le multi-balle
-- [x] différentes grilles chargées depuis un fichier ASCII 
-- [x] supporter différentes formes de grilles de briques : hexagonales et triangulaires
-- [x] Utilisez la STL au maximum  :
-  - [x] Pas de tableau! des conteneurs STL
-  - [ ] Pas de pointeur! des unique/shared/weak_ptr  
-  <span style="color:red;">
-    Nous avons nettoyé un maximum de pointeur "classique" pour n'utiliser que des unique / shared / weak_ptr, sauf dans un cas : 
-    L'objet *Game* doit créer et gérer les *BonusMalus* (ainsi que les *SpecialBrick*). *BonusMalus* et *SpecialBrick* ont besoin de connaitre le *Game* pour pouvoir accélérer/décélérer les balles, agrandir/rétrécir la raquette, créer de nouvelles balles... En bref, toutes les interactions du jeu lié au bonus et malus.
-    Nous devons donc utilisé un pointeur dans ces classes vers un objet *Game*, nécessaire lors de la construction de ces objets.
-    Nous pensons qu'il faut remplacer ce pointeur par un weak_ptr. Par manque de temps nous n'avons pas réussi à l'implémenter correctemetnt. Vous pourrez néanomoins retrouver le code associé dans la branche **test-weak-ptr** notamment, où la classe *Game* hérite de **std::enable_shared_from_this<Game<Shape>>** et où nous avons essayé de passer en argument des constructeurs de BonusMalus des *weak_from_this()*. Cela compile, mais malheureusement, la condition **if (auto game = game_.lock())** des différents *BonusMalus* est toujours fausse.  
-  </span>  
- 
-  - [x] Utilisez les algorithmes de la STL
-- [x] Écrivez des classes pour vos objets et encapsulez la SDL2
-- [x] Utilisez de l'héritage et du polymorphisme
+- [x] **une plateforme déplaçable au clavier ou à la souris**
+- [x] **une balle qui rebondit en fonction de son angle d'impact**
+- [x] **des briques de différents types avec différentes résistances**
+- [x] **au moins trois types de bonus/malus dont le multi-balle**
+- [x] **différentes grilles chargées depuis un fichier ASCII**
+- [x] **supporter différentes formes de grilles de briques : hexagonales et triangulaires**
+- [x] **Utilisez la STL au maximum  :**
+  - [x] **Pas de tableau! des conteneurs STL**
+  - [ ] **Pas de pointeur! des unique/shared/weak_ptr**  
+    Nous avons entrepris une optimisation des pointeurs "classiques", en remplaçant autant que possible ces derniers par des **unique_ptr**, **shared_ptr**, et **weak_ptr**. Cependant, une exception subsiste : l'objet *Game* doit continuer de créer et de superviser les *BonusMalus* (ainsi que les *SpecialBrick*).
+
+    Les classes *BonusMalus* et *SpecialBrick* ont besoin de connaître l'instance de *Game* pour pouvoir effectuer diverses actions telles qu'accélérer/décélérer les balles, agrandir/rétrécir la raquette, ou encore créer de nouvelles balles. En résumé, elles gèrent toutes les interactions liées aux bonus et malus du jeu. Pour répondre à cette exigence, nous avons initialement utilisé un pointeur brut dans ces classes vers un objet *Game*, nécessaire lors de leur construction.
+
+    Suite à une réflexion approfondie, nous sommes convaincus qu'il est préférable de remplacer ce pointeur brut par un weak_ptr. Cependant, en raison de contraintes de temps, nous n'avons pas encore réussi à implémenter cette solution de manière optimale.
+
+    Vous pouvez néanmoins consulter le code associé dans la branche "test-weak-ptr", où la classe *Game* hérite de **`std::enable_shared_from_this<Game>`**. Dans cette implémentation, nous avons tenté de passer des weak_from_this() en tant qu'arguments aux constructeurs de *BonusMalus*. Bien que cette approche compile sans erreur, nous constatons malheureusement que la condition `if (auto game = game_.lock())` dans les différentes classes *BonusMalus* reste toujours fausse.
+  - [x] **Utilisez les algorithmes de la STL**
+- [x] **Écrivez des classes pour vos objets et encapsulez la SDL2**
+- [x] **Utilisez de l'héritage et du polymorphisme**
 <img src="diagramme.png">
 
-- [ ] Soyez const-correct et efficaces, pas de copie inutile  
-    <span style="color:red;">
+- [ ] **Soyez const-correct et efficaces, pas de copie inutile**  
     Nous pensons avoir essayé de le faire au maximum, mais par manque de temps il est possible qu'il y ait encore des choses à améliorer.
-  </span> 
 
-- [x] Documentez votre code  
-    Nous avons utilisé *Doxygen*
-- [x] Utilisez une convention de codage  
+- [x] **Documentez votre code**  
+    Nous avons utilisé *Doxygen*.
+- [x] **Utilisez une convention de codage**  
      Nous avons utilisé la convention de codage "Google" utilisée avec l'outil de formatage de code *clang-format*. Nous avons écrit un maximum le code en anglais, les commentaires en français.
-
 
 ---
 ## Autres notions du cours utilisées
-- **CRTP** : *SpecialBrick* est "templatisée" à l'aide des classes dont il hérite : *BonusBrick* et *MalusBrick* (qui ont un cacun attribut *static* pour ne charger qu'une fois les images dans le jeu avec la forme carré).
-- **Mixin** : *SquareCell*, *TriangleCell* et *HexagonCell* partagent des fonctionnalités (typiquement la fonction *draw* ou *getPoint*).
+- **CRTP** : *SpecialBrick* utilise un modèle de programmation basé sur les templates, où il est spécialisé en fonction des classes dont il hérite, telles que *BonusBrick* et *MalusBrick*. Ces dernières possèdent chacune un attribut statique permettant de charger les images du jeu une seule fois pour les briques de forme carrée.
+- **Mixin** : Les classes *SquareCell*, *TriangleCell* et *HexagonCell* partagent des fonctionnalitéscommunes telles que les méthodes *draw* ou *getPoint*. Cela permet une réutilisation efficace du code et une gestion modulaire des fonctionnalités dans le jeu.
 
 ---
 ## Usage
