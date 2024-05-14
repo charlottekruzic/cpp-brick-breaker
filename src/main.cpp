@@ -1,6 +1,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include <iostream>
+#include <memory>
 #include <string>
 
 #include "Game.h"
@@ -18,16 +19,16 @@ void startInterface(std::shared_ptr<SDL_Renderer>& renderer,
   }
 
   // Charger les polices
-  TTF_Font* font_button =
-      TTF_OpenFont("../ttf/Super Creamy Personal Use.ttf", 24);
+  std::unique_ptr<TTF_Font, decltype(&TTF_CloseFont)> font_button(
+      TTF_OpenFont("../ttf/Super Creamy Personal Use.ttf", 24), TTF_CloseFont);
   if (!font_button) {
     std::cerr << "Erreur lors du chargement de la police  pour les boutons"
               << std::endl;
     return;
   }
 
-  TTF_Font* font_title =
-      TTF_OpenFont("../ttf/Super Creamy Personal Use.ttf", 50);
+  std::unique_ptr<TTF_Font, decltype(&TTF_CloseFont)> font_title(
+      TTF_OpenFont("../ttf/Super Creamy Personal Use.ttf", 50), TTF_CloseFont);
   if (!font_title) {
     std::cerr << "Erreur lors du chargement de la police pour le titre"
               << std::endl;
@@ -42,26 +43,34 @@ void startInterface(std::shared_ptr<SDL_Renderer>& renderer,
   // Texte boutons
   SDL_Color textColor = {255, 255, 255};
   int textWidth, textHeight;
-  SDL_Surface* textSurfaceSquare =
-      TTF_RenderText_Solid(font_button, "Square", textColor);
-  SDL_Surface* textSurfaceTriangle =
-      TTF_RenderText_Solid(font_button, "Triangle", textColor);
-  SDL_Surface* textSurfaceHexagon =
-      TTF_RenderText_Solid(font_button, "Hexagon", textColor);
-  SDL_Texture* textTextureSquare =
-      SDL_CreateTextureFromSurface(renderer.get(), textSurfaceSquare);
-  SDL_Texture* textTextureTriangle =
-      SDL_CreateTextureFromSurface(renderer.get(), textSurfaceTriangle);
-  SDL_Texture* textTextureHexagon =
-      SDL_CreateTextureFromSurface(renderer.get(), textSurfaceHexagon);
+  std::unique_ptr<SDL_Surface, decltype(&SDL_FreeSurface)> textSurfaceSquare(
+      TTF_RenderText_Solid(font_button.get(), "Square", textColor),
+      SDL_FreeSurface);
+  std::unique_ptr<SDL_Surface, decltype(&SDL_FreeSurface)> textSurfaceTriangle(
+      TTF_RenderText_Solid(font_button.get(), "Triangle", textColor),
+      SDL_FreeSurface);
+  std::unique_ptr<SDL_Surface, decltype(&SDL_FreeSurface)> textSurfaceHexagon(
+      TTF_RenderText_Solid(font_button.get(), "Hexagon", textColor),
+      SDL_FreeSurface);
+  std::shared_ptr<SDL_Texture> textTextureSquare(
+      SDL_CreateTextureFromSurface(renderer.get(), textSurfaceSquare.get()),
+      SDL_DestroyTexture);
+  std::shared_ptr<SDL_Texture> textTextureTriangle(
+      SDL_CreateTextureFromSurface(renderer.get(), textSurfaceTriangle.get()),
+      SDL_DestroyTexture);
+  std::shared_ptr<SDL_Texture> textTextureHexagon(
+      SDL_CreateTextureFromSurface(renderer.get(), textSurfaceHexagon.get()),
+      SDL_DestroyTexture);
 
   // Texte titre
-  SDL_Surface* titleSurface =
-      TTF_RenderText_Solid(font_title, "Brick Breaker", textColor);
-  SDL_Texture* titleTexture =
-      SDL_CreateTextureFromSurface(renderer.get(), titleSurface);
+  std::unique_ptr<SDL_Surface, decltype(&SDL_FreeSurface)> titleSurface(
+      TTF_RenderText_Solid(font_title.get(), "Brick Breaker", textColor),
+      SDL_FreeSurface);
+  std::shared_ptr<SDL_Texture> titleTexture(
+      SDL_CreateTextureFromSurface(renderer.get(), titleSurface.get()),
+      SDL_DestroyTexture);
   int titleWidth, titleHeight;
-  TTF_SizeText(font_title, "Brick Breaker", &titleWidth, &titleHeight);
+  TTF_SizeText(font_title.get(), "Brick Breaker", &titleWidth, &titleHeight);
   SDL_Rect titleRect = {(400 - titleWidth) / 2, 50, titleWidth, titleHeight};
 
   // Attente clique
@@ -104,45 +113,34 @@ void startInterface(std::shared_ptr<SDL_Renderer>& renderer,
     SDL_RenderFillRect(renderer.get(), &hexagonButton);
 
     // Affichage texte
-    TTF_SizeText(font_button, "Square", &textWidth, &textHeight);
+    TTF_SizeText(font_button.get(), "Square", &textWidth, &textHeight);
     SDL_Rect textRectSquare = {
         squareButton.x + (squareButton.w - textWidth) / 2,
         squareButton.y + (squareButton.h - textHeight) / 2, textWidth,
         textHeight};
-    TTF_SizeText(font_button, "Triangle", &textWidth, &textHeight);
+    TTF_SizeText(font_button.get(), "Triangle", &textWidth, &textHeight);
     SDL_Rect textRectTriangle = {
         triangleButton.x + (triangleButton.w - textWidth) / 2,
         triangleButton.y + (triangleButton.h - textHeight) / 2, textWidth,
         textHeight};
-    TTF_SizeText(font_button, "Hexagon", &textWidth, &textHeight);
+    TTF_SizeText(font_button.get(), "Hexagon", &textWidth, &textHeight);
     SDL_Rect textRectHexagon = {
         hexagonButton.x + (hexagonButton.w - textWidth) / 2,
         hexagonButton.y + (hexagonButton.h - textHeight) / 2, textWidth,
         textHeight};
 
-    SDL_RenderCopy(renderer.get(), textTextureSquare, NULL, &textRectSquare);
-    SDL_RenderCopy(renderer.get(), textTextureTriangle, NULL,
+    SDL_RenderCopy(renderer.get(), textTextureSquare.get(), NULL,
+                   &textRectSquare);
+    SDL_RenderCopy(renderer.get(), textTextureTriangle.get(), NULL,
                    &textRectTriangle);
-    SDL_RenderCopy(renderer.get(), textTextureHexagon, NULL, &textRectHexagon);
+    SDL_RenderCopy(renderer.get(), textTextureHexagon.get(), NULL,
+                   &textRectHexagon);
 
     // Affichage du titre
-    SDL_RenderCopy(renderer.get(), titleTexture, NULL, &titleRect);
+    SDL_RenderCopy(renderer.get(), titleTexture.get(), NULL, &titleRect);
 
     SDL_RenderPresent(renderer.get());
   }
-
-  // Libérer ressources
-  SDL_FreeSurface(textSurfaceSquare);
-  SDL_FreeSurface(textSurfaceTriangle);
-  SDL_FreeSurface(textSurfaceHexagon);
-  SDL_FreeSurface(titleSurface);
-  SDL_DestroyTexture(textTextureSquare);
-  SDL_DestroyTexture(textTextureTriangle);
-  SDL_DestroyTexture(textTextureHexagon);
-  SDL_DestroyTexture(titleTexture);
-  TTF_CloseFont(font_title);
-  TTF_CloseFont(font_button);
-  TTF_Quit();
 }
 
 int main(int argc, char* argv[]) {
@@ -159,11 +157,12 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  SDL_Window* window =
+  std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window(
       SDL_CreateWindow("Game Board", SDL_WINDOWPOS_CENTERED,
-                       SDL_WINDOWPOS_CENTERED, 400, 800, SDL_WINDOW_SHOWN);
+                       SDL_WINDOWPOS_CENTERED, 400, 800, SDL_WINDOW_SHOWN),
+      SDL_DestroyWindow);
   std::shared_ptr<SDL_Renderer> renderer(
-      SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED),
+      SDL_CreateRenderer(window.get(), -1, SDL_RENDERER_ACCELERATED),
       SDL_DestroyRenderer);
 
   std::string shapeCellule;
@@ -173,8 +172,9 @@ int main(int argc, char* argv[]) {
 
   // fermeture fenetre de choix
   SDL_DestroyRenderer(renderer.get());
-  SDL_DestroyWindow(window);
+  SDL_DestroyWindow(window.get());
   SDL_Quit();
+  TTF_Quit();
 
   if (shapeCellule == "-t") {
     // demarrage du jeu

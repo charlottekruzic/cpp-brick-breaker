@@ -67,7 +67,7 @@ template <typename Shape>
 void Game<Shape>::initGameComponents(const std::string& nomFichierGrille) {
   grid_ = std::make_shared<Grid<Shape>>(nomFichierGrille, screen_width_,
                                         screen_height_, renderer_, this);
-  balls_.insert(std::make_shared<Ball>(10, 500, plateform_.getPosX(),
+  balls_.insert(std::make_shared<Ball>(10, 450, plateform_.getPosX(),
                                        plateform_.getPosY(),
                                        plateform_.getWidth(), 0.5, -0.5));
 }
@@ -231,7 +231,7 @@ void Game<Shape>::setBallAccelerating() {
   std::cout << "acceleration" << std::endl;
   for (const auto& ball : balls_) {
     int newSpeed = ball->getSpeed() + 75;
-    if (newSpeed <= 650) {
+    if (newSpeed <= 600) {
       ball->setSpeed(newSpeed);
     }
   }
@@ -331,11 +331,11 @@ void Game<Shape>::generateNewBalls() {
   int randomX2 = std::uniform_int_distribution<>(0, screen_width_ - 10)(gen);
 
   auto ball1 = std::make_shared<Ball>(
-      10, 500, std::max(plateform_.getPosX() - 20, 5), plateform_.getPosY(),
+      10, 450, std::max(plateform_.getPosX() - 20, 5), plateform_.getPosY(),
       plateform_.getWidth(), 0.5, -0.5);
 
   auto ball2 = std::make_shared<Ball>(
-      10, 500, std::min(plateform_.getPosX() + 20, screen_width_ - 5),
+      10, 450, std::min(plateform_.getPosX() + 20, screen_width_ - 5),
       plateform_.getPosY(), plateform_.getWidth(), 0.5, -0.5);
 
   // Ajouter les nouvelles balles à la liste des balles du jeu
