@@ -61,7 +61,6 @@ class Empty : public Cell<Shape> {
    * @param y Position y de la case vide
    * @param cellWidth Largeur d'une cellule
    * @param cellHeight Hauteur d'une cellule
-   * @return void
    */
   void renderCell(std::shared_ptr<SDL_Renderer>& renderer, const int x,
                   const int y, const float cellWidth,

@@ -23,7 +23,6 @@ class MultiBall : public BonusMalus<Shape> {
 
   /**
    * @brief Appliquer l'effet du bonus
-   * @return void
    * @details Générer de nouvelles balles
    *
    */

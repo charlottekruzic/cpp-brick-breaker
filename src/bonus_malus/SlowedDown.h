@@ -23,7 +23,6 @@ class SlowedDown : public BonusMalus<Shape> {
 
   /**
    * @brief Appliquer l'effet du bonus
-   * @return void
    * @details Ralentir la balle
    */
   void applyEffect() override;

@@ -25,7 +25,6 @@ class TriangleCell {
   /**
    * @brief Constructeur avec orientation
    * @param orientation Orientation de la cellule
-   * @return void
    */
   TriangleCell(Orientation orientation);
 
@@ -37,7 +36,6 @@ class TriangleCell {
    * @param cellWidth Largeur de la cellule
    * @param cellHeight Hauteur de la cellule
    * @param color Couleur de la cellule
-   * @return void
    */
   void draw(const std::shared_ptr<SDL_Renderer>& renderer, const int x,
             const int y, const int cellWidth, const int cellHeight,
@@ -59,7 +57,6 @@ class TriangleCell {
    * @brief Remplit un triangle
    * @param renderer Renderer
    * @param points Points du triangle
-   * @return void
    */
   void fillTriangle(const std::shared_ptr<SDL_Renderer>& renderer,
                     const std::vector<SDL_Point>& points) const;

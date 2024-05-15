@@ -25,7 +25,6 @@ class CollisionManager {
    * @param balls Ensemble des balles du jeu
    * @param grid Grille du jeu
    * @param bonus_malus Ensemble des bonus/malus du jeu
-   * @return void
    */
   static void checkCollisions(
       const Plateform& platform,
@@ -38,7 +37,6 @@ class CollisionManager {
    * @brief Méthode pour vérifier la collision entre la plateforme et la balle
    * @param platform Plateforme du jeu
    * @param ball Balle du jeu
-   * @return void
    */
   static void checkPlatformBallCollision(const Plateform& platform,
                                          const std::shared_ptr<Ball>& ball);
@@ -47,7 +45,6 @@ class CollisionManager {
    * @brief Méthode pour vérifier la collision entre la balle et la grille
    * @param grid Grille du jeu
    * @param ball Balle du jeu
-   * @return void
    */
   static void checkGridBallCollision(const std::shared_ptr<Grid<Shape>>& grid,
                                      const std::shared_ptr<Ball>& ball);

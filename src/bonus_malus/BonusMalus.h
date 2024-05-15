@@ -53,7 +53,6 @@ class BonusMalus {
   /**
    * @brief Mettre à jour la position du bonus/malus
    * @details Déplacer le bonus/malus vers le bas pour simuler la chute
-   * @return void
    */
   inline void update() { y_ += fall_speed_; }
 
@@ -65,7 +64,6 @@ class BonusMalus {
 
   /**
    * @brief Appliquer l'effet du bonus/malus
-   * @return void
    * @details Méthode virtuelle pure à implémenter dans les classes filles
    */
   virtual void applyEffect() = 0;
@@ -73,7 +71,6 @@ class BonusMalus {
   /**
    * @brief Afiicher le bonus/malus
    * @param renderer Renderer sur lequel dessiner le bonus/malus
-   * @return void
    */
   void render(const std::shared_ptr<SDL_Renderer>& renderer);
 

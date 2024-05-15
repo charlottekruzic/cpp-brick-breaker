@@ -25,7 +25,6 @@ class HexagonCell {
    * @param cellWidth Largeur de la cellule
    * @param cellHeight Hauteur de la cellule
    * @param color Couleur de la cellule
-   * @return void
    */
   void draw(const std::shared_ptr<SDL_Renderer>& renderer, const int x,
             const int y, const int cellWidth, const int cellHeight,
@@ -46,7 +45,6 @@ class HexagonCell {
    * @brief Remplit un hexagone
    * @param renderer Renderer
    * @param points Points de l'hexagone
-   * @return void
    */
   void fillHexagon(const std::shared_ptr<SDL_Renderer> renderer,
                    const std::vector<SDL_Point>& points) const;

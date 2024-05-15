@@ -23,7 +23,6 @@ class SpedUp : public BonusMalus<Shape> {
 
   /**
    * @brief Appliquer l'effet du malus
-   * @return void
    * @details Accélérer la balle
    */
   void applyEffect() override;

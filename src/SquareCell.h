@@ -13,7 +13,6 @@ class SquareCell {
   /**
    * @brief Constructeur par défaut
    * @param size Taille du carré
-   * @return void
    * @note Par défaut, la taille est de 10
    */
   SquareCell(const int size = 10);
@@ -32,7 +31,6 @@ class SquareCell {
    * @param cellWidth Largeur de la cellule
    * @param cellHeight Hauteur de la cellule
    * @param color Couleur du carré
-   * @return void
    */
   void draw(const std::shared_ptr<SDL_Renderer>& renderer, const int x,
             const int y, const int cellWidth, const int cellHeight,

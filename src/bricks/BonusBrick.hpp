@@ -76,7 +76,6 @@ BonusBrick<Shape>::BonusBrick(Game<Shape>* game,
  * @param y Position y de la brique
  * @param cellWidth Largeur d'une cellule
  * @param cellHeight Hauteur d'une cellule
- * @return void
  */
 template <>
 void BonusBrick<SquareCell>::renderCell(
@@ -97,7 +96,6 @@ void BonusBrick<SquareCell>::renderCell(
  * @param y Position y de la brique
  * @param cellWidth Largeur d'une cellule
  * @param cellHeight Hauteur d'une cellule
- * @return void
  */
 template <>
 void BonusBrick<TriangleCell>::renderCell(
@@ -114,7 +112,6 @@ void BonusBrick<TriangleCell>::renderCell(
  * @param y Position y de la brique
  * @param cellWidth Largeur d'une cellule
  * @param cellHeight Hauteur d'une cellule
- * @return void
  */
 template <>
 void BonusBrick<HexagonCell>::renderCell(

@@ -24,7 +24,6 @@ class Shrink : public BonusMalus<Shape> {
 
   /**
    * @brief Appliquer l'effet du malus
-   * @return void
    * @details Réduire la taille de la plateforme
    */
   void applyEffect() override;

@@ -23,7 +23,6 @@ class Enlarge : public BonusMalus<Shape> {
 
   /**
    * @brief Appliquer l'effet du bonus
-   * @return void
    * @details Agrandir la plateforme
    *
    */
