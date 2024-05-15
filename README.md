@@ -96,6 +96,3 @@ make
 ./project_programmation ../grilles/12345.txt
 ```
 
---- 
-## todo 
-- sdl_surface *
