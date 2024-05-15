@@ -15,7 +15,8 @@ Wall<Shape>::Wall(std::shared_ptr<SDL_Renderer>& renderer)
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!wall_texture_) {
     // Chargez la texture du mur depuis un fichier
-    SDL_Surface* surface = IMG_Load("../img/wall.png");
+    std::unique_ptr<SDL_Surface, void (*)(SDL_Surface*)> surface(
+        IMG_Load("../img/wall.png"), SDL_FreeSurface);
 
     if (!surface) {
       // Gestion de l'erreur si le chargement de l'image échoue
@@ -23,9 +24,8 @@ Wall<Shape>::Wall(std::shared_ptr<SDL_Renderer>& renderer)
       exit(1);
     }
     wall_texture_ = std::shared_ptr<SDL_Texture>(
-        SDL_CreateTextureFromSurface(renderer.get(), surface),
+        SDL_CreateTextureFromSurface(renderer.get(), surface.get()),
         [](SDL_Texture* texture) { SDL_DestroyTexture(texture); });
-    SDL_FreeSurface(surface);
     if (!wall_texture_) {
       // Gestion de l'erreur si la création de la texture échoue
       std::cerr << "Échec de la création de la texture du mur : "
@@ -44,7 +44,8 @@ Wall<Shape>::Wall(std::shared_ptr<SDL_Renderer>& renderer,
   // Chargez la texture du mur uniquement si elle n'a pas déjà été chargée
   if (!wall_texture_) {
     // Chargez la texture du mur depuis un fichier
-    SDL_Surface* surface = IMG_Load("../img/wall.png");
+    std::unique_ptr<SDL_Surface, void (*)(SDL_Surface*)> surface(
+        IMG_Load("../img/wall.png"), SDL_FreeSurface);
 
     if (!surface) {
       // Gestion de l'erreur si le chargement de l'image échoue
@@ -52,9 +53,8 @@ Wall<Shape>::Wall(std::shared_ptr<SDL_Renderer>& renderer,
       exit(1);
     }
     wall_texture_ = std::shared_ptr<SDL_Texture>(
-        SDL_CreateTextureFromSurface(renderer.get(), surface),
+        SDL_CreateTextureFromSurface(renderer.get(), surface.get()),
         [](SDL_Texture* texture) { SDL_DestroyTexture(texture); });
-    SDL_FreeSurface(surface);
     if (!wall_texture_) {
       // Gestion de l'erreur si la création de la texture échoue
       std::cerr << "Échec de la création de la texture du mur : "

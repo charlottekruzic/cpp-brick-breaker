@@ -34,13 +34,11 @@ void Game<Shape>::initSDL() {
 
 template <typename Shape>
 void Game<Shape>::createWindowAndRenderer() {
-  window_ = std::shared_ptr<SDL_Window>(
+  window_ = std::unique_ptr<SDL_Window, void (*)(SDL_Window*)>(
       SDL_CreateWindow("Game Board", SDL_WINDOWPOS_CENTERED,
                        SDL_WINDOWPOS_CENTERED, screen_width_, screen_height_,
                        SDL_WINDOW_SHOWN),
-      [](SDL_Window* window) {
-        if (window) SDL_DestroyWindow(window);
-      });
+      SDL_DestroyWindow);
 
   if (!window_) {
     std::cerr << "Erreur lors de la création de la fenêtre : " << SDL_GetError()
@@ -49,15 +47,14 @@ void Game<Shape>::createWindowAndRenderer() {
     exit(1);
   }
 
-  renderer_ = std::shared_ptr<SDL_Renderer>(
+  renderer_ = std::unique_ptr<SDL_Renderer, void (*)(SDL_Renderer*)>(
       SDL_CreateRenderer(window_.get(), -1, SDL_RENDERER_ACCELERATED),
-      [](SDL_Renderer* renderer) {
-        if (renderer) SDL_DestroyRenderer(renderer);
-      });
+      SDL_DestroyRenderer);
+
   if (!renderer_) {
     std::cerr << "Erreur lors de la création du rendu : " << SDL_GetError()
               << std::endl;
-    SDL_DestroyWindow(window_.get());
+    window_.reset();
     SDL_Quit();
     exit(1);
   }
