@@ -60,8 +60,8 @@ Les bonus et les malus tombent du haut de la fenêtre, offrant une variété d'e
 - [x] **supporter différentes formes de grilles de briques : hexagonales et triangulaires**
 - [x] **Utilisez la STL au maximum  :**
   - [x] **Pas de tableau! des conteneurs STL**
-  - [ ] **Pas de pointeur! des unique/shared/weak_ptr**  
-    Nous avons entrepris une optimisation des pointeurs "classiques", en remplaçant autant que possible ces derniers par des **unique_ptr**, **shared_ptr**, et **weak_ptr**. Cependant, une exception subsiste : l'objet *Game* doit continuer de créer et de superviser les *BonusMalus* (ainsi que les *SpecialBrick*).
+  - [x] **Pas de pointeur! des unique/shared/weak_ptr**  
+    Nous avons entrepris une optimisation des pointeurs "classiques", en remplaçant autant que possible ces derniers par des **unique_ptr**, **shared_ptr**, et **weak_ptr**. Cependant, **une** exception subsiste : l'objet *Game* doit continuer de créer et de superviser les *BonusMalus* (ainsi que les *SpecialBrick*).
 
     Les classes *BonusMalus* et *SpecialBrick* ont besoin de connaître l'instance de *Game* pour pouvoir effectuer diverses actions telles qu'accélérer/décélérer les balles, agrandir/rétrécir la raquette, ou encore créer de nouvelles balles. En résumé, elles gèrent toutes les interactions liées aux bonus et malus du jeu. Pour répondre à cette exigence, nous avons initialement utilisé un pointeur brut dans ces classes vers un objet *Game*, nécessaire lors de leur construction.
 
@@ -73,7 +73,7 @@ Les bonus et les malus tombent du haut de la fenêtre, offrant une variété d'e
 - [x] **Utilisez de l'héritage et du polymorphisme**
 <img src="diagramme.png">
 
-- [ ] **Soyez const-correct et efficaces, pas de copie inutile**  
+- [x] **Soyez const-correct et efficaces, pas de copie inutile**  
     Nous pensons avoir essayé de le faire au maximum, mais par manque de temps il est possible qu'il y ait encore des choses à améliorer.
 
 - [x] **Documentez votre code**  
@@ -84,7 +84,7 @@ Les bonus et les malus tombent du haut de la fenêtre, offrant une variété d'e
 ---
 ## Autres notions du cours utilisées
 - **CRTP** : *SpecialBrick* utilise un modèle de programmation basé sur les templates, où il est spécialisé en fonction des classes dont il hérite, telles que *BonusBrick* et *MalusBrick*. Ces dernières possèdent chacune un attribut statique permettant de charger les images du jeu une seule fois pour les briques de forme carrée.
-- **Mixin** : Les classes *SquareCell*, *TriangleCell* et *HexagonCell* partagent des fonctionnalitéscommunes telles que les méthodes *draw* ou *getPoint*. Cela permet une réutilisation efficace du code et une gestion modulaire des fonctionnalités dans le jeu.
+- **Mixin** : Les classes *SquareCell*, *TriangleCell* et *HexagonCell* partagent des fonctionnalités communes telles que les méthodes *draw* ou *getPoint*. Cela permet une réutilisation efficace du code et une gestion modulaire des fonctionnalités dans le jeu.
 
 ---
 ## Usage
