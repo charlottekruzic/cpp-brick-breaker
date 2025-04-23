@@ -39,7 +39,7 @@ The game is built using modern C++ principles:
 ## 📐 Class structure
 The project uses a comprehensive class hierarchy:
 
-![Game Diagram](diagramme.png)
+![Game Diagram](ressources/diagramme.png)
 
 ## 📜 Requirements
 
