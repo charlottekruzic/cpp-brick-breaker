@@ -1,4 +1,5 @@
 # Brick Breaker game
+[![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg)](https://opensource.org/licenses/MIT)
 ## 🔎 Overview
 A modern C++ take on the classic Brick Breaker game, built with SDL2. This project features multiple brick types, bonus/malus effects, and support for different grid shapes (square, triangular, and hexagonal).
 
