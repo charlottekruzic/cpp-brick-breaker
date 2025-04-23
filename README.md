@@ -25,11 +25,6 @@ A modern C++ take on the classic Brick Breaker game, built with SDL2. This proje
     - Hexagonal grid
 - ASCII file-based level loading system
 
-## 🎮 Game controls
-- Move platform: Mouse or arrow keys
-- Pause/resume game: Spacebar or mouse click
-- Quit game: Escape key
-
 ## 👨🏻‍💻 Technical implementation
 The game is built using modern C++ principles:
 - Extensive use of STL containers and algorithms
@@ -39,6 +34,11 @@ The game is built using modern C++ principles:
 - Mixin pattern for grid cell implementations
 - Const-correctness and efficient memory management
 - Clean code following Google's C++ style guide
+
+## 📐 Class structure
+The project uses a comprehensive class hierarchy:
+
+![Game Diagram](diagramme.png)
 
 ## 📜 Requirements
 
@@ -61,10 +61,15 @@ The game is built using modern C++ principles:
     ```
     Replace `all.txt` with any valid grid file from the `./grilles` directory.
 
-## 📐 Class structure
-The project uses a comprehensive class hierarchy:
+## 🎮 Game controls
+- Move platform: Mouse or arrow keys
+- Pause/resume game: Spacebar or mouse click
+- Quit game: Escape key
 
-![Game Diagram](diagramme.png)
+## 📸 Preview
+<p align="center">
+  <img src="./ressources/demo.gif" alt="Demo" />
+</p>
 
 ## 📝 Documentation
 The code is fully documented using Doxygen comments and formatted according to Google's C++ style guide.
