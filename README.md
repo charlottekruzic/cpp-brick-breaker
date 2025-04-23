@@ -69,7 +69,7 @@ The project uses a comprehensive class hierarchy:
 
 ## 📸 Preview
 <p align="center">
-  <img src="./ressources/demo.gif" alt="Demo" />
+  <img src="./ressources/demo.gif" alt="Demo" width="50%"/>
 </p>
 
 ## 📝 Documentation
