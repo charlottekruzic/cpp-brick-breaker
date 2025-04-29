@@ -39,7 +39,7 @@ The game is built using modern C++ principles:
 ## 📐 Class structure
 The project uses a comprehensive class hierarchy:
 
-![Game Diagram](ressources/diagramme.png)
+![Game Diagram](resources/diagramme.png)
 
 ## 📜 Requirements
 
@@ -69,13 +69,13 @@ The project uses a comprehensive class hierarchy:
 
 ## 📸 Preview
 <p align="center">
-  <img src="./ressources/demo.gif" alt="Demo" width="50%"/>
+  <img src="./resources/demo.gif" alt="Demo" width="50%"/>
 </p>
 
 ## 📝 Documentation
 The code is fully documented using Doxygen comments and formatted according to Google's C++ style guide.
 
-For more information about the purpose of this project, you can find the [complete project assignment file](./ressources/project-assignment-fr.pdf) (in french) within this repository. This project was developed during the first year of the Master’s program in Data Science and Complex Systems at the University of Strasbourg. It is part of the common curriculum shared by all Computer Science tracks.
+For more information about the purpose of this project, you can find the [complete project assignment file](./resources/project-assignment-fr.pdf) (in french) within this repository. This project was developed during the first year of the Master’s program in Data Science and Complex Systems at the University of Strasbourg. It is part of the common curriculum shared by all Computer Science tracks.
 
 ## 👷 Contributors
 - Zoé Marquis
